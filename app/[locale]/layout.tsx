@@ -20,7 +20,7 @@ const fontCairo = FontCairo({
 export const metadata: Metadata = {
   title: "Elbanna",
   description:
-    "مكتب الالبنا للمحاماة - نقدم خدمات قانونية متميزة مصممة لتلبية احتياجاتك الفريدة، مع التزامنا بالاحترافية والتميز.",
+    "مكتب البنا للمحاماة - نقدم خدمات قانونية متميزة مصممة لتلبية احتياجاتك الفريدة، مع التزامنا بالاحترافية والتميز.",
   icons: {
     icon: "/logo/logo_elbanna.jpg",
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     url: "https://elbannalawfirm.vercel.app/",
     title: "Elbanna",
     description:
-      "مكتب الالبنا للمحاماة - ملتزمون بتقديم حلول قانونية موثوقة وفعالة مع فريق من المحترفين المتفانين.",
+      "مكتب البنا للمحاماة - ملتزمون بتقديم حلول قانونية موثوقة وفعالة مع فريق من المحترفين المتفانين.",
     siteName: "Elbanna",
     images: [
       {
