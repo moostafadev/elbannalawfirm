@@ -7,7 +7,9 @@
     "FAQs": "FAQs"
   },
   "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+    "HeroSection": {
+      "title": "Ahmed Elbanna",
+      "paragraph": "Justice is our mission, and defending your rights is our commitment."
+    }
   }
 }

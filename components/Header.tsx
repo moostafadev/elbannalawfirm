@@ -47,7 +47,7 @@ const Header = () => {
                   (item) => (
                     <li
                       key={item}
-                      className={`font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:bottom-0 hover:before:w-full before:absolute before:duration-300 ${
+                      className={`font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[1px] hover:before:w-full before:absolute before:duration-300 ${
                         locale === "ar" ? "before:right-0" : "before:left-0"
                       }`}
                     >
@@ -57,7 +57,7 @@ const Header = () => {
                 )}
               </ul>
               <ul
-                className={`md:hidden flex gap-8 text-xl fixed top-16 h-[calc(100vh-64px)] w-full duration-300 flex-col bg-primary text-white py-10 items-center ${
+                className={`z-50 md:hidden flex gap-8 text-xl fixed top-16 h-[calc(100vh-64px)] w-full duration-300 flex-col bg-primary text-white py-10 items-center ${
                   isOpen && locale === "ar"
                     ? "left-0"
                     : isOpen && locale !== "ar"
