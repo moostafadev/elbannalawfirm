@@ -1,4 +1,11 @@
 {
+  "Links": {
+    "about": "À propos",
+    "services": "Nos Services",
+    "team": "Notre Équipe",
+    "contact": "Contactez-nous",
+    "FAQs": "FAQ"
+  },
   "HomePage": {
     "title": "Bonjour le monde !",
     "about": "Aller à la page À propos"
