@@ -10,6 +10,10 @@
     "HeroSection": {
       "title": "Ahmed Elbanna",
       "paragraph": "La justice est notre mission, et défendre vos droits est notre engagement."
+    },
+    "AboutSection": {
+      "title": "À Propos de Nous",
+      "paragraph": "Nous sommes heureux de vous présenter notre cabinet d'avocats de renom, alliant des années d'expérience à une passion pour l'excellence. Notre équipe de professionnels dévoués s'engage à fournir des services juridiques personnalisés qui répondent aux besoins uniques de chaque client. Que ce soit en matière de contentieux, de conseil ou de droit des affaires, nous nous efforçons d'offrir des solutions juridiques fiables et efficaces. Notre mission est d'être un partenaire de confiance, offrant des conseils clairs à travers les questions juridiques complexes tout en garantissant justice et protection de vos intérêts."
     }
   }
 }

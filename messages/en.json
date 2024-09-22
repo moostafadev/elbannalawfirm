@@ -10,6 +10,10 @@
     "HeroSection": {
       "title": "Ahmed Elbanna",
       "paragraph": "Justice is our mission, and defending your rights is our commitment."
+    },
+    "AboutSection": {
+      "title": "About Us",
+      "paragraph": "We are pleased to introduce our esteemed law firm, combining years of experience with a passion for excellence. Our team of dedicated professionals is committed to delivering personalized legal services that address each client's unique needs. Whether it's litigation, advisory services, or corporate law, we strive to offer reliable, efficient, and effective legal solutions. Our mission is to be a trusted partner, providing clear guidance through complex legal matters while ensuring justice and protecting your interests."
     }
   }
 }

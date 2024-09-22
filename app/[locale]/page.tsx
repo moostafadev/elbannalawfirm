@@ -3,6 +3,7 @@ import HomePageOverlay from "@/components/HomePageOverlay";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -60,7 +61,42 @@ export default function Home() {
           </Link>
           <HomePageOverlay />
         </section>
-        <section className="min-h-screen" id="about"></section>
+        <section className="min-h-screen flex py-10" id="about">
+          <div className="container flex flex-col gap-10">
+            <h1 className="text-center text-2xl sm:text-4xl font-bold text-primary">
+              {t("AboutSection.title")}
+            </h1>
+            <div className="flex gap-10 flex-col md:flex-row items-center">
+              <div className="flex-1 hidden md:block">
+                <Image
+                  src={"/imgs/ahmed_2.png"}
+                  alt="elbanna"
+                  width={500}
+                  height={500}
+                  className="-mt-10 mx-auto"
+                />
+              </div>
+              <div className="flex-1 text-lg md:text-xl font-semibold !leading-8">
+                {t("AboutSection.paragraph")
+                  .split(".")
+                  .map((text, idx) => {
+                    if (
+                      idx ===
+                      t("AboutSection.paragraph").split(".").length - 1
+                    ) {
+                      return `${text}`;
+                    } else {
+                      return (
+                        <p key={idx}>
+                          {text}.<br />
+                        </p>
+                      );
+                    }
+                  })}
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
