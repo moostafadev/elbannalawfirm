@@ -3,7 +3,7 @@
 import { Link, useRouter } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -21,6 +21,18 @@ const Header = () => {
   const [isOpen, setIsopen] = useState(false);
   const scrollDirection = useScrollDirection(0);
   const headerLinks = ["about", "services", "team", "blog", "FAQs", "contact"];
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   const handleLanguageChange = (newLocale: "en" | "ar" | "fr" | undefined) => {
     router.push("/", { locale: newLocale });
@@ -133,7 +145,7 @@ const Header = () => {
               </SelectContent>
             </Select>
             <div
-              className={`bg-white dark:bg-neutral-950 rounded-md px-[1px] lg:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]`}
+              className={`rounded-md px-[1px] lg:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]`}
               onClick={() => setIsopen((prev) => !prev)}
             >
               <span
