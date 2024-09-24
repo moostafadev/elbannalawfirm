@@ -204,7 +204,7 @@ export default function Home() {
               </div>
               <div className="flex-1 flex justify-center items-center">
                 <Image
-                  src={"/imgs/ahmed_3.jpg"}
+                  src={"/imgs/ahmed_3.JPG"}
                   alt="elbanna"
                   width={400}
                   height={400}
