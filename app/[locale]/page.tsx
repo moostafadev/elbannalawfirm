@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HomePageOverlay from "@/components/HomePageOverlay";
+import ClientSideWrapper from "@/components/Loading";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -215,6 +216,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <ClientSideWrapper />
     </>
   );
 }
