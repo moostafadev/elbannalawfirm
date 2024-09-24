@@ -18,19 +18,20 @@ const Header = () => {
   const locale = useLocale();
   const router = useRouter();
   const [isOpen, setIsopen] = useState(false);
+  const headerLinks = ["about", "services", "team", "blog", "FAQs", "contact"];
 
   const handleLanguageChange = (newLocale: "en" | "ar" | "fr" | undefined) => {
     router.push("/", { locale: newLocale });
   };
 
   return (
-    <header className="h-16 md:h-24 shadow-sm border-b-2 flex items-center">
+    <header className="h-24 shadow-sm border-b-2 flex items-center">
       <div className="container">
         <div className="flex items-center justify-between">
-          <div className="flex gap-12">
+          <div className="flex lg:gap-12">
             <Link
               href={"/"}
-              className="py-2 flex items-center justify-center h-16 w-16 md:h-24 md:w-24"
+              className="py-2 flex items-center justify-center h-24 w-24"
               onClick={() => setIsopen(false)}
             >
               <Image
@@ -42,22 +43,20 @@ const Header = () => {
               />
             </Link>
             <nav className="flex">
-              <ul className="md:flex gap-6 hidden !text-neutral-800 text-lg">
-                {["about", "services", "team", "FAQs", "contact"].map(
-                  (item) => (
-                    <li
-                      key={item}
-                      className={`font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[1px] hover:before:w-full before:absolute before:duration-300 ${
-                        locale === "ar" ? "before:right-0" : "before:left-0"
-                      }`}
-                    >
-                      <Link href={`#${item}`}>{t(item)}</Link>
-                    </li>
-                  )
-                )}
+              <ul className="lg:flex gap-6 hidden !text-neutral-800 text-lg">
+                {headerLinks.map((item) => (
+                  <li
+                    key={item}
+                    className={`font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[1px] hover:before:w-full before:absolute before:duration-300 ${
+                      locale === "ar" ? "before:right-0" : "before:left-0"
+                    }`}
+                  >
+                    <Link href={`#${item}`}>{t(item)}</Link>
+                  </li>
+                ))}
               </ul>
               <ul
-                className={`z-50 md:hidden flex gap-8 text-xl fixed top-16 h-[calc(100vh-64px)] w-full duration-300 flex-col bg-primary text-white py-10 items-center ${
+                className={`z-50 lg:hidden flex gap-8 text-xl fixed top-24 h-[calc(100vh-6rem)] w-full duration-300 flex-col bg-primary text-white py-10 items-center ${
                   isOpen && locale === "ar"
                     ? "left-0"
                     : isOpen && locale !== "ar"
@@ -67,28 +66,26 @@ const Header = () => {
                     : "-right-full"
                 }`}
               >
-                {["about", "services", "team", "FAQs", "contact"].map(
-                  (item) => (
-                    <li
-                      key={item}
-                      className={`font-bold hover:text-primary duration-300 flex items-center`}
-                      onClick={() => setIsopen(false)}
-                    >
-                      <Link href={`#${item}`}>{t(item)}</Link>
-                    </li>
-                  )
-                )}
+                {headerLinks.map((item) => (
+                  <li
+                    key={item}
+                    className={`font-bold hover:text-primary duration-300 flex items-center`}
+                    onClick={() => setIsopen(false)}
+                  >
+                    <Link href={`#${item}`}>{t(item)}</Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center sm:gap-4 gap-3">
             <Select
               defaultValue={locale}
               onValueChange={(e) =>
                 handleLanguageChange(e as "en" | "ar" | "fr" | undefined)
               }
             >
-              <SelectTrigger className="w-[130px]">
+              <SelectTrigger className="w-[125px]">
                 <SelectValue placeholder="lang" />
               </SelectTrigger>
               <SelectContent>
@@ -130,7 +127,7 @@ const Header = () => {
               </SelectContent>
             </Select>
             <div
-              className={`bg-white dark:bg-neutral-950 rounded-md px-[1px] md:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]`}
+              className={`bg-white dark:bg-neutral-950 rounded-md px-[1px] lg:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]`}
               onClick={() => setIsopen((prev) => !prev)}
             >
               <span
