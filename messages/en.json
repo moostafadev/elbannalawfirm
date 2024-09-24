@@ -15,6 +15,17 @@
     "AboutSection": {
       "title": "About Us",
       "paragraph": "We are pleased to introduce our esteemed law firm, combining years of experience with a passion for excellence. Our team of dedicated professionals is committed to delivering personalized legal services that address each client's unique needs. Whether it's litigation, advisory services, or corporate law, we strive to offer reliable, efficient, and effective legal solutions. Our mission is to be a trusted partner, providing clear guidance through complex legal matters while ensuring justice and protecting your interests."
+    },
+    "ServicesSection": {
+      "title": "Our Services",
+      "paragraph": {
+        "main": "At Ahmed Elbanna Law Firm, we offer a comprehensive range of legal services designed to meet the needs of individuals and businesses across various legal fields. Our team of specialists is dedicated to providing precise and thorough legal advice. Our services include:",
+        "one": "Commercial Law: Offering legal consultations for companies and businesses in all commercial transactions.",
+        "two": "Criminal Defense: Defending individuals in criminal cases with a focus on protecting their rights.",
+        "three": "Family Law: Handling cases related to divorce, custody, and alimony to ensure the best interests of the family.",
+        "four": "Real Estate Law: Providing expert legal advice on real estate transactions, including buying, selling, and leasing.",
+        "last": "We are committed to delivering tailored legal solutions that meet the unique needs of each client, ensuring the best possible outcomes."
+      }
     }
   }
 }

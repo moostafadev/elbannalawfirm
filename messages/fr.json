@@ -15,6 +15,17 @@
     "AboutSection": {
       "title": "À Propos de Nous",
       "paragraph": "Nous sommes heureux de vous présenter notre cabinet d'avocats de renom, alliant des années d'expérience à une passion pour l'excellence. Notre équipe de professionnels dévoués s'engage à fournir des services juridiques personnalisés qui répondent aux besoins uniques de chaque client. Que ce soit en matière de contentieux, de conseil ou de droit des affaires, nous nous efforçons d'offrir des solutions juridiques fiables et efficaces. Notre mission est d'être un partenaire de confiance, offrant des conseils clairs à travers les questions juridiques complexes tout en garantissant justice et protection de vos intérêts."
+    },
+    "ServicesSection": {
+      "title": "Nos Services",
+      "paragraph": {
+        "main": "Chez Ahmed Elbanna Cabinet d’Avocats, nous proposons une gamme complète de services juridiques conçus pour répondre aux besoins des particuliers et des entreprises dans divers domaines juridiques. Notre équipe de spécialistes s'engage à fournir des conseils juridiques précis et complets. Nos services incluent :",
+        "one": "Droit Commercial : Offrir des consultations juridiques pour les entreprises et les transactions commerciales.",
+        "two": "Défense Pénale : Défendre les individus dans les affaires pénales tout en se concentrant sur la protection de leurs droits.",
+        "three": "Droit de la Famille : Traiter les affaires liées au divorce, à la garde des enfants et à la pension alimentaire pour garantir les meilleurs intérêts de la famille.",
+        "four": "Droit Immobilier : Fournir des conseils juridiques spécialisés sur les transactions immobilières, y compris l'achat, la vente et la location.",
+        "last": "Nous nous engageons à offrir des solutions juridiques sur mesure qui répondent aux besoins spécifiques de chaque client, garantissant ainsi les meilleurs résultats possibles."
+      }
     }
   }
 }
