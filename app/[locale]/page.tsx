@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import HomePageOverlay from "@/components/HomePageOverlay";
 import ClientSideWrapper from "@/components/Loading";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -13,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="overflow-hidden">
+      <main className="overflow-hidden mt-24">
         <section className="relative min-h-[calc(100vh-6rem)] py-6 flex lg:items-center">
           <div className="container lg:-mt-32 mt-4 z-20 relative">
             <div className="flex flex-col sm:gap-5 gap-2">
@@ -47,7 +48,7 @@ export default function Home() {
             href={"#about"}
             className={`absolute md:bottom-8 bottom-2 ${
               locale === "ar" ? "right-2 md:right-14" : "left-2 md:left-14"
-            } flex justify-center items-center gap-1 z-20 animate-bounce text-white md:text-[#bb9911]`}
+            } flex justify-center items-center gap-1 z-20 animate-bounce text-[#bb9911]`}
             style={{ writingMode: "vertical-lr" }}
           >
             {locale === "ar" && <ChevronDown />}
@@ -71,11 +72,11 @@ export default function Home() {
             <div className="flex lg:gap-16 gap-10 flex-col lg:flex-row items-center h-full">
               <div className="flex-1 lg:order-1 order-2 flex justify-center items-center lg:px-10">
                 <Image
-                  src={"/imgs/ahmed_2.png"}
+                  src={"/imgs/ahmed_5.jpg"}
                   alt="elbanna"
                   width={400}
                   height={400}
-                  className="w-full lg:max-w-[500px]"
+                  className="w-full lg:max-w-[400px] rounded-lg"
                 />
               </div>
               <div className="flex-1 text-lg md:text-xl font-semibold !leading-8 lg:order-2 order-1">
@@ -205,17 +206,18 @@ export default function Home() {
               </div>
               <div className="flex-1 flex justify-center items-center">
                 <Image
-                  src={"/imgs/ahmed_3.JPG"}
+                  src={"/imgs/ahmed_6.jpg"}
                   alt="elbanna"
                   width={400}
                   height={400}
-                  className="w-full lg:max-w-[500px] rounded-lg"
+                  className="w-full lg:max-w-[360px] rounded-lg"
                 />
               </div>
             </div>
           </div>
         </section>
       </main>
+      <ScrollToTop />
       <ClientSideWrapper />
     </>
   );

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description:
     "مكتب البنا للمحاماة - نقدم خدمات قانونية متميزة مصممة لتلبية احتياجاتك الفريدة، مع التزامنا بالاحترافية والتميز.",
   icons: {
-    icon: "/logo/logo_elbanna.jpg",
+    icon: "/logo/logo.png",
   },
   openGraph: {
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Elbanna",
     images: [
       {
-        url: "/logo/logo_elbanna.jpg",
+        url: "/logo/logo.png",
       },
     ],
   },

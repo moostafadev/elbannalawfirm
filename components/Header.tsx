@@ -12,12 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useScrollDirection from "@/hooks/useScrollDir";
 
 const Header = () => {
   const t = useTranslations("Links");
   const locale = useLocale();
   const router = useRouter();
   const [isOpen, setIsopen] = useState(false);
+  const scrollDirection = useScrollDirection(0);
   const headerLinks = ["about", "services", "team", "blog", "FAQs", "contact"];
 
   const handleLanguageChange = (newLocale: "en" | "ar" | "fr" | undefined) => {
@@ -25,7 +27,11 @@ const Header = () => {
   };
 
   return (
-    <header className="h-24 shadow-sm border-b-2 flex items-center">
+    <header
+      className={`h-24 shadow-sm fixed bottom-0 md:top-0 bg-[hsl(0deg,0%,100%,.8)] backdrop-blur-sm z-50 w-full border-b-2 flex items-center duration-300 ${
+        scrollDirection === "down" ? "!top-[-6rem]" : "!top-0"
+      }`}
+    >
       <div className="container">
         <div className="flex items-center justify-between">
           <div className="flex lg:gap-12">
@@ -35,7 +41,7 @@ const Header = () => {
               onClick={() => setIsopen(false)}
             >
               <Image
-                src={"/logo/logo_elbanna.jpg"}
+                src={"/logo/logo.png"}
                 alt="logo"
                 width={100}
                 height={100}
