@@ -11,7 +11,7 @@ const HomePageOverlay = () => {
         width={1000}
         height={1000}
         alt="elbanna"
-        className={`absolute bottom-0 lg:h-full lg:w-[auto] w-[300px] sm:w-[380px] lg:mx-60 max-w-none select-none ${
+        className={`absolute bottom-0 lg:h-full lg:w-[auto] w-[430px] sm:w-[500px] lg:mx-60 max-w-none select-none ${
           locale !== "ar"
             ? "sm:right-0 right-1/2 translate-x-1/2 sm:translate-x-0"
             : "sm:left-0 left-1/2 -translate-x-1/2 sm:translate-x-0"
