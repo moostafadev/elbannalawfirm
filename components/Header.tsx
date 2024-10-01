@@ -20,7 +20,7 @@ const Header = () => {
   const router = useRouter();
   const [isOpen, setIsopen] = useState(false);
   const scrollDirection = useScrollDirection(0);
-  const headerLinks = ["about", "services", "team", "blog", "FAQs", "contact"];
+  const headerLinks = ["about", "services", "blog", "team", "FAQs", "contact"];
 
   useEffect(() => {
     if (isOpen) {

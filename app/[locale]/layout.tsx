@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import MainLayout from "@/components/MainLayout";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -55,7 +56,7 @@ export default async function RootLayout({
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body className={cn("min-h-screen antialiased", selectedFont)}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <MainLayout>{children}</MainLayout>
         </NextIntlClientProvider>
       </body>
     </html>
