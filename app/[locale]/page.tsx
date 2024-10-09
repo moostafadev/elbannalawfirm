@@ -1,4 +1,5 @@
-import BlogCard from "@/components/BlogCard";
+import BlogsSection from "@/components/BlogsSection";
+import Heading from "@/components/Heading";
 import HomePageOverlay from "@/components/HomePageOverlay";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
@@ -62,9 +63,7 @@ export default function Home() {
 
       <section className="min-h-screen flex py-16" id="about">
         <div className="container flex flex-col gap-8">
-          <h1 className="text-center text-3xl sm:text-4xl font-bold text-primary">
-            {t("AboutSection.title")}
-          </h1>
+          <Heading>{t("AboutSection.title")}</Heading>
           <div className="flex lg:gap-16 gap-10 flex-col lg:flex-row items-center h-full">
             <div className="flex-1 lg:order-1 order-2 flex justify-center items-center lg:px-10">
               <Image
@@ -99,9 +98,7 @@ export default function Home() {
 
       <section className="min-h-screen flex py-16 bg-[#bb99111a]" id="services">
         <div className="container flex flex-col gap-8">
-          <h1 className="text-center text-3xl sm:text-4xl font-bold text-primary">
-            {t("ServicesSection.title")}
-          </h1>
+          <Heading>{t("ServicesSection.title")}</Heading>
           <div className="flex lg:gap-12 gap-10 flex-col lg:flex-row items-center h-full">
             <div className="flex-1 !leading-8 gap-4 flex flex-col">
               <div className="text-lg md:text-xl">
@@ -212,119 +209,8 @@ export default function Home() {
 
       <section className="min-h-screen flex py-16" id="blog">
         <div className="container flex flex-col gap-20">
-          <h1 className="text-center text-3xl sm:text-4xl font-bold text-primary">
-            {t("BlogSection.title")}
-          </h1>
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <BlogCard
-              image="/imgs/blog_1.jpg"
-              title={
-                locale === "ar"
-                  ? "دعوى نفقة الصغار"
-                  : locale === "en"
-                  ? "Child Support Lawsuit"
-                  : "Action en Pension Alimentaire pour Enfants"
-              }
-              link="/blog/1"
-            >
-              <p>
-                {locale === "ar" &&
-                  "هل تعرف أن نفقة الأطفال بعد الطلاق هي حق أساسي يكفله القانون المصري؟"}
-                {locale === "en" &&
-                  "Did you know that child support after divorce is a fundamental right protected by Egyptian law?"}
-                {locale === "fr" &&
-                  "Saviez-vous que la pension alimentaire pour enfants après un divorce est un droit fondamental protégé par la loi égyptienne ?"}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "في هذا المقال، نوضح لك كل ما تحتاج معرفته عن دعوى نفقة الصغار وأنواع النفقات التي يجب على الأب توفيرها."}
-                {locale === "en" &&
-                  "In this article, we explain everything you need to know about child support lawsuits and the types of support fathers are required to provide."}
-                {locale === "fr" &&
-                  "Dans cet article, nous vous expliquons tout ce que vous devez savoir sur les actions en pension alimentaire et les types de soutien que les pères doivent fournir."}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "اكتشف التفاصيل القانونية الهامة لحماية حقوق أطفالك وضمان مستقبلهم!"}
-                {locale === "en" &&
-                  "Discover important legal details to secure your children's rights and their future!"}
-                {locale === "fr" &&
-                  "Découvrez les détails juridiques importants pour protéger les droits de vos enfants et assurer leur avenir !"}
-              </p>
-            </BlogCard>
-            <BlogCard
-              image="/imgs/blog_2.jpg"
-              title={
-                locale === "ar"
-                  ? "عقد العمل في القانون المصري"
-                  : locale === "en"
-                  ? "Employment Contract in Egyptian Law"
-                  : "Contrat de Travail dans le Droit Égyptien"
-              }
-              link="/blog/2"
-            >
-              <p>
-                {locale === "ar" &&
-                  "هل تعرف أن نفقة الأطفال بعد الطلاق هي حق أساسي يكفله القانون المصري؟"}
-                {locale === "en" &&
-                  "Did you know that child support after divorce is a fundamental right protected by Egyptian law?"}
-                {locale === "fr" &&
-                  "Saviez-vous que la pension alimentaire pour enfants après un divorce est un droit fondamental protégé par la loi égyptienne ?"}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "في هذا المقال، نوضح لك كل ما تحتاج معرفته عن دعوى نفقة الصغار وأنواع النفقات التي يجب على الأب توفيرها."}
-                {locale === "en" &&
-                  "In this article, we explain everything you need to know about child support lawsuits and the types of support fathers are required to provide."}
-                {locale === "fr" &&
-                  "Dans cet article, nous vous expliquons tout ce que vous devez savoir sur les actions en pension alimentaire et les types de soutien que les pères doivent fournir."}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "اكتشف التفاصيل القانونية الهامة لحماية حقوق أطفالك وضمان مستقبلهم!"}
-                {locale === "en" &&
-                  "Discover important legal details to secure your children's rights and their future!"}
-                {locale === "fr" &&
-                  "Découvrez les détails juridiques importants pour protéger les droits de vos enfants et assurer leur avenir !"}
-              </p>
-            </BlogCard>
-            <BlogCard
-              image="/imgs/blog_3.jpg"
-              title={
-                locale === "ar"
-                  ? "حرية القتل الإجرامي"
-                  : locale === "en"
-                  ? "Freedom of Criminal Killing"
-                  : "Liberté du Meurtre Criminel"
-              }
-              link="/blog/3"
-            >
-              <p>
-                {locale === "ar" &&
-                  "هل تعرف أن نفقة الأطفال بعد الطلاق هي حق أساسي يكفله القانون المصري؟"}
-                {locale === "en" &&
-                  "Did you know that child support after divorce is a fundamental right protected by Egyptian law?"}
-                {locale === "fr" &&
-                  "Saviez-vous que la pension alimentaire pour enfants après un divorce est un droit fondamental protégé par la loi égyptienne ?"}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "في هذا المقال، نوضح لك كل ما تحتاج معرفته عن دعوى نفقة الصغار وأنواع النفقات التي يجب على الأب توفيرها."}
-                {locale === "en" &&
-                  "In this article, we explain everything you need to know about child support lawsuits and the types of support fathers are required to provide."}
-                {locale === "fr" &&
-                  "Dans cet article, nous vous expliquons tout ce que vous devez savoir sur les actions en pension alimentaire et les types de soutien que les pères doivent fournir."}
-              </p>
-              <p>
-                {locale === "ar" &&
-                  "اكتشف التفاصيل القانونية الهامة لحماية حقوق أطفالك وضمان مستقبلهم!"}
-                {locale === "en" &&
-                  "Discover important legal details to secure your children's rights and their future!"}
-                {locale === "fr" &&
-                  "Découvrez les détails juridiques importants pour protéger les droits de vos enfants et assurer leur avenir !"}
-              </p>
-            </BlogCard>
-          </div>
+          <Heading>{t("BlogSection.title")}</Heading>
+          <BlogsSection />
         </div>
       </section>
     </>
