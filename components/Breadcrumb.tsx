@@ -19,7 +19,7 @@ interface ILink {
 const BreadcrumbC = ({ links }: { links: ILink[] }) => {
   const locale = useLocale();
   return (
-    <Breadcrumb>
+    <Breadcrumb className="content-data">
       <BreadcrumbList>
         {links
           .filter((link) => link.isNotLast)

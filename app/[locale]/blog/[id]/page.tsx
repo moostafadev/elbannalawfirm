@@ -1,3 +1,4 @@
+import Animation from "@/components/Animation";
 import BreadcrumbC from "@/components/Breadcrumb";
 import { blogsData, ITitles } from "@/data/blogs";
 import { useLocale } from "next-intl";
@@ -40,13 +41,15 @@ const BlogPage = ({ params: { id } }: { params: { id: string } }) => {
             ]}
           />
           <div>
-            <Image
-              src={blog?.image as string}
-              alt={"image"}
-              width={2000}
-              height={2000}
-              className="rounded-lg max-w-full"
-            />
+            <Animation>
+              <Image
+                src={blog?.image as string}
+                alt={"image"}
+                width={2000}
+                height={2000}
+                className="rounded-lg max-w-full"
+              />
+            </Animation>
           </div>
           <div className="flex flex-col gap-3">
             {blog?.largeContent[locale as keyof typeof blog.largeContent].map(
