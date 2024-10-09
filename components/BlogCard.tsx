@@ -1,6 +1,8 @@
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import React from "react";
+import CustomButton from "./CustomButton";
+import { useLocale } from "next-intl";
 
 interface IProps {
   link: string;
@@ -10,11 +12,9 @@ interface IProps {
 }
 
 const BlogCard = ({ title, image, children, link }: IProps) => {
+  const locale = useLocale();
   return (
-    <Link
-      href={link}
-      className="flex flex-col gap-4 rounded-lg duration-300 shadow-sm border-2 border-primary hover:scale-105 hover:shadow-md bg-[#bb99111a] overflow-hidden"
-    >
+    <div className="flex flex-col gap-4 rounded-lg duration-300 shadow-sm border-2 border-primary hover:scale-105 hover:shadow-md bg-[#bb99111a] overflow-hidden">
       <div className="flex max-h-1/2 justify-center items-center">
         <Image
           src={image}
@@ -28,7 +28,16 @@ const BlogCard = ({ title, image, children, link }: IProps) => {
         <h2 className="text-lg font-bold">{title}</h2>
         <div className="text-sm md:text-base">{children}</div>
       </div>
-    </Link>
+      <Link href={link} className="mt-auto m-4 self-end">
+        <CustomButton size="fit" color="yellow">
+          {locale === "ar"
+            ? "قراء المزيد"
+            : locale === "en"
+            ? "Read more"
+            : "Lire la suite"}
+        </CustomButton>
+      </Link>
+    </div>
   );
 };
 
