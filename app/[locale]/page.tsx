@@ -79,7 +79,7 @@ export default function Home() {
                   alt="elbanna"
                   width={400}
                   height={400}
-                  className="w-full lg:max-w-[400px] rounded-lg"
+                  className="w-full lg:max-w-[400px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
                 />
               </Animation>
             </div>
@@ -110,121 +110,56 @@ export default function Home() {
       <section className="min-h-screen flex py-16 bg-[#bb99111a]" id="services">
         <div className="container flex flex-col gap-8">
           <Heading>{t("ServicesSection.title")}</Heading>
-          <div className="flex lg:gap-12 gap-10 flex-col lg:flex-row items-center h-full">
-            <div className="flex-1 !leading-8 gap-4 flex flex-col">
-              <div className="text-lg md:text-xl">
+          <div className="flex flex-col gap-2">
+            <div className="text-lg md:text-xl">
+              <Animation>
+                <p className="font-semibold">
+                  {t("ServicesSection.paragraph.0").split(",")[0]},
+                </p>
+                <p className="text-base">
+                  {t("ServicesSection.paragraph.0").split(",")[1].split(".")[0]}
+                  .
+                  {t("ServicesSection.paragraph.0").split(",")[1].split(".")[1]}
+                  .
+                </p>
+                <p className="mt-2 text-lg font-semibold">
+                  {t("ServicesSection.paragraph.0").split(",")[1].split(".")[2]}
+                </p>
+              </Animation>
+            </div>
+            <div className="flex lg:gap-12 gap-10 flex-col lg:flex-row items-center h-full">
+              <div className="flex flex-col gap-2 flex-1 self-start">
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => {
+                  const [title, description] = t(
+                    `ServicesSection.paragraph.${num}`
+                  ).split(":");
+                  return (
+                    <div className="flex flex-col" key={num}>
+                      <Animation>
+                        <div className="flex items-center min-w-fit">
+                          <p className="lg:text-lg font-semibold">
+                            {num} - {title}:
+                          </p>
+                        </div>
+                        <div className="text-sm md:text-base">
+                          {description}
+                        </div>
+                      </Animation>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex-1 flex justify-center items-center">
                 <Animation>
-                  <p className="font-semibold">
-                    {t("ServicesSection.paragraph.main").split(",")[0]},
-                  </p>
-                  <p className="text-base">
-                    {
-                      t("ServicesSection.paragraph.main")
-                        .split(",")[1]
-                        .split(".")[0]
-                    }
-                    .
-                    {
-                      t("ServicesSection.paragraph.main")
-                        .split(",")[1]
-                        .split(".")[1]
-                    }
-                    .
-                  </p>
-                  <p className="mt-2 text-lg font-semibold">
-                    {
-                      t("ServicesSection.paragraph.main")
-                        .split(",")[1]
-                        .split(".")[2]
-                    }
-                  </p>
+                  <Image
+                    src={"/imgs/ahmed_6.jpg"}
+                    alt="elbanna"
+                    width={400}
+                    height={400}
+                    className="w-full max-w-[400px] lg:max-w-[360px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
+                  />
                 </Animation>
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex flex-col">
-                  <Animation>
-                    <div className="flex items-center min-w-fit">
-                      <Image
-                        src={"/icons/shop.svg"}
-                        alt="icon"
-                        width={34}
-                        height={34}
-                      />
-                      <p className="lg:text-lg font-semibold">
-                        {t("ServicesSection.paragraph.one").split(":")[0]}:
-                      </p>
-                    </div>
-                    <div className="text-sm md:text-base">
-                      {t("ServicesSection.paragraph.one").split(":")[1]}
-                    </div>
-                  </Animation>
-                </div>
-                <div className="flex flex-col">
-                  <Animation>
-                    <div className="flex items-center min-w-fit gap-1">
-                      <Image
-                        src={"/icons/law.svg"}
-                        alt="icon"
-                        width={30}
-                        height={30}
-                      />
-                      <p className="lg:text-lg font-semibold">
-                        {t("ServicesSection.paragraph.two").split(":")[0]}:
-                      </p>
-                    </div>
-                    <div className="text-sm md:text-base">
-                      {t("ServicesSection.paragraph.two").split(":")[1]}
-                    </div>
-                  </Animation>
-                </div>
-                <div className="flex flex-col">
-                  <Animation>
-                    <div className="flex items-center min-w-fit gap-1">
-                      <Image
-                        src={"/icons/family.svg"}
-                        alt="icon"
-                        width={34}
-                        height={34}
-                      />
-                      <p className="lg:text-lg font-semibold">
-                        {t("ServicesSection.paragraph.three").split(":")[0]}:
-                      </p>
-                    </div>
-                    <div className="text-sm md:text-base">
-                      {t("ServicesSection.paragraph.three").split(":")[1]}
-                    </div>
-                  </Animation>
-                </div>
-                <div className="flex flex-col">
-                  <Animation>
-                    <div className="flex items-center min-w-fit gap-1">
-                      <Image
-                        src={"/icons/company.svg"}
-                        alt="icon"
-                        width={32}
-                        height={32}
-                      />
-                      <p className="lg:text-lg font-semibold">
-                        {t("ServicesSection.paragraph.four").split(":")[0]}:
-                      </p>
-                    </div>
-                    <div className="text-sm md:text-base">
-                      {t("ServicesSection.paragraph.four").split(":")[1]}
-                    </div>
-                  </Animation>
-                </div>
-              </div>
-            </div>
-            <div className="flex-1 flex justify-center items-center">
-              <Animation>
-                <Image
-                  src={"/imgs/ahmed_6.jpg"}
-                  alt="elbanna"
-                  width={400}
-                  height={400}
-                  className="w-full lg:max-w-[360px] rounded-lg"
-                />
-              </Animation>
             </div>
           </div>
         </div>

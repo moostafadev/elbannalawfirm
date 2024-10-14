@@ -14,7 +14,7 @@ interface IProps {
 const BlogCard = ({ title, image, children, link }: IProps) => {
   const locale = useLocale();
   return (
-    <div className="content-data flex flex-col gap-4 rounded-lg duration-300 shadow-sm border-2 border-primary hover:scale-105 hover:shadow-md bg-[#bb99111a] overflow-hidden">
+    <div className="flex flex-col gap-4 rounded-lg duration-300 shadow-sm border-2 border-primary hover:shadow-md hover:rounded-none bg-[#bb99111a] overflow-hidden content-data">
       <div className="flex max-h-1/2 justify-center items-center">
         <Image
           src={image}

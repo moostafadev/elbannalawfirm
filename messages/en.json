@@ -19,12 +19,17 @@
     "ServicesSection": {
       "title": "Our Services",
       "paragraph": {
-        "main": "At Ahmed Elbanna Law Firm, we offer a comprehensive range of legal services designed to meet the needs of individuals and businesses across various legal fields. Our team of specialists is dedicated to providing precise and thorough legal advice. Our services include:",
-        "one": "Commercial Law: Offering legal consultations for companies and businesses in all commercial transactions.",
-        "two": "Criminal Defense: Defending individuals in criminal cases with a focus on protecting their rights.",
-        "three": "Family Law: Handling cases related to divorce, custody, and alimony to ensure the best interests of the family.",
-        "four": "Real Estate Law: Providing expert legal advice on real estate transactions, including buying, selling, and leasing.",
-        "last": "We are committed to delivering tailored legal solutions that meet the unique needs of each client, ensuring the best possible outcomes."
+        "0": "At Ahmed Elbanna Law Firm, we offer a comprehensive range of legal services designed to meet the needs of individuals and businesses across various legal fields. Our team of specialists is dedicated to providing precise and thorough legal advice. Our services include:",
+        "1": "Civil Cases: Including compensation claims, contracts, and property disputes.",
+        "2": "Criminal Cases: Representing individuals in criminal defense, including major crimes and misdemeanors.",
+        "3": "Personal Status Cases: Covering marriage, divorce, alimony, custody, and other family-related matters.",
+        "4": "Commercial Cases: Providing legal advice, drafting commercial contracts, and representing companies in commercial disputes.",
+        "5": "Litigation and Dispute Resolution: Offering legal solutions for litigation at all court levels, including arbitration and alternative dispute resolution methods.",
+        "6": "Real Estate Law: Providing legal consultations related to real estate, real estate contracts, and assistance in registering properties with the relevant authorities.",
+        "7": "Intellectual Property: Protecting trademarks, copyrights, patents, and other intellectual property rights.",
+        "8": "Corporate Legal Consulting: Offering periodic legal consultations to companies, including contract drafting, company formation procedures, and legal compliance.",
+        "9": "Tax Law: Providing legal support in matters related to taxation and legal accounting.",
+        "10": "Registration and Legal Documentation: Offering services for contract notarization and authentication before judicial authorities."
       }
     },
     "BlogSection": {

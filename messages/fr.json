@@ -19,12 +19,17 @@
     "ServicesSection": {
       "title": "Nos Services",
       "paragraph": {
-        "main": "Chez Ahmed Elbanna Cabinet d’Avocats, nous proposons une gamme complète de services juridiques conçus pour répondre aux besoins des particuliers et des entreprises dans divers domaines juridiques. Notre équipe de spécialistes s'engage à fournir des conseils juridiques précis et complets. Nos services incluent :",
-        "one": "Droit Commercial : Offrir des consultations juridiques pour les entreprises et les transactions commerciales.",
-        "two": "Défense Pénale : Défendre les individus dans les affaires pénales tout en se concentrant sur la protection de leurs droits.",
-        "three": "Droit de la Famille : Traiter les affaires liées au divorce, à la garde des enfants et à la pension alimentaire pour garantir les meilleurs intérêts de la famille.",
-        "four": "Droit Immobilier : Fournir des conseils juridiques spécialisés sur les transactions immobilières, y compris l'achat, la vente et la location.",
-        "last": "Nous nous engageons à offrir des solutions juridiques sur mesure qui répondent aux besoins spécifiques de chaque client, garantissant ainsi les meilleurs résultats possibles."
+        "0": "Chez Ahmed Elbanna Cabinet d’Avocats, nous proposons une gamme complète de services juridiques conçus pour répondre aux besoins des particuliers et des entreprises dans divers domaines juridiques. Notre équipe de spécialistes s'engage à fournir des conseils juridiques précis et complets. Nos services incluent :",
+        "1": "Affaires civiles : Y compris les réclamations d'indemnisation, les contrats et les litiges immobiliers.",
+        "2": "Affaires pénales : Représentation des individus en défense pénale, y compris les crimes majeurs et les délits.",
+        "3": "Affaires de statut personnel : Couvre le mariage, le divorce, la pension alimentaire, la garde des enfants et d'autres questions familiales.",
+        "4": "Affaires commerciales : Fournir des conseils juridiques, rédiger des contrats commerciaux et représenter les entreprises dans les litiges commerciaux.",
+        "5": "Contentieux et résolution des litiges : Offrir des solutions juridiques pour les litiges devant tous les niveaux de juridiction, y compris l'arbitrage et les méthodes alternatives de résolution des conflits.",
+        "6": "Droit immobilier : Fournir des consultations juridiques liées à l'immobilier, aux contrats immobiliers et à l'assistance pour l'enregistrement des biens auprès des autorités compétentes.",
+        "7": "Propriété intellectuelle : Protéger les marques, les droits d'auteur, les brevets et autres droits de propriété intellectuelle.",
+        "8": "Consultation juridique pour les entreprises : Offrir des consultations juridiques périodiques aux entreprises, y compris la rédaction de contrats, les procédures de création d'entreprises et la conformité légale.",
+        "9": "Droit fiscal : Fournir un soutien juridique dans les affaires liées à la fiscalité et à la comptabilité légale.",
+        "10": "Enregistrement et documentation légale : Offrir des services pour la notarisation et l'authentification des contrats devant les autorités judiciaires."
       }
     },
     "BlogSection": {

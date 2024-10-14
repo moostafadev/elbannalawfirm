@@ -6,14 +6,14 @@ import ScrollReveal from "scrollreveal";
 const Animation = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const sr = ScrollReveal({
-      origin: "top",
+      origin: "bottom",
       distance: "20px",
       duration: 1000,
       reset: false,
     });
 
     sr.reveal(".content-data", {
-      interval: 200,
+      interval: 100,
     });
   }, []);
 
