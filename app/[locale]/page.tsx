@@ -2,6 +2,7 @@ import Animation from "@/components/Animation";
 import BlogsSection from "@/components/BlogsSection";
 import Heading from "@/components/Heading";
 import HomePageOverlay from "@/components/HomePageOverlay";
+import { teamData } from "@/data/team";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -169,6 +170,50 @@ export default function Home() {
         <div className="container flex flex-col gap-20">
           <Heading>{t("BlogSection.title")}</Heading>
           <BlogsSection />
+        </div>
+      </section>
+
+      <section className="min-h-screen flex py-16 bg-[#bb99111a]" id="team">
+        <div className="container flex flex-col gap-10">
+          <div className="flex flex-col gap-8 items-center">
+            <Heading>{t("TeamSection.title")}</Heading>
+            <Animation>
+              <p className="md:text-xl text-lg font-semibold text-center">
+                {t("TeamSection.paragraph")}
+              </p>
+            </Animation>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 my-auto">
+            {teamData.map((member) => (
+              <div
+                key={member.id}
+                className="bg-white relative rounded-lg shadow-sm text-center overflow-hidden duration-300 hover:shadow-md hover:rounded-none hover:scale-105 group content-data border-2 border-primary"
+              >
+                <div className="relative">
+                  <Image
+                    src={member.image}
+                    alt={member.name[locale as keyof typeof member.name]}
+                    width={500}
+                    height={500}
+                    className="w-full mx-auto object-cover"
+                  />
+                  <div
+                    className={`absolute ${
+                      locale === "ar" ? "left-0" : "right-0"
+                    } top-0 bg-black opacity-30 group-hover:w-full w-0 h-full duration-300 z-20`}
+                  />
+                </div>
+                <div className="flex flex-col items-center p-4 border-t-2 border-primary">
+                  <h2 className="text-lg font-semibold">
+                    {member.name[locale as keyof typeof member.name]}
+                  </h2>
+                  <p className="text-neutral-500">
+                    {member.role[0][locale as keyof (typeof member.role)[0]]}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>

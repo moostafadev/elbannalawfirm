@@ -34,6 +34,10 @@
     },
     "BlogSection": {
       "title": "Quelques articles"
+    },
+    "TeamSection": {
+      "title": "Notre Équipe",
+      "paragraph": "Notre équipe est composée des meilleurs avocats spécialisés pour offrir les meilleurs conseils juridiques."
     }
   }
 }
