@@ -19,7 +19,11 @@ export function AccordionFAQ() {
           value={`item-${index + 1}`}
           className="content-data"
         >
-          <AccordionTrigger className="text-sm md:text-lg font-semibold text-right">
+          <AccordionTrigger
+            className={`text-sm md:text-lg font-semibold ${
+              locale === "ar" ? "text-right" : "text-left"
+            }`}
+          >
             {faq.question}
           </AccordionTrigger>
           <AccordionContent className="text-sm md:text-base">
