@@ -38,6 +38,9 @@
     "TeamSection": {
       "title": "Our Team",
       "paragraph": "Our team consists of top lawyers specializing in providing the best legal advice."
+    },
+    "FAQsSection": {
+      "title": "Frequently Asked Questions"
     }
   }
 }

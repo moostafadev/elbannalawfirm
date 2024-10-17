@@ -1,3 +1,4 @@
+import { AccordionFAQ } from "@/components/Accordion";
 import Animation from "@/components/Animation";
 import BlogsSection from "@/components/BlogsSection";
 import Heading from "@/components/Heading";
@@ -214,6 +215,13 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="min-h-screen flex py-16" id="FAQs">
+        <div className="container flex flex-col gap-20">
+          <Heading>{t("FAQsSection.title")}</Heading>
+          <AccordionFAQ />
         </div>
       </section>
     </>
