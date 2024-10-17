@@ -35,16 +35,6 @@ export const teamData: TeamMember[] = [
     role: [{ ar: "محامي", en: "Lawyer", fr: "Avocat" }],
   },
   {
-    id: 1,
-    name: {
-      ar: "احمد البنا",
-      en: "Ahmed Elbanna",
-      fr: "Ahmed Elbanna",
-    },
-    image: "/imgs/team/ahmed_team.jpg",
-    role: [{ ar: "المحامي", en: "Lawyer", fr: "Avocat" }],
-  },
-  {
     id: 4,
     name: {
       ar: "عمرو جاد",

@@ -18,7 +18,7 @@ const ContactBtn = () => {
     <Link
       href={"tel:+201000728654"}
       title={title}
-      className={`fixed bottom-6 left-4 z-20 p-2 rounded-full sm:w-[44px] sm:h-[44px] w-[40px] h-[40px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex justify-center items-center cursor-pointer shadow-md hover:shadow-lg hover:scale-110 hover:bg-brown hover:text-primary hover:-translate-y-1`}
+      className={`fixed bottom-6 left-4 z-20 p-2 rounded-full sm:w-[56px] sm:h-[56px] w-[48px] h-[48px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex justify-center items-center cursor-pointer shadow-md hover:shadow-lg hover:scale-110 hover:bg-brown hover:text-primary hover:-translate-y-1`}
     >
       <Phone />
     </Link>
