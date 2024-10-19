@@ -1,20 +1,22 @@
 "use client";
 
 import React, { useEffect } from "react";
-import ScrollReveal from "scrollreveal";
 
 const Animation = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    const sr = ScrollReveal({
-      origin: "bottom",
-      distance: "20px",
-      duration: 1000,
-      reset: false,
-    });
+    async function animate() {
+      const sr = (await import("scrollreveal")).default;
+      sr({
+        origin: "bottom",
+        distance: "20px",
+        duration: 1000,
+        reset: false,
+      }).reveal(".content-data", {
+        interval: 100,
+      });
+    }
 
-    sr.reveal(".content-data", {
-      interval: 100,
-    });
+    animate();
   }, []);
 
   return <div className="content-data">{children}</div>;

@@ -63,7 +63,7 @@ export async function generateMetadata({
       ],
       openGraph: {
         type: "website",
-        url: "https://elbannalawfirm.vercel.app",
+        url: "https://elbannalawfirm.vercel.app/en",
         title: "Elbanna Law Firm",
         description:
           "Elbanna Law Firm - Committed to providing reliable and effective legal solutions with a dedicated team of professionals.",
@@ -120,7 +120,7 @@ export async function generateMetadata({
       ],
       openGraph: {
         type: "website",
-        url: "https://elbannalawfirm.vercel.app",
+        url: "https://elbannalawfirm.vercel.app/ar",
         title: "مكتب البنا للمحاماة",
         description:
           "مكتب البنا للمحاماة - ملتزمون بتقديم حلول قانونية موثوقة وفعالة مع فريق من المحترفين المتفانين.",
@@ -177,7 +177,7 @@ export async function generateMetadata({
       ],
       openGraph: {
         type: "website",
-        url: "https://elbannalawfirm.vercel.app",
+        url: "https://elbannalawfirm.vercel.app/fr",
         title: "Cabinet d'avocats Elbanna",
         description:
           "Cabinet d'avocats Elbanna - Engagés à fournir des solutions juridiques fiables et efficaces avec une équipe de professionnels dévoués.",
