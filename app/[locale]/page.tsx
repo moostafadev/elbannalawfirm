@@ -237,6 +237,9 @@ export default function Home() {
             </Animation>
           </div>
           <div className="flex flex-col lg:flex-row gap-6 lg:items-center">
+            <div className="flex-1">
+              <ContactForm />
+            </div>
             <div className="flex-1 flex justify-center items-center">
               <Animation>
                 <Image
@@ -247,9 +250,6 @@ export default function Home() {
                   className="w-full max-w-[400px] lg:max-w-[360px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
                 />
               </Animation>
-            </div>
-            <div className="flex-1">
-              <ContactForm />
             </div>
           </div>
         </div>

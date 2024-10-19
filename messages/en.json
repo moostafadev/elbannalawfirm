@@ -44,7 +44,12 @@
     },
     "ContactSection": {
       "title": "Contact Us",
-      "paragraph": "Reach out to us now to book a personalized legal consultation tailored to your needs, Our team of legal experts is here to assist you with everything you require."
+      "paragraph": "Reach out to us now to book a personalized legal consultation tailored to your needs. Our team of legal experts is here to assist you with everything you require.",
+      "inputName": "Full Name",
+      "inputPhone": "Mobile Phone Number",
+      "inputAge": "Age",
+      "inputState": "Place of Residence",
+      "inputSubject": "Consultation Subject"
     }
   }
 }
