@@ -80,16 +80,4 @@ html {
 }
 ::-webkit-scrollbar-thumb {
   background-color: #bb9911;
-  transition: 0.3s;
-}
-
-.dark ::-webkit-scrollbar {
-  width: 12px;
-}
-.dark ::-webkit-scrollbar-track {
-  background-color: #bb9911;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background-color: white;
-  transition: 0.3s;
 }

@@ -41,6 +41,10 @@
     },
     "FAQsSection": {
       "title": "Questions Fréquemment Posées"
+    },
+    "ContactSection": {
+      "title": "Contactez-nous",
+      "paragraph": "Contactez-nous dès maintenant pour réserver une consultation juridique personnalisée adaptée à vos besoins, Notre équipe d'experts juridiques est là pour vous aider dans tout ce dont vous avez besoin."
     }
   }
 }

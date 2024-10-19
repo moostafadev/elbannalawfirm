@@ -1,6 +1,7 @@
 import { AccordionFAQ } from "@/components/Accordion";
 import Animation from "@/components/Animation";
 import BlogsSection from "@/components/BlogsSection";
+import ContactForm from "@/components/ContactForm";
 import Heading from "@/components/Heading";
 import HomePageOverlay from "@/components/HomePageOverlay";
 import { teamData } from "@/data/team";
@@ -222,6 +223,35 @@ export default function Home() {
         <div className="container flex flex-col gap-20">
           <Heading>{t("FAQsSection.title")}</Heading>
           <AccordionFAQ />
+        </div>
+      </section>
+
+      <section className="min-h-screen flex py-16 bg-[#bb99111a]" id="contact">
+        <div className="container flex flex-col gap-10">
+          <div className="flex flex-col gap-8 items-center">
+            <Heading>{t("ContactSection.title")}</Heading>
+            <Animation>
+              <p className="md:text-xl text-lg font-semibold text-center">
+                {t("ContactSection.paragraph")}
+              </p>
+            </Animation>
+          </div>
+          <div className="flex flex-col lg:flex-row gap-6 lg:items-center">
+            <div className="flex-1 flex justify-center items-center">
+              <Animation>
+                <Image
+                  src={"/imgs/ahmed_contact.jpg"}
+                  alt="elbanna"
+                  width={400}
+                  height={400}
+                  className="w-full max-w-[400px] lg:max-w-[360px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
+                />
+              </Animation>
+            </div>
+            <div className="flex-1">
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </section>
     </>
