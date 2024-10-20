@@ -248,8 +248,6 @@ const Footer = () => {
                   <Phone />
                   <p className="text-lg">01000728654</p>
                 </Link>
-              </Animation>
-              <Animation>
                 <Link
                   href={"https://api.whatsapp.com/send?phone=201000728654"}
                   target="_blank"
