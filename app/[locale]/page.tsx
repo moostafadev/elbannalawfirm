@@ -18,13 +18,13 @@ export default function Home() {
     <>
       <section className="relative min-h-[calc(100vh-6rem)] py-6 flex lg:items-center">
         <div className="container lg:-mt-32 mt-4 z-20 relative">
-          <div className="flex flex-col sm:gap-5 gap-2">
+          <div className="flex flex-col lg:gap-5 gap-2">
             <div className="flex items-end gap-2">
               <Animation>
                 <h1
                   className={`${
                     locale === "ar" ? "text-4xl" : "text-2xl"
-                  } sm:text-6xl font-black text-primary`}
+                  } lg:text-6xl sm:text-4xl font-black text-primary`}
                 >
                   {t("HeroSection.title")}
                 </h1>
@@ -32,8 +32,8 @@ export default function Home() {
               <Animation>
                 <p
                   className={`${
-                    locale === "ar" ? "text-xl" : "text-lg"
-                  } sm:text-3xl font-bold`}
+                    locale === "ar" ? "text-2xl" : "text-lg"
+                  } lg:text-3xl sm:text-2xl font-bold`}
                 >
                   {locale === "ar" ? "للمحاماة" : "Law firm"}
                 </p>
@@ -43,7 +43,7 @@ export default function Home() {
               <h2
                 className={`${
                   locale === "ar" ? "text-lg" : "text-base"
-                } sm:text-2xl font-semibold`}
+                } lg:text-2xl md:text-xl font-semibold`}
               >
                 {t("HeroSection.paragraph").split(",")[0]},<br />
                 {t("HeroSection.paragraph").split(",")[1]}
@@ -243,11 +243,11 @@ export default function Home() {
             <div className="flex-1 flex justify-center items-center">
               <Animation>
                 <Image
-                  src={"/imgs/ahmed_contact.jpg"}
+                  src={"/logo/logo.png"}
                   alt="elbanna"
-                  width={400}
-                  height={400}
-                  className="w-full max-w-[400px] lg:max-w-[360px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
+                  width={1000}
+                  height={1000}
+                  className="w-full max-w-[400px] lg:max-w-[360px] h-auto"
                 />
               </Animation>
             </div>

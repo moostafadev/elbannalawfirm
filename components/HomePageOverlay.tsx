@@ -11,10 +11,10 @@ const HomePageOverlay = () => {
         width={1000}
         height={1000}
         alt="elbanna"
-        className={`absolute bottom-0 lg:h-full lg:w-[auto] w-[430px] sm:w-[500px] lg:mx-60 max-w-none select-none content-data ${
+        className={`absolute bottom-0 lg:h-full lg:w-[auto] w-[430px] md:w-[500px] lg:mx-60 max-w-none select-none content-data ${
           locale !== "ar"
-            ? "xl:-right-[120px] lg:-right-[100px] sm:right-0 right-1/2 translate-x-1/2 sm:translate-x-0"
-            : "xl:-left-[120px] lg: lg:-left-[100px] sm:left-0 left-1/2 -translate-x-1/2 sm:translate-x-0"
+            ? "xl:-right-[120px] lg:-right-[240px] sm:right-0 right-1/2 translate-x-1/2 sm:translate-x-0"
+            : "xl:-left-[120px] lg: lg:-left-[240px] sm:left-0 left-1/2 -translate-x-1/2 sm:translate-x-0"
         }`}
       />
       <div
