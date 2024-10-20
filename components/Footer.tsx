@@ -255,7 +255,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex items-center justify-center sm:py-4 py-3 border-t-2 border-primary">
-        <p className="content-data text-center text-xs md:text-base">
+        <p className="text-center text-xs md:text-base">
           {locale === "ar" ? (
             <>
               جميع الحقوق محفوظة لدي <strong>مكتب أحمد البنا</strong> و تم
