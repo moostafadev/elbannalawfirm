@@ -35,7 +35,11 @@ export default function Home() {
                     locale === "ar" ? "text-2xl" : "text-lg"
                   } lg:text-3xl sm:text-2xl font-bold`}
                 >
-                  {locale === "ar" ? "للمحاماة" : "Law firm"}
+                  {locale === "ar"
+                    ? "للمحاماة"
+                    : locale === "en"
+                    ? "Law firm"
+                    : "Cabinet d'avocats"}
                 </p>
               </Animation>
             </div>
