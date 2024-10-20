@@ -37,7 +37,7 @@ const Footer = () => {
             </Animation>
           </div>
         </div>
-        <div className="w-fit xl:mx-auto flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <Animation>
             <h2 className="text-lg font-semibold">{t("headLinks")}</h2>
           </Animation>
@@ -45,7 +45,9 @@ const Footer = () => {
             {headerLinks.map((item) => (
               <li
                 key={item}
-                className={`content-data w-fit hover:mr-2 hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[2px] hover:before:w-full before:absolute before:duration-300 ${
+                className={`content-data w-fit ${
+                  locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+                } hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[2px] hover:before:w-full before:absolute before:duration-300 ${
                   locale === "ar" ? "before:right-0" : "before:left-0"
                 }`}
               >
@@ -54,13 +56,15 @@ const Footer = () => {
             ))}
           </ul>
         </div>
-        <div className="w-fit xl:mx-auto flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <Animation>
             <h2 className="text-lg font-semibold">{t("follow")}</h2>
           </Animation>
           <ul className="flex flex-col gap-3">
             <li
-              className={`content-data w-fit hover:mr-2 duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
+              className={`content-data w-fit ${
+                locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+              } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
                 locale === "ar" ? "before:right-0" : "before:left-0"
               }`}
             >
@@ -82,7 +86,9 @@ const Footer = () => {
               </Link>
             </li>
             <li
-              className={`content-data w-fit hover:mr-2 duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
+              className={`content-data w-fit ${
+                locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+              } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
                 locale === "ar" ? "before:right-0" : "before:left-0"
               }`}
             >
@@ -104,7 +110,9 @@ const Footer = () => {
               </Link>
             </li>
             <li
-              className={`content-data w-fit hover:mr-2 duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
+              className={`content-data w-fit ${
+                locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+              } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
                 locale === "ar" ? "before:right-0" : "before:left-0"
               }`}
             >
@@ -126,7 +134,9 @@ const Footer = () => {
               </Link>
             </li>
             <li
-              className={`content-data w-fit hover:mr-2 duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
+              className={`content-data w-fit ${
+                locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+              } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
                 locale === "ar" ? "before:right-0" : "before:left-0"
               }`}
             >
@@ -153,7 +163,9 @@ const Footer = () => {
               </Link>
             </li>
             <li
-              className={`content-data w-fit hover:mr-2 duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
+              className={`content-data w-fit ${
+                locale === "ar" ? "hover:mr-2" : "hover:ml-2"
+              } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[4px] hover:before:w-full before:absolute before:duration-300 ${
                 locale === "ar" ? "before:right-0" : "before:left-0"
               }`}
             >
@@ -176,12 +188,16 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="w-fit xl:mx-auto flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <Animation>
             <h2 className="text-lg font-semibold">{t("address")}</h2>
           </Animation>
           <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2 mr-2">
+            <div
+              className={`flex flex-col gap-2 ${
+                locale === "ar" ? "mr-2" : "ml-2"
+              }`}
+            >
               <Animation>
                 <h3 className="font-semibold">
                   {locale === "ar"
@@ -198,7 +214,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
-                  <MapPin />
+                  <MapPin className="min-w-fit" />
                   <p>
                     {locale === "ar"
                       ? "3 عمارات الشريف، شارع اسوان، قسم مصر الجديدة، محافظة القاهرة."
@@ -209,7 +225,11 @@ const Footer = () => {
                 </Link>
               </Animation>
             </div>
-            <div className="flex flex-col gap-2 mr-2">
+            <div
+              className={`flex flex-col gap-2 ${
+                locale === "ar" ? "mr-2" : "ml-2"
+              }`}
+            >
               <Animation>
                 <h3 className="font-semibold">
                   {locale === "ar"
@@ -244,7 +264,7 @@ const Footer = () => {
                   >
                     <path
                       d="M25.873,6.069c-2.619-2.623-6.103-4.067-9.814-4.069C8.411,2,2.186,8.224,2.184,15.874c-.001,2.446,.638,4.833,1.852,6.936l-1.969,7.19,7.355-1.929c2.026,1.106,4.308,1.688,6.63,1.689h.006c7.647,0,13.872-6.224,13.874-13.874,.001-3.708-1.44-7.193-4.06-9.815h0Zm-9.814,21.347h-.005c-2.069,0-4.099-.557-5.87-1.607l-.421-.25-4.365,1.145,1.165-4.256-.274-.436c-1.154-1.836-1.764-3.958-1.763-6.137,.003-6.358,5.176-11.531,11.537-11.531,3.08,.001,5.975,1.202,8.153,3.382,2.177,2.179,3.376,5.077,3.374,8.158-.003,6.359-5.176,11.532-11.532,11.532h0Zm6.325-8.636c-.347-.174-2.051-1.012-2.369-1.128-.318-.116-.549-.174-.78,.174-.231,.347-.895,1.128-1.098,1.359-.202,.232-.405,.26-.751,.086-.347-.174-1.464-.54-2.788-1.72-1.03-.919-1.726-2.054-1.929-2.402-.202-.347-.021-.535,.152-.707,.156-.156,.347-.405,.52-.607,.174-.202,.231-.347,.347-.578,.116-.232,.058-.434-.029-.607-.087-.174-.78-1.88-1.069-2.574-.281-.676-.567-.584-.78-.595-.202-.01-.433-.012-.665-.012s-.607,.086-.925,.434c-.318,.347-1.213,1.186-1.213,2.892s1.242,3.355,1.416,3.587c.174,.232,2.445,3.733,5.922,5.235,.827,.357,1.473,.571,1.977,.73,.83,.264,1.586,.227,2.183,.138,.666-.1,2.051-.839,2.34-1.649,.289-.81,.289-1.504,.202-1.649s-.318-.232-.665-.405h0Z"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                     ></path>
                   </svg>
                   <p className="text-lg">01000728654</p>
