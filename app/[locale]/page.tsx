@@ -19,12 +19,18 @@ export default function Home() {
       <section className="relative min-h-[calc(100vh-6rem)] py-6 flex lg:items-center">
         <div className="container lg:-mt-32 mt-4 z-20 relative">
           <div className="flex flex-col lg:gap-5 gap-2">
-            <div className="flex items-end gap-2">
+            <div
+              className={`${
+                locale === "fr"
+                  ? "flex flex-col sm:flex-row sm:gap-2 sm:items-end"
+                  : "flex gap-2 items-end"
+              }`}
+            >
               <Animation>
                 <h1
                   className={`${
                     locale === "ar" ? "text-4xl" : "text-2xl"
-                  } lg:text-6xl sm:text-4xl font-black text-primary`}
+                  } lg:text-5xl xl:text-6xl sm:text-4xl font-black text-primary`}
                 >
                   {t("HeroSection.title")}
                 </h1>
@@ -33,7 +39,7 @@ export default function Home() {
                 <p
                   className={`${
                     locale === "ar" ? "text-2xl" : "text-lg"
-                  } lg:text-3xl sm:text-2xl font-bold`}
+                  } xl:text-3xl sm:text-xl font-bold`}
                 >
                   {locale === "ar"
                     ? "للمحاماة"
@@ -47,7 +53,7 @@ export default function Home() {
               <h2
                 className={`${
                   locale === "ar" ? "text-lg" : "text-base"
-                } lg:text-2xl md:text-xl font-semibold`}
+                } xl:text-2xl md:text-xl font-semibold`}
               >
                 {t("HeroSection.paragraph").split(",")[0]},<br />
                 {t("HeroSection.paragraph").split(",")[1]}
