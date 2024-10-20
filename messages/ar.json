@@ -51,5 +51,17 @@
       "inputState": "مكان الإقامة",
       "inputSubject": "موضوع الاستشارة"
     }
+  },
+  "Footer": {
+    "title": "مكتب أحمد البنا للمحاماة",
+    "paragraph": "نصون حقوقك بثقة واحترافية",
+    "headLinks": "الروابط",
+    "follow": "تابعنا",
+    "facebook": "فيس بوك",
+    "instagram": "إنستجرام",
+    "linkedin": "لينكد إن",
+    "youtube": "يوتيوب",
+    "tiktok": "تيك توك",
+    "address": "العنوان و التواصل"
   }
 }

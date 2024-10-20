@@ -51,5 +51,17 @@
       "inputState": "Lieu de résidence",
       "inputSubject": "Sujet de la consultation"
     }
+  },
+  "Footer": {
+    "title": "Cabinet d'Avocats Ahmed Elbanna",
+    "paragraph": "Protéger vos droits avec confiance et professionnalisme",
+    "headLinks": "Liens",
+    "follow": "Suivez-nous",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "tiktok": "TikTok",
+    "address": "Adresse et Contact"
   }
 }

@@ -51,5 +51,17 @@
       "inputState": "Place of Residence",
       "inputSubject": "Consultation Subject"
     }
+  },
+  "Footer": {
+    "title": "Ahmed Elbanna Law Firm",
+    "paragraph": "Protecting your rights with trust and professionalism",
+    "headLinks": "Links",
+    "follow": "Follow us",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "tiktok": "TikTok",
+    "address": "Address & Contact"
   }
 }
