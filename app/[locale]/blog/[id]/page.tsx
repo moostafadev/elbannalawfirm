@@ -1,9 +1,21 @@
 import Animation from "@/components/Animation";
 import BreadcrumbC from "@/components/Breadcrumb";
 import { blogsData, ITitles } from "@/data/blogs";
+import { Metadata } from "next";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import React from "react";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { id: string; locale: string };
+}): Promise<Metadata> => {
+  const blog = blogsData.find((item) => item.id === +params.id);
+  return {
+    title: blog ? blog.titles[params.locale as keyof ITitles] : "Article",
+  };
+};
 
 const BlogPage = ({ params: { id } }: { params: { id: string } }) => {
   const locale = useLocale();

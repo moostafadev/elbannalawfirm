@@ -25,10 +25,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const metadataByLocale: Record<string, Metadata> = {
     en: {
-      title: "Elbanna Law Firm",
+      title: {
+        default: "Elbanna Law Firm",
+        template: "%s - Elbanna Law Firm",
+      },
       description:
         "Elbanna Law Firm - Offering exceptional legal services tailored to your unique needs, with a commitment to professionalism and excellence.",
-      icons: { icon: "/logo/logo.png" },
+      twitter: {
+        card: "summary_large_image",
+      },
+
       keywords: [
         "Egypt lawyer",
         "legal services Egypt",
@@ -68,7 +74,7 @@ export async function generateMetadata({
         description:
           "Elbanna Law Firm - Committed to providing reliable and effective legal solutions with a dedicated team of professionals.",
         siteName: "Elbanna",
-        images: [{ url: "/logo/logo.png", alt: "Elbanna Law Firm Logo" }],
+        images: [{ url: "/logo/opengraph.jpg", alt: "Elbanna Law Firm Logo" }],
       },
       other: {
         "og:social": JSON.stringify({
@@ -82,10 +88,16 @@ export async function generateMetadata({
       },
     },
     ar: {
-      title: "مكتب البنا للمحاماة",
+      title: {
+        default: "مكتب البنا للمحاماة",
+        template: "%s - مكتب البنا للمحاماة",
+      },
       description:
         "مكتب البنا للمحاماة - نقدم خدمات قانونية متميزة مصممة لتلبية احتياجاتك الفريدة، مع التزامنا بالاحترافية والتميز.",
-      icons: { icon: "/logo/logo.png" },
+      twitter: {
+        card: "summary_large_image",
+      },
+
       keywords: [
         "محامي مصر",
         "خدمات قانونية مصر",
@@ -125,7 +137,9 @@ export async function generateMetadata({
         description:
           "مكتب البنا للمحاماة - ملتزمون بتقديم حلول قانونية موثوقة وفعالة مع فريق من المحترفين المتفانين.",
         siteName: "مكتب البنا",
-        images: [{ url: "/logo/logo.png", alt: "شعار مكتب البنا للمحاماة" }],
+        images: [
+          { url: "/logo/opengraph.jpg", alt: "شعار مكتب البنا للمحاماة" },
+        ],
       },
       other: {
         "og:social": JSON.stringify({
@@ -139,10 +153,16 @@ export async function generateMetadata({
       },
     },
     fr: {
-      title: "Cabinet d'avocats Elbanna",
+      title: {
+        default: "Cabinet d'avocats Elbanna",
+        template: "%s - Cabinet d'avocats Elbanna",
+      },
       description:
         "Cabinet d'avocats Elbanna - Nous offrons des services juridiques exceptionnels adaptés à vos besoins uniques, avec un engagement envers le professionnalisme et l'excellence.",
-      icons: { icon: "/logo/logo.png" },
+      twitter: {
+        card: "summary_large_image",
+      },
+
       keywords: [
         "avocat Égypte",
         "services juridiques Égypte",
@@ -183,7 +203,10 @@ export async function generateMetadata({
           "Cabinet d'avocats Elbanna - Engagés à fournir des solutions juridiques fiables et efficaces avec une équipe de professionnels dévoués.",
         siteName: "Elbanna",
         images: [
-          { url: "/logo/logo.png", alt: "Logo du cabinet d'avocats Elbanna" },
+          {
+            url: "/logo/opengraph.jpg",
+            alt: "Logo du cabinet d'avocats Elbanna",
+          },
         ],
       },
       other: {
