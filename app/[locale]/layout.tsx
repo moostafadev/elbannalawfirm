@@ -241,6 +241,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="GgXouGnecLgAbDFX5A97vpd9601BeTwKDbHHz71mzV4"
+        />
+      </head>
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-X4CR834PMJ"
