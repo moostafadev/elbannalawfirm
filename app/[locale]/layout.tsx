@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import MainLayout from "@/components/MainLayout";
+import Script from "next/script";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -240,6 +241,18 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-X4CR834PMJ"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-X4CR834PMJ');
+          `}
+      </Script>
       <body className={cn("min-h-screen antialiased", selectedFont)}>
         <NextIntlClientProvider messages={messages}>
           <MainLayout>{children}</MainLayout>
