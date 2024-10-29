@@ -400,7 +400,7 @@ export default async function RootLayout({
       <head>
         <meta
           name="google-site-verification"
-          content="GgXouGnecLgAbDFX5A97vpd9601BeTwKDbHHz71mzV4"
+          content="MMRg72OM49dAdaitjLy17l7bY-dBF7n-PR1wuGostrU"
         />
       </head>
       <Script
