@@ -150,6 +150,11 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5760588310891464"
+          crossOrigin="anonymous"
+        ></script>
         <meta
           name="google-site-verification"
           content="MMRg72OM49dAdaitjLy17l7bY-dBF7n-PR1wuGostrU"
