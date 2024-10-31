@@ -9,7 +9,6 @@ import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import Script from "next/script";
 
 export default function Home() {
   const locale = useLocale();
@@ -81,19 +80,6 @@ export default function Home() {
         </Link>
         <HomePageOverlay />
       </section>
-
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block", width: "100%", height: "120px" }}
-        data-ad-client="ca-pub-5760588310891464"
-        data-ad-slot="1234567890"
-        date-ad-format="rectangle"
-      ></ins>
-      <Script id="adsbygoogle-init" strategy="afterInteractive">
-        {`
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          `}
-      </Script>
 
       <section className="min-h-screen flex py-16" id="about">
         <div className="container flex flex-col gap-8">
