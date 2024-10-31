@@ -65,7 +65,7 @@ export default function Home() {
           href={"#about"}
           className={`content-data absolute md:bottom-8 bottom-2 ${
             locale === "ar" ? "right-2 md:right-14" : "left-2 md:left-14"
-          } flex justify-center items-center gap-1 z-20 animate-bounce text-[#bb9911]`}
+          } flex justify-center items-center gap-1 z-20 animate-bounce text-primary`}
           style={{ writingMode: "vertical-lr" }}
         >
           {locale === "ar" && <ChevronDown />}
