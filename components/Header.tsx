@@ -58,6 +58,7 @@ const Header = () => {
                 width={100}
                 height={100}
                 className="h-full -mt-1"
+                loading="lazy"
               />
             </Link>
             <nav className="flex">
@@ -115,6 +116,7 @@ const Header = () => {
                         alt="saudi-arabia"
                         width={20}
                         height={20}
+                        loading="lazy"
                       />
                       <span>العربية</span>
                     </div>
@@ -126,6 +128,7 @@ const Header = () => {
                         alt="united-kingdom"
                         width={20}
                         height={20}
+                        loading="lazy"
                       />
                       <span>English</span>
                     </div>
@@ -137,6 +140,7 @@ const Header = () => {
                         alt="france"
                         width={20}
                         height={20}
+                        loading="lazy"
                       />
                       <span>français</span>
                     </div>

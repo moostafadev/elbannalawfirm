@@ -10,6 +10,7 @@ const HomePageOverlay = () => {
         src={"/imgs/elbanna_3.png"}
         width={1000}
         height={1000}
+        loading="lazy"
         alt="elbanna"
         className={`absolute bottom-0 lg:h-full lg:w-[auto] w-[430px] md:w-[500px] lg:mx-60 max-w-none select-none content-data ${
           locale !== "ar"

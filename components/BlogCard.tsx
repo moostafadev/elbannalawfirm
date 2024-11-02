@@ -22,6 +22,7 @@ const BlogCard = ({ title, image, children, link }: IProps) => {
           width={1000}
           height={1000}
           className="!min-w-full !min-h-full"
+          loading="lazy"
         />
       </div>
       <div className="flex flex-col gap-3 px-4 pb-4">

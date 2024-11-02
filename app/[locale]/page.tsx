@@ -93,6 +93,7 @@ export default function Home() {
                   width={400}
                   height={400}
                   className="w-full lg:max-w-[400px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
+                  loading="lazy"
                 />
               </Animation>
             </div>
@@ -169,6 +170,7 @@ export default function Home() {
                     alt="elbanna"
                     width={400}
                     height={400}
+                    loading="lazy"
                     className="w-full max-w-[400px] lg:max-w-[360px] rounded-lg shadow-sm duration-300 hover:scale-105 hover:rounded-none hover:shadow-md"
                   />
                 </Animation>
@@ -208,6 +210,7 @@ export default function Home() {
                     width={500}
                     height={500}
                     className="w-full mx-auto object-cover"
+                    loading="lazy"
                   />
                   <div
                     className={`absolute ${
@@ -258,6 +261,7 @@ export default function Home() {
                   width={1000}
                   height={1000}
                   className="w-full max-w-[400px] lg:max-w-[360px] h-auto"
+                  loading="lazy"
                 />
               </Animation>
             </div>

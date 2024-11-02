@@ -60,6 +60,7 @@ const BlogPage = ({ params: { id } }: { params: { id: string } }) => {
                 width={2000}
                 height={2000}
                 className="rounded-lg max-w-full"
+                loading="lazy"
               />
             </Animation>
           </div>
