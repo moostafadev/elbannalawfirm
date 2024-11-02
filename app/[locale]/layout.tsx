@@ -159,6 +159,7 @@ export default async function RootLayout({
           name="google-site-verification"
           content="MMRg72OM49dAdaitjLy17l7bY-dBF7n-PR1wuGostrU"
         />
+        <meta name="google-adsense-account" content="ca-pub-5760588310891464" />
       </head>
       <Script
         strategy="afterInteractive"
