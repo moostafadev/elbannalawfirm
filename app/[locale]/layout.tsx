@@ -25,6 +25,14 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const openGraphLinks = {
+    facebook: "https://www.facebook.com/AhmedElbannaLawyer",
+    linkedin: "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
+    instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
+    youtube: "https://www.youtube.com/@ahmed-elbanna1",
+    tiktok: "https://www.tiktok.com/@ahmedelbanna65",
+  };
+
   const metadataByLocale: Record<string, Metadata> = {
     en: {
       title: {
@@ -48,14 +56,7 @@ export async function generateMetadata({
         images: [{ url: "/logo/opengraph.jpg", alt: "Elbanna Law Firm Logo" }],
       },
       other: {
-        "og:social": JSON.stringify({
-          facebook: "https://www.facebook.com/AhmedElbannaLawyer",
-          linkedin:
-            "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
-          instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
-          youtube: "https://www.youtube.com/@ahmed-elbanna1",
-          tiktok: "https://www.tiktok.com/@ahmedelbanna65",
-        }),
+        "og:social": JSON.stringify(openGraphLinks),
       },
     },
     ar: {
@@ -82,14 +83,7 @@ export async function generateMetadata({
         ],
       },
       other: {
-        "og:social": JSON.stringify({
-          facebook: "https://www.facebook.com/AhmedElbannaLawyer",
-          linkedin:
-            "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
-          instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
-          youtube: "https://www.youtube.com/@ahmed-elbanna1",
-          tiktok: "https://www.tiktok.com/@ahmedelbanna65",
-        }),
+        "og:social": JSON.stringify(openGraphLinks),
       },
     },
     fr: {
@@ -119,14 +113,7 @@ export async function generateMetadata({
         ],
       },
       other: {
-        "og:social": JSON.stringify({
-          facebook: "https://www.facebook.com/AhmedElbannaLawyer",
-          linkedin:
-            "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
-          instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
-          youtube: "https://www.youtube.com/@ahmed-elbanna1",
-          tiktok: "https://www.tiktok.com/@ahmedelbanna65",
-        }),
+        "og:social": JSON.stringify(openGraphLinks),
       },
     },
   };
