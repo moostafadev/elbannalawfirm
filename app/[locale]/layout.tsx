@@ -58,6 +58,9 @@ export async function generateMetadata({
       other: {
         "og:social": JSON.stringify(openGraphLinks),
       },
+      icons: {
+        icon: "/logo/logo.png",
+      },
     },
     ar: {
       title: {
@@ -84,6 +87,9 @@ export async function generateMetadata({
       },
       other: {
         "og:social": JSON.stringify(openGraphLinks),
+      },
+      icons: {
+        icon: "/logo/logo.png",
       },
     },
     fr: {
@@ -114,6 +120,9 @@ export async function generateMetadata({
       },
       other: {
         "og:social": JSON.stringify(openGraphLinks),
+      },
+      icons: {
+        icon: "/logo/logo.png",
       },
     },
   };
