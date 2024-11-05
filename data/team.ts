@@ -21,7 +21,7 @@ export const teamData: TeamMember[] = [
       en: "Ahmed Saif",
       fr: "Ahmed Saif",
     },
-    image: "/imgs/team/ahmed_saif.jpg",
+    image: "/imgs/team/ahmed_saif.webp",
     role: [{ ar: "محامي", en: "Lawyer", fr: "Avocat" }],
   },
   {
@@ -31,7 +31,7 @@ export const teamData: TeamMember[] = [
       en: "Bakr Mojahed",
       fr: "Bakr Mojahed",
     },
-    image: "/imgs/team/bakr.jpg",
+    image: "/imgs/team/bakr.webp",
     role: [{ ar: "محامي", en: "Lawyer", fr: "Avocat" }],
   },
   {
@@ -41,7 +41,7 @@ export const teamData: TeamMember[] = [
       en: "Amr Gad",
       fr: "Amr Gad",
     },
-    image: "/imgs/team/amr.jpg",
+    image: "/imgs/team/amr.webp",
     role: [{ ar: "محامي", en: "Lawyer", fr: "Avocat" }],
   },
   {
@@ -51,7 +51,7 @@ export const teamData: TeamMember[] = [
       en: "Ayman Samir ElBahrawy",
       fr: "Ayman Samir ElBahrawy",
     },
-    image: "/imgs/team/ayman.jpg",
+    image: "/imgs/team/ayman.webp",
     role: [{ ar: "محامي", en: "Lawyer", fr: "Avocat" }],
   },
 ];

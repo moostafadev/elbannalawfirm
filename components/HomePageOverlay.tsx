@@ -7,7 +7,7 @@ const HomePageOverlay = () => {
   return (
     <>
       <Image
-        src={"/imgs/elbanna_3.png"}
+        src={"/imgs/elbanna_3.webp"}
         width={1000}
         height={1000}
         loading="lazy"

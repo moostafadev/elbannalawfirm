@@ -24,7 +24,7 @@ export interface BlogData {
 export const blogsData: BlogData[] = [
   {
     id: 1,
-    image: "/imgs/blog_1.jpg",
+    image: "/imgs/blog_1.webp",
     titles: {
       ar: "دعوى نفقة الصغار",
       en: "Child Support Lawsuit",
@@ -83,7 +83,7 @@ export const blogsData: BlogData[] = [
   },
   {
     id: 2,
-    image: "/imgs/blog_2.jpg",
+    image: "/imgs/blog_2.webp",
     titles: {
       ar: "عقد العمل في القانون المصري",
       en: "Employment Contract in Egyptian Law",
@@ -148,7 +148,7 @@ export const blogsData: BlogData[] = [
   },
   {
     id: 3,
-    image: "/imgs/blog_3.jpg",
+    image: "/imgs/blog_3.webp",
     titles: {
       ar: "حرية القتل الإلكتروني",
       en: "Freedom of Cyber Killing",

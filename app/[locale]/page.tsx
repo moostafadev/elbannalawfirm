@@ -88,7 +88,7 @@ export default function Home() {
             <div className="flex-1 lg:order-1 order-2 flex justify-center items-center lg:px-10">
               <Animation>
                 <Image
-                  src={"/imgs/ahmed_5.jpg"}
+                  src={"/imgs/ahmed_5.webp"}
                   alt="elbanna"
                   width={400}
                   height={400}
@@ -166,7 +166,7 @@ export default function Home() {
               <div className="flex-1 flex justify-center items-center">
                 <Animation>
                   <Image
-                    src={"/imgs/ahmed_6.jpg"}
+                    src={"/imgs/ahmed_6.webp"}
                     alt="elbanna"
                     width={400}
                     height={400}
