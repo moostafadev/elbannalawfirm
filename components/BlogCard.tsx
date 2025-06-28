@@ -29,7 +29,7 @@ const BlogCard = ({ title, image, children, link }: IProps) => {
         <h2 className="text-lg font-bold">{title}</h2>
         <div className="text-sm md:text-base">{children}</div>
       </div>
-      <Link href={link} className="mt-auto m-4 self-end">
+      <Link href={link} className="mt-auto m-4 self-end" title={title}>
         <CustomButton size="fit" color="yellow">
           {locale === "ar"
             ? "قراء المزيد"

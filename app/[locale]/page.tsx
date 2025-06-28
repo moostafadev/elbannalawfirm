@@ -36,7 +36,7 @@ export default function Home() {
                 </h1>
               </Animation>
               <Animation>
-                <p
+                <h2
                   className={`${
                     locale === "ar" ? "text-2xl" : "text-lg"
                   } xl:text-3xl sm:text-xl font-bold`}
@@ -46,7 +46,7 @@ export default function Home() {
                     : locale === "en"
                     ? "Law firm"
                     : "Cabinet d'avocats"}
-                </p>
+                </h2>
               </Animation>
             </div>
             <Animation>
@@ -215,13 +215,13 @@ export default function Home() {
                   <div
                     className={`absolute ${
                       locale === "ar" ? "left-0" : "right-0"
-                    } top-0 bg-black opacity-30 group-hover:w-full w-0 h-full duration-300 z-20`}
+                    } top-0 bg-black opacity-20 group-hover:w-0 w-full h-full duration-300 z-20`}
                   />
                 </div>
                 <div className="flex flex-col items-center p-4 border-t-2 border-primary">
-                  <h2 className="text-lg font-semibold">
+                  <p className="text-lg font-semibold">
                     {member.name[locale as keyof typeof member.name]}
-                  </h2>
+                  </p>
                   <p className="text-neutral-500">
                     {member.role[0][locale as keyof (typeof member.role)[0]]}
                   </p>
@@ -260,7 +260,7 @@ export default function Home() {
                   alt="elbanna"
                   width={1000}
                   height={1000}
-                  className="w-full max-w-[400px] lg:max-w-[360px] h-auto"
+                  className="w-full max-w-[400px] max-h-[400px] lg:max-w-[380px] lg:max-h-[380px]"
                   loading="lazy"
                 />
               </Animation>

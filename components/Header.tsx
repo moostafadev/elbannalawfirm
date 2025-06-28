@@ -16,6 +16,7 @@ import useScrollDirection from "@/hooks/useScrollDir";
 
 const Header = () => {
   const t = useTranslations("Links");
+  const tFooter = useTranslations("Footer");
   const locale = useLocale();
   const router = useRouter();
   const [isOpen, setIsopen] = useState(false);
@@ -51,6 +52,7 @@ const Header = () => {
               href={"/"}
               className="py-2 flex items-center justify-center h-24 w-24"
               onClick={() => setIsopen(false)}
+              title={tFooter("ahmed-elbanna")}
             >
               <Image
                 src={"/logo/logo.png"}
@@ -58,7 +60,8 @@ const Header = () => {
                 width={100}
                 height={100}
                 className="h-full -mt-1"
-                loading="lazy"
+                loading="eager"
+                priority={true}
               />
             </Link>
             <nav className="flex">
@@ -70,7 +73,9 @@ const Header = () => {
                       locale === "ar" ? "before:right-0" : "before:left-0"
                     }`}
                   >
-                    <Link href={`#${item}`}>{t(item)}</Link>
+                    <Link href={`#${item}`} title={t(item)}>
+                      {t(item)}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -91,7 +96,9 @@ const Header = () => {
                     className={`font-bold hover:text-primary duration-300 flex items-center`}
                     onClick={() => setIsopen(false)}
                   >
-                    <Link href={`#${item}`}>{t(item)}</Link>
+                    <Link href={`#${item}`} title={t(item)}>
+                      {t(item)}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -116,7 +123,8 @@ const Header = () => {
                         alt="saudi-arabia"
                         width={20}
                         height={20}
-                        loading="lazy"
+                        loading="eager"
+                        priority={true}
                       />
                       <span>العربية</span>
                     </div>
@@ -128,7 +136,8 @@ const Header = () => {
                         alt="united-kingdom"
                         width={20}
                         height={20}
-                        loading="lazy"
+                        loading="eager"
+                        priority={true}
                       />
                       <span>English</span>
                     </div>
@@ -140,7 +149,8 @@ const Header = () => {
                         alt="france"
                         width={20}
                         height={20}
-                        loading="lazy"
+                        loading="eager"
+                        priority={true}
                       />
                       <span>français</span>
                     </div>

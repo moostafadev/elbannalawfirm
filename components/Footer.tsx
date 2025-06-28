@@ -14,22 +14,26 @@ const Footer = () => {
     <footer className="pt-12 bg-[#75600a] text-white flex flex-col gap-12 overflow-hidden">
       <div className="container grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
-          <Link href={"/"} className="flex-1 flex justify-center items-center">
+          <Link
+            href={"/"}
+            className="flex justify-center items-center flex-1"
+            title={t("ahmed-elbanna")}
+          >
             <Image
               src={"/logo/logo.png"}
               alt="elbanna"
-              width={1000}
-              height={1000}
-              className="max-w-[100px] h-auto"
+              width={200}
+              height={200}
+              className="max-w-[120px] max-h-[120px]"
             />
           </Link>
           <div className="flex flex-col items-center">
-            <h2 className="text-lg font-semibold text-center">{t("title")}</h2>
+            <h4 className="text-lg font-semibold text-center">{t("title")}</h4>
             <p className="text-base text-center">{t("paragraph")}.</p>
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">{t("headLinks")}</h2>
+          <h5 className="text-lg font-semibold">{t("headLinks")}</h5>
 
           <ul className="flex flex-col gap-2">
             {headerLinks.map((item) => (
@@ -37,17 +41,19 @@ const Footer = () => {
                 key={item}
                 className={` w-fit ${
                   locale === "ar" ? "hover:mr-2" : "hover:ml-2"
-                } hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[2px] hover:before:w-full before:absolute before:duration-300 ${
+                } duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[2px] hover:before:w-full before:absolute before:duration-300 ${
                   locale === "ar" ? "before:right-0" : "before:left-0"
                 }`}
               >
-                <Link href={`#${item}`}>{tLinks(item)}</Link>
+                <Link href={`#${item}`} title={tLinks(item)}>
+                  {tLinks(item)}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">{t("follow")}</h2>
+          <h5 className="text-lg font-semibold">{t("follow")}</h5>
 
           <ul className="flex flex-col gap-3">
             <li
@@ -61,6 +67,7 @@ const Footer = () => {
                 href={"https://www.facebook.com/AhmedElbannaLawyer"}
                 target="_blank"
                 className="flex items-center gap-2"
+                title={t("facebook")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -85,6 +92,7 @@ const Footer = () => {
                 href={"https://www.instagram.com/ahmed_elbanna_lawyer"}
                 target="_blank"
                 className="flex items-center gap-2"
+                title={t("instagram")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,6 +117,7 @@ const Footer = () => {
                 href={"https://www.tiktok.com/@ahmedelbanna65"}
                 target="_blank"
                 className="flex items-center gap-2"
+                title={t("tiktok")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -135,6 +144,7 @@ const Footer = () => {
                 }
                 target="_blank"
                 className="flex items-center gap-2"
+                title={t("linkedin")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -162,6 +172,7 @@ const Footer = () => {
                 href={"https://youtube.com/@ahmed-elbanna1"}
                 target="_blank"
                 className="flex items-center gap-2"
+                title={t("youtube")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +189,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">{t("address")}</h2>
+          <h5 className="text-lg font-semibold">{t("address")}</h5>
 
           <div className="flex flex-col gap-3">
             <div
@@ -186,13 +197,13 @@ const Footer = () => {
                 locale === "ar" ? "mr-2" : "ml-2"
               }`}
             >
-              <h3 className="font-semibold">
+              <h6 className="font-semibold">
                 {locale === "ar"
                   ? "العنوان"
                   : locale === "en"
                   ? "Address"
                   : "Adresse"}
-              </h3>
+              </h6>
 
               <Link
                 href="https://www.google.com/maps/place/%D8%A7%D8%AD%D9%85%D8%AF+%D8%A7%D9%84%D8%A8%D9%86%D8%A7+%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%85%D9%89%D8%8C+3+%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D8%AA+%D8%A7%D9%84%D8%B4%D8%B1%D9%8A%D9%81%D8%8C+%D8%B4%D8%A7%D8%B1%D8%B9+%D8%A7%D8%B3%D9%88%D8%A7%D9%86%D8%8C+%D9%82%D8%B3%D9%85+%D9%85%D8%B5%D8%B1+%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%D8%8C+%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%E2%80%AC%E2%80%AD/data=!4m2!3m1!1s0x1458159d0de5b165:0xeb564c00e4ac4984?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESCjExLjE0OS4xMDEYACDXggMqdSw5NDI0MjU2Miw5NDIyMzI5OSw5NDIxNjQxMyw5NDIxMjQ5Niw5NDIwNzM5NCw5NDIwNzUwNiw5NDIwODUwNiw5NDIxNzUyMyw5NDIxODY1Myw5NDIyOTgzOSw0NzA4NzExOCw0NzA4NDM5Myw5NDIxMzIwMEICRUc%3D"
@@ -215,13 +226,13 @@ const Footer = () => {
                 locale === "ar" ? "mr-2" : "ml-2"
               }`}
             >
-              <h3 className="font-semibold">
+              <h6 className="font-semibold">
                 {locale === "ar"
                   ? "التواصل"
                   : locale === "en"
                   ? "Contact"
                   : "Contact"}
-              </h3>
+              </h6>
 
               <Link
                 href={"tel:+201000728654"}
@@ -260,26 +271,28 @@ const Footer = () => {
             <>
               جميع الحقوق محفوظة لدي <strong>مكتب أحمد البنا</strong> و تم
               تطويره من قبل{" "}
-              <a
+              <Link
                 href="https://moostafadev.github.io/Mostafa_Website"
                 target="_blank"
-                className="font-bold hover:text-primary duration-300"
+                className="font-bold hover:text-red-600 duration-300"
+                title="مصطفى أحمد"
               >
                 مصطفى أحمد
-              </a>
+              </Link>
               .
             </>
           ) : locale === "en" ? (
             <>
               All rights reserved to <strong>Ahmed Elbanna Law Firm</strong>,
               developed by{" "}
-              <a
+              <Link
                 href="https://moostafadev.github.io/Mostafa_Website"
                 target="_blank"
-                className="font-bold hover:text-primary duration-300"
+                className="font-bold hover:text-red-600 duration-300"
+                title="Mostafa Ahmed"
               >
                 Mostafa Ahmed
-              </a>
+              </Link>
               .
             </>
           ) : (
@@ -287,13 +300,14 @@ const Footer = () => {
               Tous droits réservés au{" "}
               <strong>cabinet d&apos;Avocats Ahmed Elbanna</strong>, développé
               par{" "}
-              <a
+              <Link
                 href="https://moostafadev.github.io/Mostafa_Website"
                 target="_blank"
-                className="font-bold hover:text-primary duration-300"
+                className="font-bold hover:text-red-600 duration-300"
+                title="Mostafa Ahmed"
               >
                 Mostafa Ahmed
-              </a>
+              </Link>
               .
             </>
           )}

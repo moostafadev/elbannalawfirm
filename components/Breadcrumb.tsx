@@ -29,6 +29,7 @@ const BreadcrumbC = ({ links }: { links: ILink[] }) => {
                 <Link
                   href={link.href as string}
                   className="font-bold text-black"
+                  title={link.title}
                 >
                   {link.title}
                 </Link>
