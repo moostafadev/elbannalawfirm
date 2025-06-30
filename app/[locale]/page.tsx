@@ -5,6 +5,7 @@ import ContactForm from "@/components/ContactForm";
 import Heading from "@/components/Heading";
 import HomePageOverlay from "@/components/HomePageOverlay";
 import { teamData } from "@/data/team";
+import InheritanceCalculator, { Heir } from "@/helpers/calculateShares";
 import { Link } from "@/i18n/routing";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -13,6 +14,19 @@ import Image from "next/image";
 export default function Home() {
   const locale = useLocale();
   const t = useTranslations("HomePage");
+
+  const heirs: Heir[] = [
+    { type: "wife", count: 1 },
+    { type: "mother", count: 1 },
+    { type: "father", count: 1 },
+    { type: "daughter", count: 1 },
+    { type: "full_brother", count: 2 },
+    { type: "maternal_sister", count: 1 },
+  ];
+
+  const estateAmount = 100000;
+  const calculator = new InheritanceCalculator(heirs, estateAmount);
+  console.log(calculator.calculateShares());
 
   return (
     <>

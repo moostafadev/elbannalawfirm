@@ -11,7 +11,7 @@ const Footer = () => {
   const headerLinks = ["about", "services", "blog", "team", "FAQs", "contact"];
 
   return (
-    <footer className="pt-12 bg-[#75600a] text-white flex flex-col gap-12 overflow-hidden">
+    <footer className="pt-12 bg-[#5a4b00] text-white flex flex-col gap-12 overflow-hidden">
       <div className="container grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link
