@@ -29,9 +29,9 @@ const CustomButton = ({
           : "max-w-fit"
       } text-white ${
         color === "red"
-          ? "bg-red"
+          ? "bg-red-600"
           : color === "gray"
-          ? "bg-neutral-500"
+          ? "bg-[hsl(212.31deg,8.84%,28.82%)]"
           : color === "white"
           ? "bg-background"
           : color === "yellow"

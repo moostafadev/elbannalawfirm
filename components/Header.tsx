@@ -69,11 +69,15 @@ const Header = () => {
                 {headerLinks.map((item) => (
                   <li
                     key={item}
-                    className={`font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[1px] hover:before:w-full before:absolute before:duration-300 ${
+                    className={`group font-bold hover:text-primary duration-300 flex items-center relative before:w-0 before:h-[2px] before:bg-primary before:-bottom-[1px] hover:before:w-full before:absolute before:duration-300 ${
                       locale === "ar" ? "before:right-0" : "before:left-0"
                     }`}
                   >
-                    <Link href={`#${item}`} title={t(item)}>
+                    <Link
+                      href={`#${item}`}
+                      title={t(item)}
+                      className="duration-300 group-hover:-mt-[6px] group-hover:scale-x-105"
+                    >
                       {t(item)}
                     </Link>
                   </li>

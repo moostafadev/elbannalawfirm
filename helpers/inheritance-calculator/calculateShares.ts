@@ -1,40 +1,6 @@
-// Egyptian Inheritance Law - Refined Version with Uncles and Cousins
+// Egyptian Inheritance Law
 
-export type HeirType =
-  | "husband"
-  | "wife"
-  | "father"
-  | "mother"
-  | "son"
-  | "daughter"
-  | "son_son"
-  | "son_daughter"
-  | "full_brother"
-  | "full_sister"
-  | "paternal_brother"
-  | "paternal_sister"
-  | "maternal_brother"
-  | "maternal_sister"
-  | "grandfather"
-  | "maternal_grandmother"
-  | "paternal_grandmother"
-  | "full_uncle"
-  | "paternal_uncle"
-  | "son_of_full_uncle"
-  | "son_of_paternal_uncle"
-  | "son_of_full_brother"
-  | "son_of_paternal_brother";
-
-export interface Heir {
-  type: HeirType;
-  count: number;
-}
-
-export interface ShareResult {
-  type: HeirType;
-  share: number;
-  amount: number;
-}
+import { Heir, HeirType, ShareResult } from "./types";
 
 export default class InheritanceCalculator {
   private heirs: Heir[];
@@ -279,10 +245,10 @@ export default class InheritanceCalculator {
           "paternal_brother",
           "full_sister",
           "paternal_sister",
-          "son_of_full_uncle", // Added son of full uncle
-          "son_of_paternal_uncle", // Added son of paternal uncle
-          "son_of_full_brother", // Added son of full brother
-          "son_of_paternal_brother", // Added son of paternal brother
+          "son_of_full_uncle",
+          "son_of_paternal_uncle",
+          "son_of_full_brother",
+          "son_of_paternal_brother",
         ].includes(h.type) && !this.blockedTypes.includes(h.type)
     );
     const units = candidates.reduce(

@@ -1,40 +1,29 @@
 "use client";
 
-import InheritanceCalculator, {
+import CustomButton from "@/components/CustomButton";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import InheritanceCalculator from "@/helpers/inheritance-calculator/calculateShares";
+import { heirOptions } from "@/helpers/inheritance-calculator/constants";
+import {
   Heir,
   HeirType,
   ShareResult,
-} from "@/helpers/calculateShares";
+} from "@/helpers/inheritance-calculator/types";
+import { Minus, Plus } from "lucide-react";
+import { useLocale } from "next-intl";
 import React, { useState } from "react";
 
-const heirOptions: { label: string; value: HeirType }[] = [
-  { label: "الزوج", value: "husband" },
-  { label: "الزوجة", value: "wife" },
-  { label: "الأب", value: "father" },
-  { label: "الأم", value: "mother" },
-  { label: "الجد", value: "grandfather" },
-  { label: "الجدة لأم", value: "maternal_grandmother" },
-  { label: "الجدة لأب", value: "paternal_grandmother" },
-  { label: "الابن", value: "son" },
-  { label: "الابنة", value: "daughter" },
-  { label: "ابن الابن", value: "son_son" },
-  { label: "بنت الابن", value: "son_daughter" },
-  { label: "الأخ الشقيق", value: "full_brother" },
-  { label: "الأخت الشقيقة", value: "full_sister" },
-  { label: "الأخ لأب", value: "paternal_brother" },
-  { label: "الأخت لأب", value: "paternal_sister" },
-  { label: "الأخ لأم", value: "maternal_brother" },
-  { label: "الأخت لأم", value: "maternal_sister" },
-  { label: "العم الشقيق", value: "full_uncle" },
-  { label: "العم لأب", value: "paternal_uncle" },
-  { label: "ابن العم الشقيق", value: "son_of_full_uncle" },
-  { label: "ابن العم لأب", value: "son_of_paternal_uncle" },
-  { label: "ابن الأخ الشقيق", value: "son_of_full_brother" },
-  { label: "ابن الأخ لأب", value: "son_of_paternal_brother" },
-];
-
 const Page = () => {
+  const locale = useLocale();
   const [estate, setEstate] = useState<number>(0);
+  const [unit, setUnit] = useState<"جنيه" | "فدان">("جنيه");
   const [heirs, setHeirs] = useState<Heir[]>([]);
   const [results, setResults] = useState<ShareResult[]>([]);
 
@@ -80,17 +69,32 @@ const Page = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">حاسبة المواريث المصرية</h1>
+    <div className="max-w-2xl mx-auto p-4 py-10">
+      <h1 className="text-2xl font-bold mb-4 text-center">أحسب ميراثك</h1>
 
       <div className="mb-4">
-        <label className="block font-medium mb-1">قيمة التركة (بالجنيه):</label>
-        <input
-          type="number"
-          value={estate}
-          onChange={(e) => setEstate(Number(e.target.value))}
-          className="w-full border p-2 rounded"
-        />
+        <label className="block font-medium mb-1">قيمة التركة:</label>
+        <div className="flex items-center gap-2">
+          <Input
+            type="number"
+            value={estate}
+            onChange={(e) => setEstate(Number(e.target.value))}
+            className="w-full border"
+          />
+          <Select
+            value={unit}
+            onValueChange={(e) => setUnit(e as "جنيه" | "فدان")}
+            dir="rtl"
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="جنيه">جنيه</SelectItem>
+              <SelectItem value="فدان">فدان</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="mb-4">
@@ -99,22 +103,25 @@ const Page = () => {
           {heirOptions.map((opt) => (
             <div
               key={opt.value}
-              className="flex items-center justify-between bg-gray-100 rounded p-2"
+              className="flex items-center justify-between bg-primary/10 border-2 border-primary rounded-lg p-2"
             >
-              <span>{opt.label}</span>
-              <div className="flex gap-2">
-                <button
+              <span>{opt.label[locale]}</span>
+              <div className="flex gap-4 bg-white items-center rounded-lg overflow-hidden">
+                <CustomButton
                   onClick={() => addHeir(opt.value)}
-                  className="px-2 py-1 bg-green-500 text-white rounded"
+                  size="fit"
+                  color="yellow"
                 >
-                  +
-                </button>
-                <button
+                  <Plus size={16} />
+                </CustomButton>
+                <p>{heirs.find((h) => h.type === opt.value)?.count ?? 0}</p>
+                <CustomButton
                   onClick={() => removeHeir(opt.value)}
-                  className="px-2 py-1 bg-red-500 text-white rounded"
+                  size="fit"
+                  color="red"
                 >
-                  -
-                </button>
+                  <Minus size={16} />
+                </CustomButton>
               </div>
             </div>
           ))}
@@ -130,7 +137,7 @@ const Page = () => {
                 )?.label;
                 return (
                   <li key={h.type}>
-                    {label}: {h.count}
+                    {label?.[locale]}: {h.count}
                   </li>
                 );
               })}
@@ -139,12 +146,14 @@ const Page = () => {
         )}
       </div>
 
-      <button
+      <CustomButton
+        size="full"
+        color="gray"
         onClick={calculate}
-        className="w-full bg-blue-600 text-white py-2 rounded font-bold"
+        className="text-center justify-center"
       >
         احسب الأنصبة
-      </button>
+      </CustomButton>
 
       {results.length > 0 && (
         <div className="mt-6">
@@ -154,7 +163,7 @@ const Page = () => {
               <tr>
                 <th className="border p-2">الوارث</th>
                 <th className="border p-2">النصيب النسبي</th>
-                <th className="border p-2">القيمة بالجنيه</th>
+                <th className="border p-2">القيمة {unit}</th>
               </tr>
             </thead>
             <tbody>
@@ -164,11 +173,15 @@ const Page = () => {
                 )?.label;
                 return (
                   <tr key={r.type}>
-                    <td className="border p-2">{label}</td>
+                    <td className="border p-2">{label?.[locale]}</td>
                     <td className="border p-2">
                       {(r.share * 100).toFixed(2)}%
                     </td>
-                    <td className="border p-2">{r.amount.toFixed(2)} جنيه</td>
+                    <td className="border p-2">
+                      {unit === "جنيه"
+                        ? r.amount.toFixed(2) + " جنيه"
+                        : r.amount.toFixed(2) + " فدان"}
+                    </td>
                   </tr>
                 );
               })}
@@ -181,5 +194,3 @@ const Page = () => {
 };
 
 export default Page;
-
-// inheritance-calculator
