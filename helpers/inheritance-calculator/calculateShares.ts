@@ -15,8 +15,7 @@ export default class InheritanceCalculator {
     this.totalEstate = totalEstate;
     this.blockedTypes = this.calculateBlockedHeirs();
     const hasChildren = this.hasChildren();
-    const hasSiblings = this.hasSiblings();
-    this.fixedShares = this.calculateFixedShares(hasChildren, hasSiblings);
+    this.fixedShares = this.calculateFixedShares(hasChildren);
   }
 
   private validateSpouseExclusivity(heirs: Heir[]) {
@@ -30,19 +29,6 @@ export default class InheritanceCalculator {
   private hasChildren(): boolean {
     return this.heirs.some((h) =>
       ["son", "daughter", "son_son", "son_daughter"].includes(h.type)
-    );
-  }
-
-  private hasSiblings(): boolean {
-    return this.heirs.some((h) =>
-      [
-        "full_brother",
-        "full_sister",
-        "maternal_brother",
-        "maternal_sister",
-        "full_uncle",
-        "paternal_uncle", // Added for uncles
-      ].includes(h.type)
     );
   }
 
@@ -102,11 +88,9 @@ export default class InheritanceCalculator {
             blocked.push(heir.type);
           break;
         case "son_of_full_brother":
-          // ابن الأخ الشقيق يتم حجزه إذا كان هناك أبناء للأب
           if (hasSon || hasFullSibling) blocked.push(heir.type);
           break;
         case "son_of_paternal_brother":
-          // ابن الأخ لأب يتم حجزه إذا كان هناك أبناء للأب
           if (hasSon || hasFullSibling) blocked.push(heir.type);
           break;
       }
@@ -116,8 +100,7 @@ export default class InheritanceCalculator {
   }
 
   private calculateFixedShares(
-    hasChildren: boolean,
-    hasSiblings: boolean
+    hasChildren: boolean
   ): Partial<Record<HeirType, number>> {
     const shares: Partial<Record<HeirType, number>> = {};
     const find = (type: HeirType) => this.heirs.find((h) => h.type === type);
@@ -135,7 +118,26 @@ export default class InheritanceCalculator {
       maternalSiblings.forEach((s) => (shares[s.type] = 1 / 3 / maternalCount));
 
     const mother = find("mother");
-    if (mother) shares.mother = hasChildren || hasSiblings ? 1 / 6 : 1 / 3;
+    if (mother) {
+      const siblingCount = this.heirs
+        .filter((h) =>
+          [
+            "full_brother",
+            "full_sister",
+            "maternal_brother",
+            "maternal_sister",
+            "paternal_brother",
+            "paternal_sister",
+          ].includes(h.type)
+        )
+        .reduce((sum, h) => sum + h.count, 0);
+
+      if (hasChildren || siblingCount >= 2) {
+        shares.mother = 1 / 6;
+      } else {
+        shares.mother = 1 / 3;
+      }
+    }
 
     const maternalGrandmother = find("maternal_grandmother");
     const paternalGrandmother = find("paternal_grandmother");

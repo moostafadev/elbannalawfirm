@@ -18,24 +18,27 @@ import {
 } from "@/helpers/inheritance-calculator/types";
 import { Minus, Plus } from "lucide-react";
 import { useLocale } from "next-intl";
-import React, { useState } from "react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+
+const binaryHeirs: HeirType[] = [
+  "husband",
+  "father",
+  "mother",
+  "grandfather",
+  "maternal_grandmother",
+  "paternal_grandmother",
+];
 
 const Page = () => {
   const locale = useLocale();
   const [estate, setEstate] = useState<number>(0);
   const [unit, setUnit] = useState<"جنيه" | "فدان">("جنيه");
+  const [deceasedGender, setDeceasedGender] = useState<"ذكر" | "أنثى">("ذكر");
   const [heirs, setHeirs] = useState<Heir[]>([]);
   const [results, setResults] = useState<ShareResult[]>([]);
 
   const addHeir = (type: HeirType) => {
-    if (
-      (type === "husband" && heirs.some((h) => h.type === "wife")) ||
-      (type === "wife" && heirs.some((h) => h.type === "husband"))
-    ) {
-      alert("لا يمكن إضافة الزوج والزوجة معًا في نفس الحالة.");
-      return;
-    }
-
     setHeirs((prev) => {
       const existing = prev.find((h) => h.type === type);
       if (existing) {
@@ -62,15 +65,50 @@ const Page = () => {
       alert("الرجاء إدخال قيمة تركة صحيحة.");
       return;
     }
+    if (heirs.length === 0) {
+      alert("الرجاء إضافة ورثة قبل الحساب.");
+      return;
+    }
 
     const calc = new InheritanceCalculator(heirs, estate);
     const res = calc.calculateShares();
     setResults(res);
   };
 
+  useEffect(() => {
+    setHeirs((prevHeirs) => {
+      const filtered = prevHeirs.filter(
+        (h) => h.type !== "husband" && h.type !== "wife"
+      );
+
+      if (deceasedGender === "أنثى") {
+        return [...filtered, { type: "husband", count: 1 }];
+      }
+
+      return filtered;
+    });
+  }, [deceasedGender]);
+
   return (
-    <div className="max-w-2xl mx-auto p-4 py-10">
+    <div className="max-w-5xl mx-auto p-4 py-10">
       <h1 className="text-2xl font-bold mb-4 text-center">أحسب ميراثك</h1>
+
+      <div className="mb-4">
+        <label className="block font-medium mb-1">جنس المتوفي:</label>
+        <Select
+          value={deceasedGender}
+          onValueChange={(val) => setDeceasedGender(val as "ذكر" | "أنثى")}
+          dir="rtl"
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="اختر الجنس" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="ذكر">ذكر</SelectItem>
+            <SelectItem value="أنثى">أنثى</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       <div className="mb-4">
         <label className="block font-medium mb-1">قيمة التركة:</label>
@@ -78,7 +116,10 @@ const Page = () => {
           <Input
             type="number"
             value={estate}
-            onChange={(e) => setEstate(Number(e.target.value))}
+            onChange={(e) => setEstate(Math.abs(Number(e.target.value)))}
+            onFocus={(e) =>
+              e.target.value === "0" ? (e.target.value = "") : e.target.value
+            }
             className="w-full border"
           />
           <Select
@@ -87,7 +128,7 @@ const Page = () => {
             dir="rtl"
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="الوحدة" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="جنيه">جنيه</SelectItem>
@@ -99,32 +140,105 @@ const Page = () => {
 
       <div className="mb-4">
         <label className="block font-medium mb-1">أضف الورثة:</label>
-        <div className="grid grid-cols-2 gap-2">
-          {heirOptions.map((opt) => (
-            <div
-              key={opt.value}
-              className="flex items-center justify-between bg-primary/10 border-2 border-primary rounded-lg p-2"
-            >
-              <span>{opt.label[locale]}</span>
-              <div className="flex gap-4 bg-white items-center rounded-lg overflow-hidden">
-                <CustomButton
-                  onClick={() => addHeir(opt.value)}
-                  size="fit"
-                  color="yellow"
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+          {heirOptions
+            .filter((opt) => {
+              if (opt.value === "husband" && deceasedGender !== "أنثى")
+                return false;
+              if (opt.value === "wife" && deceasedGender !== "ذكر")
+                return false;
+              return true;
+            })
+            .map((opt) => {
+              const heirCount =
+                heirs.find((h) => h.type === opt.value)?.count ?? 0;
+              const isHusband = opt.value === "husband";
+              const maxReached = isHusband && heirCount >= 1;
+              const isBinary = binaryHeirs.includes(opt.value);
+
+              return (
+                <div
+                  className={`flex flex-col gap-2 p-3 rounded-lg shadow-sm duration-300 hover:shadow-md border items-center justify-center ${
+                    heirs.find((h) => h.count > 0 && h.type === opt.value)
+                      ? "border-green-600 bg-green-700/10 !shadow-md scale-[1.02]"
+                      : "border-primary/30"
+                  }`}
+                  key={opt.value}
                 >
-                  <Plus size={16} />
-                </CustomButton>
-                <p>{heirs.find((h) => h.type === opt.value)?.count ?? 0}</p>
-                <CustomButton
-                  onClick={() => removeHeir(opt.value)}
-                  size="fit"
-                  color="red"
-                >
-                  <Minus size={16} />
-                </CustomButton>
-              </div>
-            </div>
-          ))}
+                  <Image
+                    src={opt.img?.src}
+                    alt={opt.img?.alt}
+                    width={100}
+                    height={100}
+                    className="w-16 lg:w-[72px]"
+                  />
+                  <p className="text-sm sm:text-base lg:text-lg font-bold text-primary">
+                    {opt.label[locale]}
+                  </p>
+                  <div className="flex justify-between gap-2 items-center">
+                    {isBinary ? (
+                      <>
+                        <CustomButton
+                          onClick={() => {
+                            const exists = heirs.some(
+                              (h) => h.type === opt.value
+                            );
+                            if (!exists) {
+                              setHeirs((prev) => [
+                                ...prev,
+                                { type: opt.value, count: 1 },
+                              ]);
+                            }
+                          }}
+                          size="fit"
+                          color="yellow"
+                          disabled={heirs.some((h) => h.type === opt.value)}
+                          className="hover:scale-100 !py-1 !px-3"
+                        >
+                          حي
+                        </CustomButton>
+                        <CustomButton
+                          onClick={() => {
+                            setHeirs((prev) =>
+                              prev.filter((h) => h.type !== opt.value)
+                            );
+                          }}
+                          size="fit"
+                          color="red"
+                          disabled={!heirs.some((h) => h.type === opt.value)}
+                          className="border !border-red-700 hover:scale-100 !py-1 !px-3"
+                        >
+                          ميت
+                        </CustomButton>
+                      </>
+                    ) : (
+                      <>
+                        <CustomButton
+                          onClick={() => addHeir(opt.value)}
+                          size="fit"
+                          color="yellow"
+                          disabled={maxReached}
+                          className={`border border-primary/90 hover:scale-100 !py-1 !px-1 ${
+                            maxReached ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                        >
+                          <Plus className="w-4 h-4 lg:w-5 lg:h-5" />
+                        </CustomButton>
+                        <p className="w-5 text-center">{heirCount}</p>
+                        <CustomButton
+                          onClick={() => removeHeir(opt.value)}
+                          size="fit"
+                          color="red"
+                          className="border border-red-700 hover:scale-100 !py-1 !px-1"
+                        >
+                          <Minus className="w-4 h-4 lg:w-5 lg:h-5" />
+                        </CustomButton>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
         </div>
 
         {heirs.length > 0 && (
@@ -178,9 +292,7 @@ const Page = () => {
                       {(r.share * 100).toFixed(2)}%
                     </td>
                     <td className="border p-2">
-                      {unit === "جنيه"
-                        ? r.amount.toFixed(2) + " جنيه"
-                        : r.amount.toFixed(2) + " فدان"}
+                      {r.amount.toFixed(2)} {unit}
                     </td>
                   </tr>
                 );
