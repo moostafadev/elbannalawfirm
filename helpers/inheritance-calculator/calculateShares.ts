@@ -12,9 +12,9 @@ export default class InheritanceCalculator {
   constructor(heirs: Heir[], estate: number) {
     this.heirs = heirs;
     this.estate = estate;
-    heirs.forEach(
-      (h) => (this.present[h.type] = (this.present[h.type] || 0) + h.count)
-    );
+    heirs.forEach((h) => {
+      this.present[h.type] = (this.present[h.type] || 0) + h.count;
+    });
   }
 
   public calculate(): ShareResult[] {
@@ -23,100 +23,180 @@ export default class InheritanceCalculator {
     this.determineBlocks();
     this.calculateFixedShares();
     this.applyAwlIfNeeded();
+
     const remaining = this.estate * (1 - this.sum(this.shares));
     if (remaining > 0) this.allocateAsaba(remaining);
+
     this.applyRaddIfNeeded();
     return this.buildResults();
   }
 
   private ensureNoSpouseConflict() {
-    if (this.present["husband"] && this.present["wife"])
+    if (this.present["husband"] && this.present["wife"]) {
       throw new Error("لا يمكن وجود زوج وزوجة معًا.");
+    }
   }
 
   private determineBlocks() {
     const p = this.present;
     const b = this.blocked;
 
-    const hasParentOrKids = !!p["father"] || !!p["son"] || !!p["daughter"];
-    if (hasParentOrKids) {
-      [
+    const block = (...types: HeirType[]) => types.forEach((t) => (b[t] = true));
+
+    const hasMaleDescendants = !!p["son"] || !!p["son_son"];
+
+    if (p["father"]) {
+      block(
         "full_brother",
         "full_sister",
         "paternal_brother",
         "paternal_sister",
-      ].forEach((t) => (b[t as HeirType] = true));
-    }
-
-    if (p["mother"]) {
-      ["paternal_grandmother", "maternal_grandmother"].forEach(
-        (t) => (b[t as HeirType] = true)
+        "grandfather"
       );
     }
 
-    if (p["father"]) {
-      b["grandfather"] = true;
+    if (
+      (p["father"] || hasMaleDescendants) &&
+      !p["full_brother"] &&
+      !p["full_sister"]
+    ) {
+      block(
+        "full_brother",
+        "full_sister",
+        "paternal_brother",
+        "paternal_sister"
+      );
+    }
+
+    if (p["mother"]) {
+      block("paternal_grandmother", "maternal_grandmother");
     }
 
     if (p["full_uncle"] || p["paternal_uncle"]) {
-      [
+      block(
         "son_of_full_uncle",
         "son_of_paternal_uncle",
         "son_of_full_brother",
-        "son_of_paternal_brother",
-      ].forEach((t) => (b[t as HeirType] = true));
+        "son_of_paternal_brother"
+      );
+    }
+
+    if (p["son"]) {
+      block("son_son", "son_daughter");
+    }
+
+    if (hasMaleDescendants) {
+      block(
+        "son_of_full_uncle",
+        "son_of_paternal_uncle",
+        "son_of_full_brother",
+        "son_of_paternal_brother"
+      );
+    }
+
+    if (
+      p["daughter"] &&
+      p["son_daughter"] &&
+      p["daughter"] >= 2 &&
+      !p["son_son"]
+    ) {
+      b["son_daughter"] = true;
     }
   }
 
   private calculateFixedShares() {
     const p = this.present;
     const s = this.shares;
-    const hasChild = !!p["son"] || !!p["daughter"];
 
+    const hasChild =
+      !!p["son"] || !!p["daughter"] || !!p["son_son"] || !!p["son_daughter"];
+
+    // Spouses
     if (p["wife"]) s["wife"] = (hasChild ? 1 / 8 : 1 / 4) * p["wife"];
     if (p["husband"]) s["husband"] = hasChild ? 1 / 4 : 1 / 2;
 
+    // Mother
     if (p["mother"]) {
-      const sib =
+      const siblings =
         (p["full_brother"] || 0) +
         (p["full_sister"] || 0) +
         (p["paternal_brother"] || 0) +
         (p["paternal_sister"] || 0);
-      s["mother"] = hasChild || sib >= 2 ? 1 / 6 : 1 / 3;
+      s["mother"] = hasChild || siblings >= 2 ? 1 / 6 : 1 / 3;
     }
 
-    if (p["father"] && hasChild) s["father"] = 1 / 6;
-    else if (p["grandfather"] && hasChild && !this.blocked["grandfather"]) {
+    // Father/Grandfather
+    if (p["father"] && hasChild) {
+      s["father"] = 1 / 6;
+    } else if (p["grandfather"] && hasChild && !this.blocked["grandfather"]) {
       s["grandfather"] = 1 / 6;
     }
 
-    if (!p["son"] && p["daughter"]) {
-      const d = p["daughter"];
-      s["daughter"] = d === 1 ? 1 / 2 : 2 / 3;
+    // Special case: daughter + son_daughter only
+    if (
+      p["daughter"] === 1 &&
+      p["son_daughter"] === 1 &&
+      !this.hasOtherHeirs(["daughter", "son_daughter"])
+    ) {
+      s["daughter"] = 3 / 4;
+      s["son_daughter"] = 1 / 4;
+      return;
     }
 
+    // Daughters
+    if (!p["son"] && p["daughter"]) {
+      const count = p["daughter"];
+      const hasSonSon = !!p["son_son"];
+      const hasSonDaughter =
+        !!p["son_daughter"] && !this.blocked["son_daughter"];
+
+      s["daughter"] = count === 1 ? 1 / 2 : 2 / 3;
+      if (!hasSonSon && !hasSonDaughter) {
+        s["daughter"] = count === 1 ? 1 / 2 : 2 / 3;
+      }
+    }
+
+    // Son's daughters
+    if (!p["son"] && p["son_daughter"] && !this.blocked["son_daughter"]) {
+      const count = p["son_daughter"];
+      const hasDaughter = !!p["daughter"];
+
+      if (hasDaughter) {
+        s["son_daughter"] = p["daughter"] === 1 ? 1 / 6 : 0;
+        if ((p["daughter"] ?? 0) > 1) this.blocked["son_daughter"] = true;
+      } else {
+        s["son_daughter"] = count === 1 ? 1 / 2 : 2 / 3;
+      }
+    }
+
+    // Sisters
     ["full_sister", "paternal_sister"].forEach((type) => {
-      const cnt = p[type as HeirType] || 0;
       if (
-        cnt &&
+        p[type as HeirType] &&
         !this.blocked[type as HeirType] &&
-        !p["daughter"] &&
         !p["son"] &&
-        !(p["full_brother"] || p["paternal_brother"])
+        !p["daughter"] &&
+        !p["son_daughter"] &&
+        !p["son_son"] &&
+        !p[type.replace("sister", "brother") as HeirType]
       ) {
-        s[type as HeirType] = cnt === 1 ? 1 / 2 : 2 / 3;
+        s[type as HeirType] = p[type as HeirType]! === 1 ? 1 / 2 : 2 / 3;
       }
     });
 
-    if (!p["mother"] && p["maternal_grandmother"])
+    // Grandmothers
+    if (!p["mother"] && p["maternal_grandmother"]) {
       s["maternal_grandmother"] = 1 / 6;
+    }
+
     if (
       !p["mother"] &&
       !p["father"] &&
       !p["grandfather"] &&
       p["paternal_grandmother"]
-    )
+    ) {
       s["paternal_grandmother"] = 1 / 6;
+    }
   }
 
   private applyAwlIfNeeded() {
@@ -132,160 +212,107 @@ export default class InheritanceCalculator {
     const p = this.present;
     const s = this.shares;
 
-    if (
-      p["daughter"] &&
-      !p["son"] &&
-      (p["full_sister"] || p["paternal_sister"])
-    ) {
-      const sisters: [HeirType, number][] = [];
-      if (p["full_sister"] && !this.blocked["full_sister"])
-        sisters.push(["full_sister", p["full_sister"]]);
-      if (p["paternal_sister"] && !this.blocked["paternal_sister"])
-        sisters.push(["paternal_sister", p["paternal_sister"]]);
+    const distributeAsaba = (male: HeirType, female?: HeirType) => {
+      const mCount = p[male] || 0;
+      const fCount = female ? p[female] || 0 : 0;
+      const units = mCount * 2 + fCount;
+      const unitValue = remaining / units;
 
-      if (sisters.length > 0) {
-        const daughterUnits = p["daughter"] * 2;
-        const sisterUnits = sisters.reduce((sum, [, c]) => sum + c, 0);
-        const totalUnits = daughterUnits + sisterUnits;
-        const unitValue = remaining / totalUnits;
+      if (mCount)
+        s[male] = (s[male] || 0) + (unitValue * 2 * mCount) / this.estate;
+      if (female && fCount)
+        s[female] = (s[female] || 0) + (unitValue * fCount) / this.estate;
+    };
 
-        for (const [type, count] of sisters) {
-          s[type] = (s[type] || 0) + (unitValue * count) / this.estate;
+    if (p["son"]) return distributeAsaba("son", "daughter");
+    if (p["son_son"] && !p["son_daughter"] && !p["son"])
+      return (s["son_son"] = (s["son_son"] || 0) + remaining / this.estate);
+    if (p["son_son"]) return distributeAsaba("son_son", "son_daughter");
+    if (p["father"] && !this.blocked["father"])
+      return (s["father"] = (s["father"] || 0) + remaining / this.estate);
+    if (p["grandfather"] && !this.blocked["grandfather"] && !p["father"])
+      return (s["grandfather"] =
+        (s["grandfather"] || 0) + remaining / this.estate);
+
+    const fallbackAsaba: [HeirType, HeirType | undefined][] = [
+      ["full_brother", "full_sister"],
+      ["paternal_brother", "paternal_sister"],
+    ];
+
+    for (const [m, f] of fallbackAsaba) {
+      if ((p[m] || p[f as HeirType]) && !this.blocked[m])
+        return distributeAsaba(m, f);
+    }
+
+    const maleAsaba: HeirType[] = [
+      "full_uncle",
+      "paternal_uncle",
+      "son_of_full_uncle",
+      "son_of_paternal_uncle",
+      "son_of_full_brother",
+      "son_of_paternal_brother",
+    ];
+
+    const totalUnits = maleAsaba.reduce(
+      (sum, t) => sum + (!this.blocked[t] ? (p[t] || 0) * 2 : 0),
+      0
+    );
+
+    if (totalUnits > 0) {
+      const unitValue = remaining / totalUnits;
+      for (const t of maleAsaba) {
+        if (!this.blocked[t] && p[t]) {
+          s[t] = (s[t] || 0) + (unitValue * 2 * p[t]!) / this.estate;
         }
-        return;
       }
-    }
-
-    if (p["son"] || p["daughter"]) {
-      const units = (p["son"] || 0) * 2 + (p["daughter"] || 0);
-      const unitValue = remaining / units;
-      if (p["son"] && !s["son"])
-        s["son"] = (unitValue * 2 * p["son"]) / this.estate;
-      if (p["daughter"])
-        s["daughter"] =
-          (s["daughter"] || 0) + (unitValue * p["daughter"]) / this.estate;
-      return;
-    }
-
-    if (
-      p["full_brother"] &&
-      p["full_sister"] &&
-      !this.blocked["full_brother"]
-    ) {
-      const units = p["full_brother"] * 2 + p["full_sister"];
-      const unitValue = remaining / units;
-      if (p["full_brother"])
-        s["full_brother"] = (unitValue * 2 * p["full_brother"]) / this.estate;
-      if (p["full_sister"])
-        s["full_sister"] =
-          (s["full_sister"] || 0) +
-          (unitValue * p["full_sister"]) / this.estate;
-      return;
-    }
-
-    if (
-      p["paternal_brother"] &&
-      p["paternal_sister"] &&
-      !this.blocked["paternal_brother"]
-    ) {
-      const units = p["paternal_brother"] * 2 + p["paternal_sister"];
-      const unitValue = remaining / units;
-      if (p["paternal_brother"])
-        s["paternal_brother"] =
-          (unitValue * 2 * p["paternal_brother"]) / this.estate;
-      if (p["paternal_sister"])
-        s["paternal_sister"] =
-          (s["paternal_sister"] || 0) +
-          (unitValue * p["paternal_sister"]) / this.estate;
-      return;
-    }
-
-    if (p["father"] && !this.blocked["father"] && !s["father"]) {
-      s["father"] = (s["father"] || 0) + remaining / this.estate;
-      return;
-    }
-
-    if (
-      p["grandfather"] &&
-      !p["father"] &&
-      !this.blocked["grandfather"] &&
-      !s["grandfather"]
-    ) {
-      s["grandfather"] = (s["grandfather"] || 0) + remaining / this.estate;
-      return;
-    }
-
-    const brothers = (p["full_brother"] || 0) + (p["paternal_brother"] || 0);
-    const sisters = (p["full_sister"] || 0) + (p["paternal_sister"] || 0);
-    if (brothers || sisters) {
-      const units = brothers * 2 + sisters;
-      const value = remaining / units;
-      if (p["full_brother"])
-        s["full_brother"] = (value * 2 * p["full_brother"]) / this.estate;
-      if (p["paternal_brother"])
-        s["paternal_brother"] =
-          (value * 2 * p["paternal_brother"]) / this.estate;
-      if (p["full_sister"])
-        s["full_sister"] =
-          (s["full_sister"] || 0) + (value * p["full_sister"]) / this.estate;
-      if (p["paternal_sister"])
-        s["paternal_sister"] =
-          (s["paternal_sister"] || 0) +
-          (value * p["paternal_sister"]) / this.estate;
-      return;
-    }
-
-    const uncles = (p["full_uncle"] || 0) + (p["paternal_uncle"] || 0);
-    const sonsOf =
-      (p["son_of_full_uncle"] || 0) +
-      (p["son_of_paternal_uncle"] || 0) +
-      (p["son_of_full_brother"] || 0) +
-      (p["son_of_paternal_brother"] || 0);
-    const units = uncles * 2 + sonsOf;
-    if (units) {
-      const value = remaining / units;
-      if (p["full_uncle"])
-        s["full_uncle"] = (value * 2 * p["full_uncle"]) / this.estate;
-      if (p["paternal_uncle"])
-        s["paternal_uncle"] = (value * 2 * p["paternal_uncle"]) / this.estate;
-      if (p["son_of_full_uncle"])
-        s["son_of_full_uncle"] = (value * p["son_of_full_uncle"]) / this.estate;
-      if (p["son_of_paternal_uncle"])
-        s["son_of_paternal_uncle"] =
-          (value * p["son_of_paternal_uncle"]) / this.estate;
-      if (p["son_of_full_brother"])
-        s["son_of_full_brother"] =
-          (value * p["son_of_full_brother"]) / this.estate;
-      if (p["son_of_paternal_brother"])
-        s["son_of_paternal_brother"] =
-          (value * p["son_of_paternal_brother"]) / this.estate;
     }
   }
 
   private applyRaddIfNeeded() {
-    const totalShare = this.sum(this.shares);
-    if (totalShare < 1) {
-      const nonSpouse: HeirType[] = ["wife", "husband"];
-      const toShare = 1 - totalShare;
-      const recipients = Object.entries(this.shares).filter(
-        ([t]) => !nonSpouse.includes(t as HeirType)
-      );
-      const total = recipients.reduce((a, [, v]) => a + v, 0);
+    const total = this.sum(this.shares);
+    if (total >= 1) return;
+
+    const toDistribute = 1 - total;
+    const excluded: HeirType[] = ["wife", "husband"];
+    const recipients = Object.entries(this.shares).filter(
+      ([k]) => !excluded.includes(k as HeirType)
+    );
+
+    if (
+      this.present["daughter"] === 1 &&
+      this.present["son_daughter"] === 1 &&
+      recipients.every(([k]) => k === "daughter" || k === "son_daughter") &&
+      !this.hasOtherHeirs(["daughter", "son_daughter", "wife", "husband"])
+    ) {
+      this.shares["daughter"] = 3 / 4;
+      this.shares["son_daughter"] = 1 / 4;
+      return;
+    }
+
+    const shareSum = recipients.reduce((sum, [, v]) => sum + v, 0);
+    if (shareSum > 0) {
       recipients.forEach(
-        ([t, v]) => (this.shares[t as HeirType]! += (v / total) * toShare)
+        ([k, v]) =>
+          (this.shares[k as HeirType]! += (v / shareSum) * toDistribute)
       );
     }
   }
 
-  private sum(m: ShareMap) {
+  private sum(m: ShareMap): number {
     return Object.values(m).reduce((a, b) => a + (b || 0), 0);
   }
 
+  private hasOtherHeirs(exclude: HeirType[]): boolean {
+    return Object.entries(this.present).some(
+      ([k, v]) => !exclude.includes(k as HeirType) && v! > 0
+    );
+  }
+
   private buildResults(): ShareResult[] {
-    return Object.entries(this.shares).map(([t, sh]) => ({
-      type: t as HeirType,
-      share: sh!,
-      amount: parseFloat((sh! * this.estate).toFixed(2)),
+    return Object.entries(this.shares).map(([type, share]) => ({
+      type: type as HeirType,
+      share: share!,
+      amount: parseFloat((share! * this.estate).toFixed(2)),
     }));
   }
 }

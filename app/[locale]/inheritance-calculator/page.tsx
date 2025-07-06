@@ -71,9 +71,8 @@ const Page = () => {
     }
 
     const calc = new InheritanceCalculator(heirs, estate);
-    const res = calc.calculateShares();
+    const res = calc.calculate();
     setResults(res);
-    console.log(res);
   };
 
   useEffect(() => {
