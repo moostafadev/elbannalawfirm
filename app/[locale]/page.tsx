@@ -29,8 +29,6 @@ export default async function HomePage() {
           t(`ServicesSection.paragraph.${i + 1}`)
         ),
         blogTitle: t("BlogSection.title"),
-        teamTitle: t("TeamSection.title"),
-        teamParagraph: t("TeamSection.paragraph"),
         faqTitle: t("FAQsSection.title"),
         contactTitle: t("ContactSection.title"),
         contactParagraph: t("ContactSection.paragraph"),

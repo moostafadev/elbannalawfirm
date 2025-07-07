@@ -1,5 +1,28 @@
 import { getTranslations } from "next-intl/server";
 import CalculatorClient from "@/components/inheritance/CalculatorClient";
+import { Metadata } from "next";
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations("Inheritance");
+  const tHome = await getTranslations("HomePage");
+
+  return {
+    title: t("title"),
+    description: t("InheritanceSection.paragraph"),
+    openGraph: {
+      title: t("title"),
+      description: tHome("InheritanceSection.paragraph"),
+      url: `https://elbannalawfirm.com/ar/inheritance-calculator`,
+      images: [{ url: "/logo/inheritance.png" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: tHome("InheritanceSection.paragraph"),
+      images: ["/logo/inheritance.png"],
+    },
+  };
+};
 
 export default async function InheritancePage() {
   const t = await getTranslations("Inheritance");

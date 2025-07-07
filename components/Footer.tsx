@@ -8,7 +8,14 @@ const Footer = () => {
   const t = useTranslations("Footer");
   const tLinks = useTranslations("Links");
   const locale = useLocale();
-  const headerLinks = ["about", "services", "blog", "team", "FAQs", "contact"];
+  const headerLinks = [
+    "about",
+    "services",
+    "blog",
+    "inheritance",
+    "FAQs",
+    "contact",
+  ];
 
   return (
     <footer className="pt-12 bg-[#5a4b00] text-white flex flex-col gap-12 overflow-hidden">

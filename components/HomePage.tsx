@@ -25,8 +25,6 @@ interface HomeClientProps {
     servicesParagraph0: string;
     servicesList: string[];
     blogTitle: string;
-    teamTitle: string;
-    teamParagraph: string;
     faqTitle: string;
     contactTitle: string;
     contactParagraph: string;
