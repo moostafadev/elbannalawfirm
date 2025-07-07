@@ -20,6 +20,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     });
+
+    sitemapData.push({
+      url: `https://www.elbannalawfirm.com/${lang}/inheritance-calculator`,
+      alternates: {
+        languages: alternates,
+      },
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
   });
 
   blogsData.forEach(({ id }) => {
