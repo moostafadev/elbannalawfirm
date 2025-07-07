@@ -19,4 +19,4 @@ const Heading = ({
   );
 };
 
-export default Heading;
+export default React.memo(Heading);

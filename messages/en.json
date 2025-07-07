@@ -2,7 +2,7 @@
   "Links": {
     "about": "About Us",
     "services": "Our Services",
-    "team": "Our Team",
+    "inheritance": "Calculate Your Inheritance",
     "blog": "Blog",
     "contact": "Contact Us",
     "FAQs": "FAQs"
@@ -35,9 +35,10 @@
     "BlogSection": {
       "title": "Some Articles"
     },
-    "TeamSection": {
-      "title": "Our Team",
-      "paragraph": "Our team consists of top lawyers specializing in providing the best legal advice."
+    "InheritanceSection": {
+      "title": "Calculate Your Inheritance",
+      "paragraph": "We offer you a unique service for the first time in the Arab world: an online inheritance calculator. This free tool allows you to calculate the distribution of inheritance accurately and in accordance with Islamic law, without the need for legal expertise or consulting a specialist. All you have to do is enter the data, and the legal shares of the heirs will be displayed within seconds. This service is part of our efforts to provide simplified and reliable legal tools that serve the Arab community.",
+      "tryNow": "Try Now"
     },
     "FAQsSection": {
       "title": "Frequently Asked Questions"
@@ -50,6 +51,32 @@
       "inputAge": "Age",
       "inputState": "Place of Residence",
       "inputSubject": "Consultation Subject"
+    }
+  },
+  "Inheritance": {
+    "title": "Calculate Your Inheritance",
+    "section1": {
+      "label": "Deceased's Gender",
+      "male": "Male",
+      "female": "Female"
+    },
+    "section2": {
+      "label": "Estate Value",
+      "pound": "Egyptian Pound",
+      "faddan": "Feddan"
+    },
+    "section3": {
+      "label": "Add Heirs",
+      "alive": "Alive",
+      "dead": "Deceased",
+      "button": "Calculate Shares"
+    },
+    "section4": {
+      "resultsTitle": "Results",
+      "heirLabel": "Heir",
+      "totalShare": "Total Share",
+      "individualShare": "Individual Share",
+      "toggleTitle": "Click to toggle between percentage and amount"
     }
   },
   "Footer": {

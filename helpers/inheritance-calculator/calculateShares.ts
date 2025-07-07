@@ -21,6 +21,16 @@ export default class InheritanceCalculator {
     this.shares = {};
     this.ensureNoSpouseConflict();
     this.determineBlocks();
+    const eligibleHeirs = Object.entries(this.present).filter(
+      ([type, count]) => count! > 0 && !this.blocked[type as HeirType]
+    );
+
+    if (eligibleHeirs.length === 1) {
+      const [soleType, count] = eligibleHeirs[0];
+      const sharePer = 1 / count!;
+      this.shares[soleType as HeirType] = sharePer;
+      return this.buildResults();
+    }
     this.calculateFixedShares();
     this.applyAwlIfNeeded();
 
@@ -112,7 +122,7 @@ export default class InheritanceCalculator {
       !!p["son"] || !!p["daughter"] || !!p["son_son"] || !!p["son_daughter"];
 
     // Spouses
-    if (p["wife"]) s["wife"] = (hasChild ? 1 / 8 : 1 / 4) * p["wife"];
+    if (p["wife"]) s["wife"] = hasChild ? 1 / 8 : 1 / 4;
     if (p["husband"]) s["husband"] = hasChild ? 1 / 4 : 1 / 2;
 
     // Mother

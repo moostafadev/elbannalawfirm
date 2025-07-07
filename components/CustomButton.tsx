@@ -21,7 +21,7 @@ const CustomButton = ({
   return (
     <button
       disabled={isLoading}
-      className={`flex gap-2 items-center shadow-sm rounded-lg py-1 sm:py-2 px-2 sm:px-3 text-sm sm:text-base font-medium ${
+      className={`flex gap-2 items-center shadow-sm rounded-md sm:rounded-lg py-1 sm:py-2 px-2 sm:px-3 text-sm sm:text-base font-medium ${
         size === "full"
           ? "min-w-full"
           : size === "icon"
@@ -65,4 +65,4 @@ const CustomButton = ({
   );
 };
 
-export default CustomButton;
+export default React.memo(CustomButton);

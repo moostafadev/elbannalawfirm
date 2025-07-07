@@ -2,7 +2,7 @@
   "Links": {
     "about": "À propos",
     "services": "Nos Services",
-    "team": "Notre Équipe",
+    "inheritance": "Calculez votre héritage",
     "blog": "Blog",
     "contact": "Contactez-nous",
     "FAQs": "FAQ"
@@ -35,9 +35,10 @@
     "BlogSection": {
       "title": "Quelques articles"
     },
-    "TeamSection": {
-      "title": "Notre Équipe",
-      "paragraph": "Notre équipe est composée des meilleurs avocats spécialisés pour offrir les meilleurs conseils juridiques."
+    "InheritanceSection": {
+      "title": "Calculez votre héritage",
+      "paragraph": "Nous vous proposons un service unique pour la première fois dans le monde arabe : un calculateur d’héritage en ligne. Cet outil gratuit vous permet de calculer la répartition de l’héritage avec précision et conformément à la loi islamique, sans avoir besoin de connaissances juridiques ni de consulter un spécialiste. Il vous suffit de saisir les données, et les parts légales des héritiers seront affichées en quelques secondes. Ce service s’inscrit dans notre démarche visant à fournir des outils juridiques simplifiés et fiables au service de la communauté arabe.",
+      "tryNow": "Essayez maintenant"
     },
     "FAQsSection": {
       "title": "Questions Fréquemment Posées"
@@ -50,6 +51,32 @@
       "inputAge": "Âge",
       "inputState": "Lieu de résidence",
       "inputSubject": "Sujet de la consultation"
+    }
+  },
+  "Inheritance": {
+    "title": "Calculez votre héritage",
+    "section1": {
+      "label": "Sexe du défunt",
+      "male": "Homme",
+      "female": "Femme"
+    },
+    "section2": {
+      "label": "Valeur de la succession",
+      "pound": "Livre égyptienne",
+      "faddan": "Feddan"
+    },
+    "section3": {
+      "label": "Ajouter les héritiers",
+      "alive": "Vivant",
+      "dead": "Décédé",
+      "button": "Calculer les parts"
+    },
+    "section4": {
+      "resultsTitle": "Résultats",
+      "heirLabel": "Héritier",
+      "totalShare": "Part Totale",
+      "individualShare": "Part Individuelle",
+      "toggleTitle": "Cliquez pour basculer entre pourcentage et montant"
     }
   },
   "Footer": {
