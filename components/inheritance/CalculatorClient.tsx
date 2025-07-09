@@ -50,28 +50,6 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
     const [results, setResults] = useState<ShareResult[]>([]);
     const [blockedHeirs, setBlockedHeirs] = useState<HeirType[]>([]);
 
-    const addHeir = useCallback((type: HeirType) => {
-      setHeirs((prev) => {
-        const existing = prev.find((h) => h.type === type);
-        if (existing) {
-          return prev.map((h) =>
-            h.type === type ? { ...h, count: h.count + 1 } : h
-          );
-        }
-        return [...prev, { type, count: 1 }];
-      });
-    }, []);
-
-    const removeHeir = useCallback((type: HeirType) => {
-      setHeirs((prev) =>
-        prev
-          .map((h) =>
-            h.type === type ? { ...h, count: Math.max(0, h.count - 1) } : h
-          )
-          .filter((h) => h.count > 0)
-      );
-    }, []);
-
     const calculate = useCallback(() => {
       if (estate <= 0) {
         alert("الرجاء إدخال قيمة تركة صحيحة.");
@@ -89,6 +67,16 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
       setResults(res);
       setBlockedHeirs(blocked);
     }, [heirs, estate]);
+
+    const clearResultsIfExist = () => {
+      if (results.length > 0) {
+        setResults([]);
+      }
+    };
+
+    useEffect(() => {
+      clearResultsIfExist();
+    }, [heirs]);
 
     useEffect(() => {
       setHeirs((prev) => {
@@ -131,13 +119,12 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
             {translations.heirsLabel}:
           </label>
           <HeirsGrid
-            addHeir={addHeir}
             deceasedGender={deceasedGender}
             heirs={heirs}
             locale={locale}
-            removeHeir={removeHeir}
             setHeirs={setHeirs}
             translations={translations}
+            onHeirsChanged={clearResultsIfExist}
           />
         </div>
 
@@ -151,7 +138,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           size="fit"
           color="gray"
           onClick={calculate}
-          className="text-center justify-center mt-6"
+          className="text-center justify-center mt-6 py-2 px-4"
         >
           {translations.calculateButton}
         </CustomButton>

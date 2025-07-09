@@ -147,10 +147,24 @@ const ResultsTable: React.FC<Props> = ({
                   )}
                 </td>
 
-                <td className="border p-2">
-                  {showShareAsAmount
-                    ? formatUnit(r.amount, unit)
-                    : `${(r.share * 100).toFixed(2)}%`}
+                <td className="border p-2 flex items-center gap-2">
+                  <span>
+                    {showShareAsAmount
+                      ? formatUnit(r.amount, unit)
+                      : `${(r.share * 100).toFixed(2)}%`}
+                  </span>
+                  {r.share !== 1 &&
+                    r.fraction.includes("/") &&
+                    !showShareAsAmount && (
+                      <span className="ml-2 inline-flex flex-col items-center text-sm sm:text-base font-semibold text-black leading-tight">
+                        <span className="border-b-2 border-black px-[4px]">
+                          {r.fraction.split("/")[0]}
+                        </span>
+                        <span className="px-[4px]">
+                          {r.fraction.split("/")[1]}
+                        </span>
+                      </span>
+                    )}
                 </td>
 
                 <td className="border p-2">

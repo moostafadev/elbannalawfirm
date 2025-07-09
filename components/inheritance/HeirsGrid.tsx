@@ -7,8 +7,6 @@ import CustomButton from "../CustomButton";
 
 interface Props {
   heirs: Heir[];
-  addHeir: (type: HeirType) => void;
-  removeHeir: (type: HeirType) => void;
   deceasedGender: "male" | "female";
   locale: string;
   setHeirs: React.Dispatch<React.SetStateAction<Heir[]>>;
@@ -16,6 +14,7 @@ interface Props {
     alive: string;
     dead: string;
   };
+  onHeirsChanged?: () => void;
 }
 
 const binaryHeirs: HeirType[] = [
@@ -149,13 +148,41 @@ HeirItem.displayName = "HeirItem";
 
 const HeirsGrid: React.FC<Props> = ({
   heirs,
-  addHeir,
-  removeHeir,
   deceasedGender,
   locale,
   setHeirs,
   translations: { alive, dead },
+  onHeirsChanged,
 }) => {
+  const addHeir = (type: HeirType) => {
+    setHeirs((prev) => {
+      const exists = prev.find((h) => h.type === type);
+      if (exists) {
+        return prev.map((h) =>
+          h.type === type ? { ...h, count: h.count + 1 } : h
+        );
+      } else {
+        return [...prev, { type, count: 1 }];
+      }
+    });
+    onHeirsChanged?.();
+  };
+
+  const removeHeir = (type: HeirType) => {
+    setHeirs((prev) => {
+      const heir = prev.find((h) => h.type === type);
+      if (!heir) return prev;
+      if (heir.count <= 1) {
+        return prev.filter((h) => h.type !== type);
+      } else {
+        return prev.map((h) =>
+          h.type === type ? { ...h, count: h.count - 1 } : h
+        );
+      }
+    });
+    onHeirsChanged?.();
+  };
+
   return (
     <div
       className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 ${
@@ -178,7 +205,7 @@ const HeirsGrid: React.FC<Props> = ({
 
           return (
             <HeirItem
-              key={opt.value}
+              key={`${opt.value}-${heirCount}`}
               opt={opt}
               heirCount={heirCount}
               isBinary={isBinary}
@@ -192,8 +219,10 @@ const HeirsGrid: React.FC<Props> = ({
               onToggleAliveDead={(isAlive) => {
                 if (isAlive && !heirs.some((h) => h.type === opt.value)) {
                   setHeirs((prev) => [...prev, { type: opt.value, count: 1 }]);
+                  onHeirsChanged?.();
                 } else if (!isAlive) {
                   setHeirs((prev) => prev.filter((h) => h.type !== opt.value));
+                  onHeirsChanged?.();
                 }
               }}
             />

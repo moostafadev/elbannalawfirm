@@ -26,9 +26,8 @@ export default class InheritanceCalculator {
     );
 
     if (eligibleHeirs.length === 1) {
-      const [soleType, count] = eligibleHeirs[0];
-      const sharePer = 1 / count!;
-      this.shares[soleType as HeirType] = sharePer;
+      const [soleType] = eligibleHeirs[0];
+      this.shares[soleType as HeirType] = 1;
       return this.buildResults();
     }
     this.calculateFixedShares();
@@ -318,11 +317,33 @@ export default class InheritanceCalculator {
     );
   }
 
+  private toFraction(decimal: number): string {
+    const tolerance = 1.0e-6;
+    let h1 = 1,
+      h2 = 0,
+      k1 = 0,
+      k2 = 1;
+    let b = decimal;
+    do {
+      const a = Math.floor(b);
+      let aux = h1;
+      h1 = a * h1 + h2;
+      h2 = aux;
+      aux = k1;
+      k1 = a * k1 + k2;
+      k2 = aux;
+      b = 1 / (b - a);
+    } while (Math.abs(decimal - h1 / k1) > decimal * tolerance);
+
+    return `${h1}/${k1}`;
+  }
+
   private buildResults(): ShareResult[] {
     return Object.entries(this.shares).map(([type, share]) => ({
       type: type as HeirType,
       share: share!,
       amount: parseFloat((share! * this.estate).toFixed(2)),
+      fraction: this.toFraction(share!),
     }));
   }
 }

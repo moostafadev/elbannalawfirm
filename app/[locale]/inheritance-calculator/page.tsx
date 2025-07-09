@@ -28,7 +28,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
           url: "/logo/inheritance_opengraph.png",
           alt: t("InheritanceSection.title"),
         },
-        { url: "/logo/opengraph.png", alt: t("InheritanceSection.title") },
+        { url: "/logo/opengraph.jpg", alt: t("InheritanceSection.title") },
       ],
     },
     twitter: {
@@ -37,7 +37,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       description: t("InheritanceSection.paragraph"),
       site: "@elbannalaw",
       creator: "@elbannalaw",
-      images: ["/logo/inheritance_opengraph.png"],
+      images: ["/logo/inheritance_opengraph.jpg"],
     },
   };
 };

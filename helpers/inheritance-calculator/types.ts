@@ -32,4 +32,5 @@ export interface ShareResult {
   type: HeirType;
   share: number;
   amount: number;
+  fraction: string;
 }
