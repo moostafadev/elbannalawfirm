@@ -6,7 +6,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import MainLayout from "@/components/MainLayout";
 import Script from "next/script";
-import { keywordsAr, keywordsEn, keywordsFr } from "@/data/seo";
+import { mainKeywords } from "@/data/seo";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -39,19 +39,26 @@ export async function generateMetadata({
         default: "Elbanna Law Firm",
         template: "%s - Elbanna Law Firm",
       },
-      description:
-        "Elbanna Law Firm - Offering exceptional legal services tailored to your unique needs, with a commitment to professionalism and excellence.",
+      description: mainKeywords.en_description,
       twitter: {
         card: "summary_large_image",
+        title: {
+          default: "Elbanna Law Firm",
+          template: "%s - Elbanna Law Firm",
+        },
+        description: mainKeywords.en_description,
+        images: ["/logo/opengraph.jpg"],
       },
 
-      keywords: keywordsEn,
+      keywords: mainKeywords.en,
       openGraph: {
         type: "website",
         url: "https://www.elbannalawfirm.com/en",
-        title: "Elbanna Law Firm",
-        description:
-          "Elbanna Law Firm - Committed to providing reliable and effective legal solutions with a dedicated team of professionals.",
+        title: {
+          default: "Elbanna Law Firm",
+          template: "%s - Elbanna Law Firm",
+        },
+        description: mainKeywords.en_description,
         siteName: "Elbanna",
         images: [{ url: "/logo/opengraph.jpg", alt: "Elbanna Law Firm Logo" }],
       },
@@ -67,19 +74,26 @@ export async function generateMetadata({
         default: "مكتب البنا للمحاماة",
         template: "%s - مكتب البنا للمحاماة",
       },
-      description:
-        "مكتب البنا للمحاماة - نقدم خدمات قانونية متميزة مصممة لتلبية احتياجاتك الفريدة، مع التزامنا بالاحترافية والتميز.",
+      description: mainKeywords.ar_description,
       twitter: {
         card: "summary_large_image",
+        title: {
+          default: "مكتب البنا للمحاماة",
+          template: "%s - مكتب البنا للمحاماة",
+        },
+        description: mainKeywords.ar_description,
+        images: ["/logo/opengraph.jpg"],
       },
 
-      keywords: keywordsAr,
+      keywords: mainKeywords.ar,
       openGraph: {
         type: "website",
         url: "https://www.elbannalawfirm.com/ar",
-        title: "مكتب البنا للمحاماة",
-        description:
-          "مكتب البنا للمحاماة - ملتزمون بتقديم حلول قانونية موثوقة وفعالة مع فريق من المحترفين المتفانين.",
+        title: {
+          default: "مكتب البنا للمحاماة",
+          template: "%s - مكتب البنا للمحاماة",
+        },
+        description: mainKeywords.ar_description,
         siteName: "مكتب البنا",
         images: [
           { url: "/logo/opengraph.jpg", alt: "شعار مكتب البنا للمحاماة" },
@@ -97,19 +111,26 @@ export async function generateMetadata({
         default: "Cabinet d'avocats Elbanna",
         template: "%s - Cabinet d'avocats Elbanna",
       },
-      description:
-        "Cabinet d'avocats Elbanna - Nous offrons des services juridiques exceptionnels adaptés à vos besoins uniques, avec un engagement envers le professionnalisme et l'excellence.",
+      description: mainKeywords.fr_description,
       twitter: {
         card: "summary_large_image",
+        title: {
+          default: "Cabinet d'avocats Elbanna",
+          template: "%s - Cabinet d'avocats Elbanna",
+        },
+        description: mainKeywords.fr_description,
+        images: ["/logo/opengraph.jpg"],
       },
 
-      keywords: keywordsFr,
+      keywords: mainKeywords.fr,
       openGraph: {
         type: "website",
         url: "https://www.elbannalawfirm.com/fr",
-        title: "Cabinet d'avocats Elbanna",
-        description:
-          "Cabinet d'avocats Elbanna - Engagés à fournir des solutions juridiques fiables et efficaces avec une équipe de professionnels dévoués.",
+        title: {
+          default: "Cabinet d'avocats Elbanna",
+          template: "%s - Cabinet d'avocats Elbanna",
+        },
+        description: mainKeywords.fr_description,
         siteName: "Elbanna",
         images: [
           {
@@ -146,6 +167,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <head>
+        <meta name="apple-mobile-web-app-title" content="Elbanna" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5760588310891464"
@@ -160,6 +182,7 @@ export default async function RootLayout({
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-X4CR834PMJ"
+        referrerPolicy="no-referrer-when-downgrade"
       />
       <Script id="google-analytics" strategy="afterInteractive">
         {`
