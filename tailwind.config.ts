@@ -78,6 +78,16 @@ const config: Config = {
         cairo: ["var(--font-cairo)", ...fontFamily.sans],
       },
       keyframes: {
+        slideInOut: {
+          "0%": { transform: "translateX([calc(-100%+45px+8px)])" },
+          "50%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX([calc(-100%+45px+8px)])" },
+        },
+        slideInOutAr: {
+          "0%": { transform: "translateX([calc(100%-45px-8px)])" },
+          "50%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX([calc(100%-45px-8px)])" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -96,6 +106,8 @@ const config: Config = {
         },
       },
       animation: {
+        "slide-in-out": "slideInOut 3s ease-in-out",
+        "slide-in-out-ar": "slideInOutAr 3s ease-in-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },

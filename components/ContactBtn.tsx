@@ -43,9 +43,9 @@ const ContactBtn = () => {
           title={t("title")}
           className={`fixed top-32 w-fit z-20 p-1 ${
             locale === "ar"
-              ? "left-[-2px] translate-x-[calc(-100%+45px+8px)] hover:translate-x-0 pl-2"
-              : "right-[-2px] translate-x-[calc(100%-45px-8px)] hover:translate-x-0 pr-2"
-          } rounded-s-lg h-[56px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex items-center gap-1 cursor-pointer shadow-md hover:shadow-lg hover:rounded-none hover:bg-brown`}
+              ? "left-[-2px] translate-x-[calc(-100%+45px+8px)] hover:translate-x-0 pl-2 animate-slide-in-out-ar"
+              : "right-[-2px] translate-x-[calc(100%-45px-8px)] hover:translate-x-0 pr-2 animate-slide-in-out"
+          } rounded-s-lg h-[56px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown transition-all border-2 border-primary flex items-center gap-1 cursor-pointer shadow-md hover:shadow-lg hover:rounded-none hover:bg-brown`}
         >
           <Image
             src={"/logo/inheritance.png"}
