@@ -41,9 +41,11 @@ const ContactBtn = () => {
         <Link
           href={"/inheritance-calculator"}
           title={t("title")}
-          className={`fixed sm:bottom-[calc(24px+56px+8px)] bottom-[calc(24px+48px+8px)] ${
-            locale === "ar" ? "left-4" : "right-4"
-          } z-20 p-1 rounded-full sm:w-[56px] sm:h-[56px] w-[48px] h-[48px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex justify-center items-center cursor-pointer shadow-md hover:shadow-lg hover:scale-110 hover:bg-brown hover:text-primary hover:-translate-y-1`}
+          className={`fixed top-32 w-fit z-20 p-1 ${
+            locale === "ar"
+              ? "left-[-2px] translate-x-[calc(-100%+45px+8px)] hover:translate-x-0 pl-2"
+              : "right-[-2px] translate-x-[calc(100%-45px-8px)] hover:translate-x-0 pr-2"
+          } rounded-s-lg h-[56px] bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex items-center gap-1 cursor-pointer shadow-md hover:shadow-lg hover:rounded-none hover:bg-brown`}
         >
           <Image
             src={"/logo/inheritance.png"}
@@ -51,7 +53,9 @@ const ContactBtn = () => {
             width={200}
             height={200}
             priority={true}
+            className="max-h-full w-auto"
           />
+          <p className="min-w-fit">{t("title")}</p>
         </Link>
       )}
     </>
