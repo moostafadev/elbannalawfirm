@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ShareResult,
   Heir,
   HeirType,
 } from "@/helpers/inheritance-calculator/types";
 import { heirOptions } from "@/helpers/inheritance-calculator/constants";
-import { ArrowRightLeft } from "lucide-react";
 import { pluralForms } from "@/helpers/inheritance-calculator/pluralForms";
 
 interface Props {
@@ -31,9 +30,6 @@ const ResultsTable: React.FC<Props> = ({
   locale,
   translations,
 }) => {
-  const [showShareAsAmount, setShowShareAsAmount] = useState(false);
-  const [showIndividualAsAmount, setShowIndividualAsAmount] = useState(false);
-
   if (results.length === 0) return null;
 
   const getCount = (type: string) =>
@@ -88,41 +84,19 @@ const ResultsTable: React.FC<Props> = ({
 
             <th
               className="border p-2 cursor-pointer hover:bg-gray-100 duration-300"
-              onClick={() => setShowShareAsAmount(!showShareAsAmount)}
               title={translations.toggleTitle}
             >
               <div className="flex items-center gap-2">
-                <span>
-                  {translations.totalShare}{" "}
-                  {showShareAsAmount
-                    ? `(${
-                        unit === "pound"
-                          ? translations.unitPound
-                          : translations.unitFaddan
-                      })`
-                    : "(%)"}
-                </span>
-                <ArrowRightLeft size={18} className="text-primary" />
+                {translations.totalShare}
               </div>
             </th>
 
             <th
               className="border p-2 cursor-pointer hover:bg-gray-100 duration-300"
-              onClick={() => setShowIndividualAsAmount(!showIndividualAsAmount)}
               title={translations.toggleTitle}
             >
               <div className="flex items-center gap-2">
-                <span>
-                  {translations.individualShare}{" "}
-                  {showIndividualAsAmount
-                    ? `(${
-                        unit === "pound"
-                          ? translations.unitPound
-                          : translations.unitFaddan
-                      })`
-                    : "(%)"}
-                </span>
-                <ArrowRightLeft size={18} className="text-primary" />
+                {translations.individualShare}
               </div>
             </th>
           </tr>
@@ -139,40 +113,44 @@ const ResultsTable: React.FC<Props> = ({
             return (
               <tr key={r.type} className="text-xs sm:text-base">
                 <td className="border p-2">
-                  {formatHeirLabel(
-                    label?.[locale] ?? "",
-                    count,
-                    locale,
-                    r.type
+                  <span className="block mb-1">
+                    {formatHeirLabel(
+                      label?.[locale] ?? "",
+                      count,
+                      locale,
+                      r.type
+                    )}
+                  </span>
+                  {r.share !== 1 && r.fraction.includes("/") && (
+                    <span className="inline-flex flex-col items-center text-sm sm:text-base font-semibold text-black leading-tight">
+                      <span className="border-b-2 border-black px-[4px]">
+                        {r.fraction.split("/")[0]}
+                      </span>
+                      <span className="px-[4px]">
+                        {r.fraction.split("/")[1]}
+                      </span>
+                    </span>
                   )}
                 </td>
 
-                <td className="border p-2 flex items-center gap-2">
-                  <span>
-                    {showShareAsAmount
-                      ? formatUnit(r.amount, unit)
-                      : `${(r.share * 100).toFixed(2)}%`}
+                <td className="border p-2">
+                  <span className="block mb-1">
+                    {formatUnit(r.amount, unit)}
                   </span>
-                  {r.share !== 1 &&
-                    r.fraction.includes("/") &&
-                    !showShareAsAmount && (
-                      <span className="ml-2 inline-flex flex-col items-center text-sm sm:text-base font-semibold text-black leading-tight">
-                        <span className="border-b-2 border-black px-[4px]">
-                          {r.fraction.split("/")[0]}
-                        </span>
-                        <span className="px-[4px]">
-                          {r.fraction.split("/")[1]}
-                        </span>
-                      </span>
-                    )}
+                  <span>{`${(r.share * 100).toFixed(2)}%`}</span>
                 </td>
 
                 <td className="border p-2">
-                  {count > 1
-                    ? showIndividualAsAmount
-                      ? formatUnit(individualAmount, unit)
-                      : `${(individualShare * 100).toFixed(2)}%`
-                    : "-"}
+                  {count > 1 ? (
+                    <>
+                      <span className="block mb-1">
+                        {formatUnit(individualAmount, unit)}
+                      </span>
+                      <span>{`${(individualShare * 100).toFixed(2)}%`}</span>
+                    </>
+                  ) : (
+                    "-"
+                  )}
                 </td>
               </tr>
             );

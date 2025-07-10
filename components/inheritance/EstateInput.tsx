@@ -45,14 +45,14 @@ const EstateInput: React.FC<Props> = ({
           onFocus={(e) =>
             e.target.value === "0" ? (e.target.value = "") : e.target.value
           }
-          className="w-full border"
+          className="border w-full border-primary/60 shadow-sm hover:shadow-md duration-300"
         />
         <Select
           value={unit}
           onValueChange={(e) => setUnit(e as "pound" | "feddan")}
           dir={locale === "ar" ? "rtl" : "ltr"}
         >
-          <SelectTrigger className="max-w-[200px] w-full">
+          <SelectTrigger className="max-w-[130px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
