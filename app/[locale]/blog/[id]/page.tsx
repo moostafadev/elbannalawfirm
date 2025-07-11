@@ -2,7 +2,7 @@ import Animation from "@/components/Animation";
 import BreadcrumbC from "@/components/Breadcrumb";
 import { blogsData, ITitles } from "@/data/blogs";
 import { Metadata } from "next";
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
 import React from "react";
 
@@ -12,13 +12,33 @@ export const generateMetadata = async ({
   params: { id: string; locale: string };
 }): Promise<Metadata> => {
   const blog = blogsData.find((item) => item.id === +params.id);
+  const locale = await getLocale();
   return {
     title: blog ? blog.titles[params.locale as keyof ITitles] : "Article",
+    openGraph: {
+      title: blog?.titles[locale as keyof ITitles],
+      description: blog?.content[locale as keyof ITitles].join(" . "),
+      url: `https://elbannalawfirm.com/${locale}/blog/${blog?.id}`,
+      images: [
+        {
+          url: `/imgs/blog_${blog?.id}.webp`,
+          alt: blog?.titles[locale as keyof ITitles],
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog?.titles[locale as keyof ITitles],
+      description: blog?.content[locale as keyof ITitles].join(" . "),
+      site: "@elbannalaw",
+      creator: "@elbannalaw",
+      images: [`/imgs/blog_${blog?.id}.webp`],
+    },
   };
 };
 
-const BlogPage = ({ params: { id } }: { params: { id: string } }) => {
-  const locale = useLocale();
+const BlogPage = async ({ params: { id } }: { params: { id: string } }) => {
+  const locale = await getLocale();
   const blog = blogsData.find((item) => item.id === +id);
   const breadcrumbTitles = {
     ar: "الصفحة الرئيسية",
