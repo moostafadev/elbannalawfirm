@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import MainLayout from "@/components/MainLayout";
 import Script from "next/script";
 import { mainKeywords } from "@/data/seo";
+import AdSense from "@/components/ad/AdSense";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -167,17 +168,12 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <head>
+        <AdSense pId="5760588310891464" />
         <meta name="apple-mobile-web-app-title" content="Elbanna" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5760588310891464"
-          crossOrigin="anonymous"
-        ></script>
         <meta
           name="google-site-verification"
           content="MMRg72OM49dAdaitjLy17l7bY-dBF7n-PR1wuGostrU"
         />
-        <meta name="google-adsense-account" content="ca-pub-5760588310891464" />
       </head>
       <Script
         strategy="afterInteractive"

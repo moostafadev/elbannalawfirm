@@ -15,6 +15,7 @@ import EstateInput from "./EstateInput";
 import HeirsGrid from "./HeirsGrid";
 import ResultsTable from "./ResultsTable";
 import BlockedHeirsList from "./BlockedHeirsList";
+import AdBanner from "../ad/AdBanner";
 
 type CalculatorClientProps = {
   translations: {
@@ -150,6 +151,14 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           translations={translations}
           heirs={heirs}
         />
+
+        <div className="mt-5">
+          <AdBanner
+            dataAdFormat="auto"
+            dataFullWidthResponsive={true}
+            dataAdSlot="2456497086"
+          />
+        </div>
       </div>
     );
   }
