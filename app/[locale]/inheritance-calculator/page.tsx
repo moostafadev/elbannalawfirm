@@ -25,7 +25,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       url: `https://elbannalawfirm.com/${locale}/inheritance-calculator`,
       images: [
         {
-          url: "/logo/inheritance_opengraph.png",
+          url: "/logo/inheritance_opengraph.jpg",
           alt: t("InheritanceSection.title"),
         },
       ],
