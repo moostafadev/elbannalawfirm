@@ -2,24 +2,32 @@
 
 import React, { useEffect } from "react";
 
-type AdBannerTypes = {
+type AdBannerProps = {
   dataAdSlot: string;
   dataAdFormat: string;
   dataFullWidthResponsive: boolean;
 };
 
-const AdBanner = ({
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
+const AdBanner: React.FC<AdBannerProps> = ({
   dataAdSlot,
   dataAdFormat,
   dataFullWidthResponsive,
-}: AdBannerTypes) => {
+}) => {
   useEffect(() => {
     try {
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-        {}
-      );
-    } catch (error: any) {
-      console.log(error.message);
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log("An unknown error occurred in adsbygoogle.");
+      }
     }
   }, []);
 
