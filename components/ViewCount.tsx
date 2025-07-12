@@ -4,11 +4,21 @@ import React, { useEffect, useState } from "react";
 import { Eye } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { createView, getViews } from "@/actions/views";
+import { useLocale } from "next-intl";
+
+const translations = {
+  en: "Views",
+  ar: "المشاهدات",
+  fr: "Vues",
+};
 
 const ViewCount = () => {
+  const locale = useLocale();
+  const slug = usePathname();
   const [views, setViews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const slug = usePathname();
+  const title =
+    translations[locale as keyof typeof translations] || translations.en;
 
   useEffect(() => {
     const hasViewed = localStorage.getItem(`viewed-${slug}`);
@@ -32,7 +42,7 @@ const ViewCount = () => {
 
   return (
     <div
-      title="Views"
+      title={title}
       className="fixed bottom-6 left-1/2 gap-1 -translate-x-1/2 z-20 rounded-lg py-1 px-3 bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex justify-center items-center cursor-pointer shadow-md hover:shadow-lg hover:bg-brown hover:text-primary"
     >
       {loading ? (
