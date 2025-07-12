@@ -5,6 +5,7 @@ import ContactBtn from "./ContactBtn";
 import { Toaster } from "./ui/toaster";
 import Footer from "./Footer";
 import Loading from "./Loading";
+import ViewCount from "./ViewCount";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -15,6 +16,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <ScrollToTop />
         <ContactBtn />
         <Toaster />
+        <ViewCount />
       </main>
       <Footer />
     </Suspense>
