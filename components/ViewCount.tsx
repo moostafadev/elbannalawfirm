@@ -5,19 +5,12 @@ import { Eye } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { createView, getViews } from "@/actions/views";
 
-const isProd = process.env.NEXT_PUBLIC_MODE === "PRODUCTION";
-
 const ViewCount = () => {
   const [views, setViews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const slug = usePathname();
 
   useEffect(() => {
-    if (!isProd) {
-      setLoading(false);
-      return;
-    }
-
     const hasViewed = localStorage.getItem(`viewed-${slug}`);
     if (hasViewed) {
       getViews(slug)
