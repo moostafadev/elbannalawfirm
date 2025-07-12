@@ -81,11 +81,13 @@ const config: Config = {
         slideInOut: {
           "0%": { transform: "translateX([calc(-100%+45px+8px)])" },
           "50%": { transform: "translateX(0)" },
+          "80%": { transform: "translateX(0)" },
           "100%": { transform: "translateX([calc(-100%+45px+8px)])" },
         },
         slideInOutAr: {
           "0%": { transform: "translateX([calc(100%-45px-8px)])" },
           "50%": { transform: "translateX(0)" },
+          "80%": { transform: "translateX(0)" },
           "100%": { transform: "translateX([calc(100%-45px-8px)])" },
         },
         "accordion-down": {
