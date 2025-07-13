@@ -51,7 +51,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
                   : "flex gap-2 items-end"
               }`}
             >
-              <Animation>
+              <Animation origin="top" animationName="top">
                 <h1
                   className={`${
                     locale === "ar" ? "text-4xl" : "text-2xl"
@@ -60,7 +60,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
                   {t.heroTitle}
                 </h1>
               </Animation>
-              <Animation>
+              <Animation origin="bottom" animationName="bottom">
                 <h2
                   className={`${
                     locale === "ar" ? "text-2xl" : "text-lg"
@@ -70,7 +70,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
                 </h2>
               </Animation>
             </div>
-            <Animation>
+            <Animation origin="right" animationName="right">
               <h2
                 className={`${
                   locale === "ar" ? "text-lg" : "text-base"
@@ -104,7 +104,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
           <Heading>{t.aboutTitle}</Heading>
           <div className="flex lg:gap-16 gap-10 flex-col lg:flex-row items-center h-full">
             <div className="flex-1 lg:order-1 order-2 flex justify-center items-center lg:px-10">
-              <Animation>
+              <Animation origin="right" animationName="right">
                 <Image
                   src="/imgs/ahmed_5.webp"
                   alt="elbanna"
@@ -116,7 +116,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
               </Animation>
             </div>
             <div className="flex-1 text-lg md:text-xl font-semibold !leading-8 lg:order-2 order-1">
-              <Animation>
+              <Animation origin="left" animationName="left">
                 {t.aboutParagraph.split(".").map((text, idx, arr) => (
                   <p key={idx}>
                     {text}
@@ -170,7 +170,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
                 })}
               </div>
               <div className="flex-1 flex justify-center items-center">
-                <Animation>
+                <Animation origin="left" animationName="left">
                   <Image
                     src="/imgs/ahmed_6.webp"
                     alt="elbanna"
@@ -203,7 +203,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
           <Heading>{t.inheritanceTitle}</Heading>
           <div className="flex lg:gap-16 gap-10 flex-col lg:flex-row items-center h-full">
             <div className="flex-1 lg:order-1 order-2 flex justify-center items-center lg:px-10">
-              <Animation>
+              <Animation origin="right" animationName="right">
                 <Image
                   src="/logo/inheritance.png"
                   alt="inheritance-calc"
@@ -215,7 +215,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
               </Animation>
             </div>
             <div className="flex-1 text-lg md:text-xl font-semibold !leading-8 lg:order-2 order-1">
-              <Animation>
+              <Animation origin="left" animationName="left">
                 {t.inheritanceParagraph
                   .split(". ")
                   .map((sentence, index, arr) => (
@@ -260,10 +260,12 @@ export default function HomeClient({ translations }: HomeClientProps) {
           </div>
           <div className="flex flex-col lg:flex-row gap-6 lg:items-center">
             <div className="flex-1">
-              <ContactForm />
+              <Animation animationName="right" origin="right">
+                <ContactForm />
+              </Animation>
             </div>
             <div className="flex-1 flex justify-center items-center">
-              <Animation>
+              <Animation animationName="left" origin="left">
                 <Image
                   src="/logo/logo.png"
                   alt="elbanna"

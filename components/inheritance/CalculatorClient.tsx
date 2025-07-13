@@ -16,6 +16,7 @@ import HeirsGrid from "./HeirsGrid";
 import ResultsTable from "./ResultsTable";
 import BlockedHeirsList from "./BlockedHeirsList";
 import AdBanner from "../ad/AdBanner";
+import Animation from "../Animation";
 
 type CalculatorClientProps = {
   translations: {
@@ -135,14 +136,16 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           locale={locale}
         />
 
-        <CustomButton
-          size="fit"
-          color="gray"
-          onClick={calculate}
-          className="text-center justify-center mt-6 py-2 px-4"
-        >
-          {translations.calculateButton}
-        </CustomButton>
+        <Animation origin="top" animationName="animation-inheritance-item">
+          <CustomButton
+            size="fit"
+            color="gray"
+            onClick={calculate}
+            className="text-center justify-center mt-6 py-2 px-4"
+          >
+            {translations.calculateButton}
+          </CustomButton>
+        </Animation>
 
         <ResultsTable
           locale={locale}

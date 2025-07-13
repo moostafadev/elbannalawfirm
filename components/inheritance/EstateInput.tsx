@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Input } from "../ui/input";
+import Animation from "../Animation";
 
 interface Props {
   estate: number;
@@ -27,39 +28,53 @@ const EstateInput: React.FC<Props> = ({
 }) => {
   return (
     <div className="mb-4">
-      <label className="block font-medium mb-3">
-        {translations.estateLabel}:
-      </label>
+      <Animation origin="right" animationName="animation-inheritance-input">
+        <label className="block font-medium mb-3">
+          {translations.estateLabel}:
+        </label>
+      </Animation>
       <div className="flex gap-2">
-        <Input
-          type="number"
-          value={estate === 0 ? "" : estate}
-          onChange={(e) => {
-            const val = e.target.value;
-            if (val === "") {
-              setEstate(0);
-            } else {
-              setEstate(Math.abs(Number(val)));
-            }
-          }}
-          onFocus={(e) =>
-            e.target.value === "0" ? (e.target.value = "") : e.target.value
-          }
-          className="border w-full border-primary/60 shadow-sm hover:shadow-md duration-300"
-        />
-        <Select
-          value={unit}
-          onValueChange={(e) => setUnit(e as "pound" | "feddan")}
-          dir={locale === "ar" ? "rtl" : "ltr"}
+        <Animation
+          origin="right"
+          animationName="animation-inheritance-input"
+          className="w-full"
         >
-          <SelectTrigger className="max-w-[130px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="pound">{translations.unitPound}</SelectItem>
-            <SelectItem value="feddan">{translations.unitFaddan}</SelectItem>
-          </SelectContent>
-        </Select>
+          <Input
+            type="number"
+            value={estate === 0 ? "" : estate}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === "") {
+                setEstate(0);
+              } else {
+                setEstate(Math.abs(Number(val)));
+              }
+            }}
+            onFocus={(e) =>
+              e.target.value === "0" ? (e.target.value = "") : e.target.value
+            }
+            className="border border-primary/60 shadow-sm hover:shadow-md duration-300"
+          />
+        </Animation>
+        <Animation
+          origin="right"
+          animationName="animation-inheritance-input"
+          className="min-w-[130px]"
+        >
+          <Select
+            value={unit}
+            onValueChange={(e) => setUnit(e as "pound" | "feddan")}
+            dir={locale === "ar" ? "rtl" : "ltr"}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pound">{translations.unitPound}</SelectItem>
+              <SelectItem value="feddan">{translations.unitFaddan}</SelectItem>
+            </SelectContent>
+          </Select>
+        </Animation>
       </div>
     </div>
   );

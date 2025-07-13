@@ -8,6 +8,7 @@ import MainLayout from "@/components/MainLayout";
 import Script from "next/script";
 import { mainKeywords } from "@/data/seo";
 import AdSense from "@/components/ad/AdSense";
+import { generateLocalizedMetadataFromContent } from "@/lib/seoUtils/seoMetadata";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -26,130 +27,28 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  const openGraphLinks = {
-    facebook: "https://www.facebook.com/AhmedElbannaLawyer",
-    linkedin: "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
-    instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
-    youtube: "https://www.youtube.com/@ahmed-elbanna1",
-    tiktok: "https://www.tiktok.com/@ahmedelbanna65",
+  const descriptionMap = {
+    ar: mainKeywords.ar_description,
+    en: mainKeywords.en_description,
+    fr: mainKeywords.fr_description,
   };
 
-  const metadataByLocale: Record<string, Metadata> = {
-    en: {
-      title: {
-        default: "Elbanna Law Firm",
-        template: "%s - Elbanna Law Firm",
-      },
-      description: mainKeywords.en_description,
-      twitter: {
-        card: "summary_large_image",
-        title: {
-          default: "Elbanna Law Firm",
-          template: "%s - Elbanna Law Firm",
-        },
-        description: mainKeywords.en_description,
-        images: ["/logo/opengraph.jpg"],
-      },
-
-      keywords: mainKeywords.en,
-      openGraph: {
-        type: "website",
-        url: "https://www.elbannalawfirm.com/en",
-        title: {
-          default: "Elbanna Law Firm",
-          template: "%s - Elbanna Law Firm",
-        },
-        description: mainKeywords.en_description,
-        siteName: "Elbanna",
-        images: [{ url: "/logo/opengraph.jpg", alt: "Elbanna Law Firm Logo" }],
-      },
-      other: {
-        "og:social": JSON.stringify(openGraphLinks),
-      },
-      icons: {
-        icon: "/logo/logo.png",
-      },
-    },
-    ar: {
-      title: {
-        default: "مكتب البنا للمحاماة",
-        template: "%s - مكتب البنا للمحاماة",
-      },
-      description: mainKeywords.ar_description,
-      twitter: {
-        card: "summary_large_image",
-        title: {
-          default: "مكتب البنا للمحاماة",
-          template: "%s - مكتب البنا للمحاماة",
-        },
-        description: mainKeywords.ar_description,
-        images: ["/logo/opengraph.jpg"],
-      },
-
-      keywords: mainKeywords.ar,
-      openGraph: {
-        type: "website",
-        url: "https://www.elbannalawfirm.com/ar",
-        title: {
-          default: "مكتب البنا للمحاماة",
-          template: "%s - مكتب البنا للمحاماة",
-        },
-        description: mainKeywords.ar_description,
-        siteName: "مكتب البنا",
-        images: [
-          { url: "/logo/opengraph.jpg", alt: "شعار مكتب البنا للمحاماة" },
-        ],
-      },
-      other: {
-        "og:social": JSON.stringify(openGraphLinks),
-      },
-      icons: {
-        icon: "/logo/logo.png",
-      },
-    },
-    fr: {
-      title: {
-        default: "Cabinet d'avocats Elbanna",
-        template: "%s - Cabinet d'avocats Elbanna",
-      },
-      description: mainKeywords.fr_description,
-      twitter: {
-        card: "summary_large_image",
-        title: {
-          default: "Cabinet d'avocats Elbanna",
-          template: "%s - Cabinet d'avocats Elbanna",
-        },
-        description: mainKeywords.fr_description,
-        images: ["/logo/opengraph.jpg"],
-      },
-
-      keywords: mainKeywords.fr,
-      openGraph: {
-        type: "website",
-        url: "https://www.elbannalawfirm.com/fr",
-        title: {
-          default: "Cabinet d'avocats Elbanna",
-          template: "%s - Cabinet d'avocats Elbanna",
-        },
-        description: mainKeywords.fr_description,
-        siteName: "Elbanna",
-        images: [
-          {
-            url: "/logo/opengraph.jpg",
-            alt: "Logo du cabinet d'avocats Elbanna",
-          },
-        ],
-      },
-      other: {
-        "og:social": JSON.stringify(openGraphLinks),
-      },
-      icons: {
-        icon: "/logo/logo.png",
-      },
-    },
+  const keywordMap: Record<string, string[]> = {
+    ar: mainKeywords.ar,
+    en: mainKeywords.en,
+    fr: mainKeywords.fr,
   };
 
-  return metadataByLocale[locale] || metadataByLocale.en;
+  const safeLocale = (
+    ["ar", "en", "fr"].includes(locale) ? locale : "en"
+  ) as LocaleKey;
+
+  return generateLocalizedMetadataFromContent({
+    description: descriptionMap[safeLocale],
+    path: "",
+    image: "/logo/opengraph.jpg",
+    keywordsByLocale: keywordMap,
+  });
 }
 
 export default async function RootLayout({

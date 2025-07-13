@@ -1,45 +1,19 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import CalculatorClient from "@/components/inheritance/CalculatorClient";
-import { Metadata } from "next";
 import { inheritanceKeywords } from "@/data/seo";
+import { generateLocalizedMetadataFromContent } from "@/lib/seoUtils/seoMetadata";
 
-export const generateMetadata = async (): Promise<Metadata> => {
+export async function generateMetadata() {
   const t = await getTranslations("HomePage");
-  const locale = await getLocale();
 
-  return {
+  return generateLocalizedMetadataFromContent({
     title: t("InheritanceSection.title"),
     description: t("InheritanceSection.paragraph"),
-    keywords: inheritanceKeywords[locale as keyof typeof inheritanceKeywords],
-    alternates: {
-      canonical: `https://elbannalawfirm.com/${locale}/inheritance-calculator`,
-      languages: {
-        en: "https://elbannalawfirm.com/en/inheritance-calculator",
-        ar: "https://elbannalawfirm.com/ar/inheritance-calculator",
-        fr: "https://elbannalawfirm.com/fr/inheritance-calculator",
-      },
-    },
-    openGraph: {
-      title: t("InheritanceSection.title"),
-      description: t("InheritanceSection.paragraph"),
-      url: `https://elbannalawfirm.com/${locale}/inheritance-calculator`,
-      images: [
-        {
-          url: "/logo/inheritance_opengraph.jpg",
-          alt: t("InheritanceSection.title"),
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("InheritanceSection.title"),
-      description: t("InheritanceSection.paragraph"),
-      site: "@elbannalaw",
-      creator: "@elbannalaw",
-      images: ["/logo/inheritance_opengraph.jpg"],
-    },
-  };
-};
+    path: "inheritance-calculator",
+    image: "/logo/inheritance_opengraph.jpg",
+    keywordsByLocale: inheritanceKeywords,
+  });
+}
 
 export default async function InheritancePage() {
   const t = await getTranslations("Inheritance");

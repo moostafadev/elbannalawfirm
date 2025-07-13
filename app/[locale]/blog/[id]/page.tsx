@@ -1,6 +1,7 @@
 import Animation from "@/components/Animation";
 import BreadcrumbC from "@/components/Breadcrumb";
 import { blogsData, ITitles } from "@/data/blogs";
+import { generateLocalizedMetadataFromContent } from "@/lib/seoUtils/seoMetadata";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import Image from "next/image";
@@ -13,28 +14,20 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const blog = blogsData.find((item) => item.id === +params.id);
   const locale = await getLocale();
-  return {
-    title: blog ? blog.titles[params.locale as keyof ITitles] : "Article",
-    openGraph: {
-      title: blog?.titles[locale as keyof ITitles],
-      description: blog?.content[locale as keyof ITitles].join(" . "),
-      url: `https://elbannalawfirm.com/${locale}/blog/${blog?.id}`,
-      images: [
-        {
-          url: `/imgs/blog_${blog?.id}.webp`,
-          alt: blog?.titles[locale as keyof ITitles],
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: blog?.titles[locale as keyof ITitles],
-      description: blog?.content[locale as keyof ITitles].join(" . "),
-      site: "@elbannalaw",
-      creator: "@elbannalaw",
-      images: [`/imgs/blog_${blog?.id}.webp`],
-    },
-  };
+
+  if (!blog) {
+    return {
+      title: "Article",
+      description: "Not found",
+    };
+  }
+
+  return generateLocalizedMetadataFromContent({
+    title: blog.titles[locale as keyof ITitles],
+    description: blog.content[locale as keyof ITitles].join(" . "),
+    path: `blog/${blog.id}`,
+    image: `/imgs/blog_${blog.id}.webp`,
+  });
 };
 
 const BlogPage = async ({ params: { id } }: { params: { id: string } }) => {
