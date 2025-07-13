@@ -12,8 +12,6 @@ const translations = {
   fr: "Vues",
 };
 
-const EXPIRY_MINUTES = 30;
-
 const ViewCount = () => {
   const locale = useLocale();
   const slug = usePathname();
@@ -24,32 +22,24 @@ const ViewCount = () => {
 
   useEffect(() => {
     const key = `viewed-${slug}`;
-    const stored = localStorage.getItem(key);
+    const hasViewed = sessionStorage.getItem(key);
 
-    if (stored) {
-      const { timestamp } = JSON.parse(stored);
-      const now = Date.now();
-      const elapsed = (now - timestamp) / (1000 * 60);
-
-      if (elapsed < EXPIRY_MINUTES) {
-        getViews(slug)
-          .then(setViews)
-          .finally(() => setLoading(false));
-        return;
-      } else {
-        localStorage.removeItem(key);
-      }
-    }
-
-    const increment = async () => {
-      await createView(slug);
-      const updated = await getViews(slug);
-      setViews(updated);
-      localStorage.setItem(key, JSON.stringify({ timestamp: Date.now() }));
+    const fetchViews = async () => {
+      const count = await getViews(slug);
+      setViews(count);
       setLoading(false);
     };
 
-    increment();
+    if (!hasViewed) {
+      const increment = async () => {
+        await createView(slug);
+        await fetchViews();
+        sessionStorage.setItem(key, "true");
+      };
+      increment();
+    } else {
+      fetchViews();
+    }
   }, [slug]);
 
   return (
