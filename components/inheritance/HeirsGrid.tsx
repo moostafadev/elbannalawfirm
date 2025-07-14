@@ -4,7 +4,6 @@ import { heirOptions } from "@/helpers/inheritance-calculator/constants";
 import Image from "next/image";
 import { Plus, Minus } from "lucide-react";
 import CustomButton from "../CustomButton";
-import Animation from "../Animation";
 
 interface Props {
   heirs: Heir[];
@@ -54,89 +53,87 @@ const HeirItem = React.memo(
     exists: boolean;
   }) => {
     return (
-      <Animation origin="top" animationName="animation-inheritance-item">
+      <div
+        className={`flex flex-col gap-2 rounded-lg shadow-sm duration-300 hover:shadow-md border items-center justify-center ${
+          locale === "ar" ? "p-3" : "px-1 py-2 sm:p-3"
+        } ${
+          heirCount > 0
+            ? "border-primary/60 bg-primary/20 !shadow-md scale-[1.02]"
+            : "border-primary/30"
+        }`}
+      >
+        <Image
+          src={opt.img?.src}
+          alt={opt.img?.alt}
+          width={100}
+          height={100}
+          className="w-16 lg:w-[72px]"
+        />
+        <p
+          className={`${
+            locale === "ar"
+              ? "text-sm sm:text-base lg:text-lg"
+              : "text-xs sm:text-sm lg:text-base"
+          } font-bold text-primary`}
+        >
+          {opt.label[locale]}
+        </p>
         <div
-          className={`flex flex-col gap-2 rounded-lg shadow-sm duration-300 hover:shadow-md border items-center justify-center ${
-            locale === "ar" ? "p-3" : "px-1 py-2 sm:p-3"
-          } ${
-            heirCount > 0
-              ? "border-primary/60 bg-primary/20 !shadow-md scale-[1.02]"
-              : "border-primary/30"
+          className={`flex justify-between items-center ${
+            locale === "ar" ? "gap-2" : "gap-1 flex-wrap"
           }`}
         >
-          <Image
-            src={opt.img?.src}
-            alt={opt.img?.alt}
-            width={100}
-            height={100}
-            className="w-16 lg:w-[72px]"
-          />
-          <p
-            className={`${
-              locale === "ar"
-                ? "text-sm sm:text-base lg:text-lg"
-                : "text-xs sm:text-sm lg:text-base"
-            } font-bold text-primary`}
-          >
-            {opt.label[locale]}
-          </p>
-          <div
-            className={`flex justify-between items-center ${
-              locale === "ar" ? "gap-2" : "gap-1 flex-wrap"
-            }`}
-          >
-            {isBinary ? (
-              <>
-                <CustomButton
-                  onClick={() => onToggleAliveDead(true)}
-                  size="fit"
-                  color="yellow"
-                  disabled={exists}
-                  className={`hover:scale-100 !py-1 !px-3 ${
-                    locale === "ar" ? "" : "text-xs sm:text-base"
-                  }`}
-                >
-                  {alive}
-                </CustomButton>
-                <CustomButton
-                  onClick={() => onToggleAliveDead(false)}
-                  size="fit"
-                  color="red"
-                  disabled={!exists}
-                  className={`border !border-red-700 hover:scale-100 !py-1 !px-3 ${
-                    locale === "ar" ? "" : "text-xs sm:text-base"
-                  }`}
-                >
-                  {dead}
-                </CustomButton>
-              </>
-            ) : (
-              <>
-                <CustomButton
-                  onClick={onAdd}
-                  size="fit"
-                  color="yellow"
-                  disabled={maxReached}
-                  className={`border border-primary/90 hover:scale-100 !py-1 !px-1 ${
-                    maxReached ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                >
-                  <Plus className="w-4 h-4 lg:w-5 lg:h-5" />
-                </CustomButton>
-                <p className="w-5 text-center">{heirCount}</p>
-                <CustomButton
-                  onClick={onRemove}
-                  size="fit"
-                  color="red"
-                  className="border border-red-700 hover:scale-100 !py-1 !px-1"
-                >
-                  <Minus className="w-4 h-4 lg:w-5 lg:h-5" />
-                </CustomButton>
-              </>
-            )}
-          </div>
+          {isBinary ? (
+            <>
+              <CustomButton
+                onClick={() => onToggleAliveDead(true)}
+                size="fit"
+                color="yellow"
+                disabled={exists}
+                className={`hover:scale-100 !py-1 !px-3 ${
+                  locale === "ar" ? "" : "text-xs sm:text-base"
+                }`}
+              >
+                {alive}
+              </CustomButton>
+              <CustomButton
+                onClick={() => onToggleAliveDead(false)}
+                size="fit"
+                color="red"
+                disabled={!exists}
+                className={`border !border-red-700 hover:scale-100 !py-1 !px-3 ${
+                  locale === "ar" ? "" : "text-xs sm:text-base"
+                }`}
+              >
+                {dead}
+              </CustomButton>
+            </>
+          ) : (
+            <>
+              <CustomButton
+                onClick={onAdd}
+                size="fit"
+                color="yellow"
+                disabled={maxReached}
+                className={`border border-primary/90 hover:scale-100 !py-1 !px-1 ${
+                  maxReached ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                <Plus className="w-4 h-4 lg:w-5 lg:h-5" />
+              </CustomButton>
+              <p className="w-5 text-center">{heirCount}</p>
+              <CustomButton
+                onClick={onRemove}
+                size="fit"
+                color="red"
+                className="border border-red-700 hover:scale-100 !py-1 !px-1"
+              >
+                <Minus className="w-4 h-4 lg:w-5 lg:h-5" />
+              </CustomButton>
+            </>
+          )}
         </div>
-      </Animation>
+      </div>
     );
   },
   (prevProps, nextProps) => {

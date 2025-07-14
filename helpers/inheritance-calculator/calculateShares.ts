@@ -54,6 +54,10 @@ export default class InheritanceCalculator {
 
     const hasMaleDescendants = !!p["son"] || !!p["son_son"];
 
+    if (p["father"] || p["grandfather"] || p["son"] || p["son_son"]) {
+      block("maternal_brother", "maternal_sister");
+    }
+
     if (p["father"]) {
       block(
         "full_brother",
@@ -141,6 +145,8 @@ export default class InheritanceCalculator {
       s["grandfather"] = 1 / 6;
     }
 
+    this.calculateMaternalSiblingsShares();
+
     // Special case: daughter + son_daughter only
     if (
       p["daughter"] === 1 &&
@@ -208,6 +214,42 @@ export default class InheritanceCalculator {
     }
   }
 
+  // دالة جديدة لحساب نصيب الإخوة لأم
+  private calculateMaternalSiblingsShares() {
+    const p = this.present;
+    const s = this.shares;
+
+    if (this.blocked["maternal_brother"] || this.blocked["maternal_sister"]) {
+      return;
+    }
+
+    const maternalBrothers = p["maternal_brother"] || 0;
+    const maternalSisters = p["maternal_sister"] || 0;
+    const totalMaternalSiblings = maternalBrothers + maternalSisters;
+
+    if (totalMaternalSiblings > 0) {
+      if (totalMaternalSiblings === 1) {
+        const shareValue = 1 / 6;
+        if (maternalBrothers > 0) {
+          s["maternal_brother"] = shareValue;
+        }
+        if (maternalSisters > 0) {
+          s["maternal_sister"] = shareValue;
+        }
+      } else {
+        const totalShare = 1 / 3;
+        const sharePerPerson = totalShare / totalMaternalSiblings;
+
+        if (maternalBrothers > 0) {
+          s["maternal_brother"] = sharePerPerson * maternalBrothers;
+        }
+        if (maternalSisters > 0) {
+          s["maternal_sister"] = sharePerPerson * maternalSisters;
+        }
+      }
+    }
+  }
+
   private applyAwlIfNeeded() {
     const total = this.sum(this.shares);
     if (total > 1) {
@@ -253,6 +295,27 @@ export default class InheritanceCalculator {
         return distributeAsaba(m, f);
     }
 
+    if (this.canMaternalSiblingsInheritAsAsaba()) {
+      const maternalBrothers = p["maternal_brother"] || 0;
+      const maternalSisters = p["maternal_sister"] || 0;
+      const totalMaternalSiblings = maternalBrothers + maternalSisters;
+
+      if (totalMaternalSiblings > 0) {
+        const sharePerPerson =
+          remaining / (totalMaternalSiblings * this.estate);
+
+        if (maternalBrothers > 0) {
+          s["maternal_brother"] =
+            (s["maternal_brother"] || 0) + sharePerPerson * maternalBrothers;
+        }
+        if (maternalSisters > 0) {
+          s["maternal_sister"] =
+            (s["maternal_sister"] || 0) + sharePerPerson * maternalSisters;
+        }
+        return;
+      }
+    }
+
     const maleAsaba: HeirType[] = [
       "full_uncle",
       "paternal_uncle",
@@ -275,6 +338,31 @@ export default class InheritanceCalculator {
         }
       }
     }
+  }
+
+  private canMaternalSiblingsInheritAsAsaba(): boolean {
+    const p = this.present;
+
+    const hasOtherAsaba = !!(
+      p["son"] ||
+      p["son_son"] ||
+      p["father"] ||
+      p["grandfather"] ||
+      p["full_brother"] ||
+      p["paternal_brother"] ||
+      p["full_uncle"] ||
+      p["paternal_uncle"] ||
+      p["son_of_full_uncle"] ||
+      p["son_of_paternal_uncle"] ||
+      p["son_of_full_brother"] ||
+      p["son_of_paternal_brother"]
+    );
+
+    return (
+      !hasOtherAsaba &&
+      !this.blocked["maternal_brother"] &&
+      !this.blocked["maternal_sister"]
+    );
   }
 
   private applyRaddIfNeeded() {
