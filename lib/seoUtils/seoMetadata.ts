@@ -1,5 +1,14 @@
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import { legalServices, openGraphLinks, titleMap } from "./constants";
+
+interface GenerateMetadataOptions {
+  title?: string;
+  description: string;
+  path: string;
+  image: string;
+  keywordsByLocale?: Record<string, string[]>;
+}
 
 export async function generateLocalizedMetadataFromContent({
   title,
@@ -7,55 +16,36 @@ export async function generateLocalizedMetadataFromContent({
   path,
   image,
   keywordsByLocale,
-}: {
-  title?: string;
-  description: string;
-  path: string;
-  image: string;
-  keywordsByLocale?: Record<string, string[]>;
-}): Promise<Metadata> {
-  const locale = await getLocale();
-  const url = `https://elbannalawfirm.com/${locale}/${path}`;
-  const keywords = keywordsByLocale?.[locale] || [];
-
-  const titleMap: Record<LocaleKey, string> = {
-    ar: "مكتب البنا للمحاماة",
-    en: "Elbanna Law Firm",
-    fr: "Cabinet d'avocats Elbanna",
-  };
-
-  const firmTitle = titleMap[locale as LocaleKey] ?? "Elbanna Law Firm";
-  const finalTitle = title ? `${title} - ${firmTitle}` : firmTitle;
-
-  const optimizedDescription =
-    description.length > 160
-      ? description.substring(0, 157) + "..."
-      : description;
-
-  const openGraphLinks = {
-    facebook: "https://www.facebook.com/AhmedElbannaLawyer",
-    linkedin: "https://www.linkedin.com/company/ahmed-elbanna-lawyer-369527297",
-    instagram: "https://www.instagram.com/ahmed_elbanna_lawyer",
-    youtube: "https://www.youtube.com/@ahmed-elbanna1",
-    tiktok: "https://www.tiktok.com/@ahmedelbanna65",
-  };
+}: GenerateMetadataOptions): Promise<Metadata> {
+  const locale = (await getLocale()) as LocaleKey;
+  const firmTitle = titleMap[locale] ?? "Elbanna Law Firm";
+  const fullTitle = title ? `${title} - ${firmTitle}` : firmTitle;
+  const fullURL = `https://elbannalawfirm.com/${locale}/${path}`;
+  const imageURL = `https://elbannalawfirm.com${image}`;
+  const services = legalServices[locale] ?? legalServices.en;
+  const keywords = (keywordsByLocale?.[locale] ?? []).join(", ");
 
   return {
-    title: finalTitle,
-    description: optimizedDescription,
+    title: fullTitle,
+    description,
     keywords,
+    authors: [{ name: "Ahmed Elbanna", url: "https://elbannalawfirm.com" }],
+    creator: "Elbanna Law Firm",
+    publisher: "Elbanna Law Firm",
+    category: "Legal Services",
+    metadataBase: new URL("https://elbannalawfirm.com"),
 
     openGraph: {
-      title: finalTitle,
-      description: optimizedDescription,
-      url,
+      title: fullTitle,
+      description,
+      url: fullURL,
       siteName: firmTitle,
       locale,
       type: "website",
       images: [
         {
-          url: `https://elbannalawfirm.com${image}`,
-          alt: title ?? firmTitle,
+          url: imageURL,
+          alt: fullTitle,
           width: 1200,
           height: 630,
         },
@@ -64,11 +54,11 @@ export async function generateLocalizedMetadataFromContent({
 
     twitter: {
       card: "summary_large_image",
-      title: finalTitle,
-      description: optimizedDescription,
+      title: fullTitle,
+      description,
       site: "@elbannalaw",
       creator: "@elbannalaw",
-      images: [`https://elbannalawfirm.com${image}`],
+      images: [imageURL],
     },
 
     robots: {
@@ -85,30 +75,42 @@ export async function generateLocalizedMetadataFromContent({
       },
     },
 
-    metadataBase: new URL("https://elbannalawfirm.com"),
-
     alternates: {
-      canonical: url,
+      canonical: fullURL,
       languages: {
-        ar: `https://elbannalawfirm.com/ar${path ? `/${path}` : ""}`,
-        en: `https://elbannalawfirm.com/en${path ? `/${path}` : ""}`,
-        fr: `https://elbannalawfirm.com/fr${path ? `/${path}` : ""}`,
+        ar: `https://elbannalawfirm.com/ar/${path}`,
+        en: `https://elbannalawfirm.com/en/${path}`,
+        fr: `https://elbannalawfirm.com/fr/${path}`,
       },
     },
 
     other: {
       "og:social": JSON.stringify(openGraphLinks),
       "article:author": "Ahmed Elbanna",
-      "article:publisher": "https://www.facebook.com/AhmedElbannaLawyer",
-      "theme-color": "#1f2937",
-      "msapplication-TileColor": "#1f2937",
+      "article:publisher": openGraphLinks.facebook,
+      "theme-color": "#8d7101",
+      "msapplication-TileColor": "#8d7101",
       "apple-mobile-web-app-capable": "yes",
       "apple-mobile-web-app-status-bar-style": "default",
+
+      "DC.title": fullTitle,
+      "DC.creator": "Ahmed Elbanna",
+      "DC.subject": `Legal Services, Law Firm, Egypt, ${services
+        .slice(0, 3)
+        .join(", ")}`,
+      "DC.description": description,
+      "DC.publisher": "Elbanna Law Firm",
+      "DC.contributor": "Ahmed Elbanna",
+      "DC.format": "text/html",
+      "DC.identifier": fullURL,
+      "DC.language": locale,
+      "DC.coverage": "Egypt",
+      "DC.rights": "Copyright Elbanna Law Firm",
     },
 
     appLinks: {
       web: {
-        url,
+        url: fullURL,
         should_fallback: true,
       },
     },
