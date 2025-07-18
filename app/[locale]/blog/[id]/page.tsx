@@ -33,21 +33,20 @@ export const generateMetadata = async ({
 const BlogPage = async ({ params: { id } }: { params: { id: string } }) => {
   const locale = await getLocale();
   const blog = blogsData.find((item) => item.id === +id);
+
   const breadcrumbTitles = {
     ar: "الصفحة الرئيسية",
     en: "Home",
     fr: "Page d'accueil",
   };
 
-  const articlePrefix = {
-    ar: "مقال -",
-    en: "Article -",
-    fr: "Article -",
-  };
+  const currentTitle = blog?.titles[locale as keyof ITitles];
+  const currentContent =
+    blog?.largeContent[locale as keyof typeof blog.largeContent];
 
   return (
-    <section className="py-6">
-      <div className="container">
+    <article className="py-6">
+      <div className="container max-w-5xl">
         <div className="flex flex-col gap-6">
           <BreadcrumbC
             links={[
@@ -58,37 +57,45 @@ const BlogPage = async ({ params: { id } }: { params: { id: string } }) => {
                 href: "/",
               },
               {
-                title: `${
-                  articlePrefix[locale as keyof typeof articlePrefix]
-                } ${blog?.titles[locale as keyof ITitles]}`,
+                title: currentTitle as string,
                 isNotLast: false,
               },
             ]}
           />
-          <div>
+
+          <figure>
             <Animation>
               <Image
                 src={blog?.image as string}
-                alt={"image"}
-                width={2000}
-                height={2000}
-                className="rounded-lg max-w-full"
-                loading="lazy"
+                alt={currentTitle as string}
+                width={1200}
+                height={630}
+                className="rounded-lg w-full h-auto"
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
               />
             </Animation>
-          </div>
-          <div className="flex flex-col gap-3">
-            {blog?.largeContent[locale as keyof typeof blog.largeContent].map(
-              (paragraph, index) => (
-                <p key={index} className="text-lg text-neutral-900">
+          </figure>
+
+          <div
+            className="prose prose-lg max-w-none"
+            itemScope
+            itemType="https://schema.org/Article"
+          >
+            <div itemProp="articleBody">
+              {currentContent?.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-lg text-neutral-900 mb-4 leading-relaxed"
+                >
                   {paragraph}
                 </p>
-              )
-            )}
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </article>
   );
 };
 
