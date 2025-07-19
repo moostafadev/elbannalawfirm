@@ -309,11 +309,11 @@ export const mainKeywords = {
     "Avocat Harcèlement Travail",
   ],
   en_description:
-    "Elbanna Law Firm is a premier full-service legal practice based in Egypt, offering expert legal counsel in civil, criminal, commercial, family, and inheritance law. With decades of combined experience, our attorneys deliver personalized legal strategies tailored to each client's unique needs. We are committed to justice, integrity, and results, serving clients locally and internationally in both English and Arabic. Contact us today for dependable legal support and trusted representation.",
+    "Elbanna Law Firm offers expert legal services in Egypt in civil, criminal, commercial, family, and inheritance law. Trusted by local and global clients.",
   ar_description:
-    "مكتب البنا للمحاماة هو مكتب قانوني رائد يقدم خدمات قانونية شاملة في مصر، ويضم نخبة من المحامين المتخصصين في القانون المدني، والجنائي، والتجاري، والأحوال الشخصية، وقضايا المواريث. نمتلك سنوات من الخبرة العملية ونوفر استشارات قانونية مخصصة لكل حالة، مع التزامنا الكامل بالنزاهة وتحقيق أفضل النتائج لعملائنا محليًا ودوليًا. تواصل معنا اليوم للحصول على الدعم القانوني الموثوق والتمثيل الاحترافي.",
+    "مكتب البنا للمحاماة يقدم خدمات قانونية متخصصة في مصر تشمل المدني والجنائي والتجاري والأحوال الشخصية والمواريث، بخبرة واسعة وموثوقية عالية.",
   fr_description:
-    "Le cabinet d'avocats Elbanna est une étude juridique de premier plan basée en Égypte, spécialisée dans le droit civil, pénal, commercial, de la famille et des successions. Forts de plusieurs années d'expérience, nos avocats offrent des solutions juridiques personnalisées et efficaces adaptées aux besoins spécifiques de chaque client. Nous sommes engagés à fournir un service fondé sur l'intégrité, la transparence et les résultats. Contactez-nous pour une assistance juridique fiable en français, anglais ou arabe.",
+    "Le cabinet Elbanna propose des services juridiques en Égypte en droit civil, pénal, commercial, familial et successoral, avec expertise et fiabilité.",
 };
 
 export const inheritanceKeywords = {
