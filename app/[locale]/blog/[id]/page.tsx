@@ -1,3 +1,4 @@
+import AdBanner from "@/components/ad/AdBanner";
 import Animation from "@/components/Animation";
 import BreadcrumbC from "@/components/Breadcrumb";
 import { blogsData, ITitles } from "@/data/blogs";
@@ -92,6 +93,14 @@ const BlogPage = async ({ params: { id } }: { params: { id: string } }) => {
                 </p>
               ))}
             </div>
+          </div>
+
+          <div className="mt-5">
+            <AdBanner
+              dataAdFormat="auto"
+              dataFullWidthResponsive={true}
+              dataAdSlot="2456497086"
+            />
           </div>
         </div>
       </div>

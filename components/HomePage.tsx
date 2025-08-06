@@ -11,6 +11,7 @@ import { ChevronDown } from "lucide-react";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import CustomButton from "./CustomButton";
+import AdBanner from "./ad/AdBanner";
 
 interface HomeClientProps {
   locale: string;
@@ -126,6 +127,13 @@ export default function HomeClient({ translations }: HomeClientProps) {
                 ))}
               </Animation>
             </div>
+          </div>
+          <div className="mx-auto">
+            <AdBanner
+              dataAdFormat="auto"
+              dataFullWidthResponsive={true}
+              dataAdSlot="2456497086"
+            />
           </div>
         </div>
       </section>
