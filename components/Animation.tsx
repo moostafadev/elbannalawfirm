@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
+import { cleanReveal, scheduleReveal } from "@/lib/scroll-reveal";
 
 /**
  * Props for the `Animation` component using ScrollReveal.
@@ -37,6 +38,7 @@ type AnimationProps = {
 
 /**
  * `Animation` is a reusable wrapper component for applying scroll-based animations using ScrollReveal.
+ * All instances share a single lazily-loaded ScrollReveal instance (see `lib/scroll-reveal.ts`).
  *
  * @example
  * ```tsx
@@ -55,24 +57,32 @@ const Animation = ({
   animationName = "content-data",
   className,
 }: AnimationProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    async function animate() {
-      const sr = (await import("scrollreveal")).default;
+    const element = ref.current;
 
-      sr({
-        origin,
-        distance,
-        duration,
-        reset,
-      }).reveal(`.${animationName}`, {
-        interval,
-      });
-    }
+    scheduleReveal(animationName, {
+      origin,
+      distance,
+      duration,
+      interval,
+      reset,
+    });
 
-    animate();
+    return () => {
+      if (element) cleanReveal(element);
+    };
   }, [origin, distance, duration, interval, reset, animationName]);
 
-  return <div className={`${animationName} ${className}`}>{children}</div>;
+  return (
+    <div
+      ref={ref}
+      className={[animationName, className].filter(Boolean).join(" ")}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Animation;
