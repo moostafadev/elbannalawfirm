@@ -1,26 +1,43 @@
-import { blogsData } from "@/data/blogs";
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { getBlogsForSitemap } from "@/services/blog.service";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.elbannalawfirm.com";
-  const now = new Date().toISOString();
-  const languages = ["ar", "en", "fr"];
+const BASE_URL = "https://www.elbannalawfirm.com";
+const LANGUAGES = ["ar", "en", "fr"] as const;
 
-  const staticPaths = languages.flatMap((lang) => [
-    `/${lang}`,
-    `/${lang}/inheritance-calculator`,
-  ]);
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date();
+  const blogs = await getBlogsForSitemap();
 
-  const blogPaths = blogsData.flatMap(({ id }) =>
-    languages.map((lang) => `/${lang}/blog/${id}`)
-  );
+  const staticEntries: MetadataRoute.Sitemap = [
+    { url: BASE_URL, lastModified: now, changeFrequency: "daily", priority: 1 },
+    ...LANGUAGES.flatMap((lang) => [
+      {
+        url: `${BASE_URL}/${lang}`,
+        lastModified: now,
+        changeFrequency: "daily" as const,
+        priority: 0.9,
+      },
+      {
+        url: `${BASE_URL}/${lang}/blog`,
+        lastModified: now,
+        changeFrequency: "daily" as const,
+        priority: 0.9,
+      },
+      {
+        url: `${BASE_URL}/${lang}/inheritance-calculator`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.9,
+      },
+    ]),
+  ];
 
-  const allPaths = ["", ...staticPaths, ...blogPaths];
-
-  return allPaths.map((path) => ({
-    url: `${baseUrl}${path}`,
-    lastModified: now,
-    changeFrequency: path === "" ? "daily" : "weekly",
-    priority: path === "" ? 1.0 : path.startsWith("/blog") ? 0.8 : 0.9,
+  const blogEntries: MetadataRoute.Sitemap = blogs.map((blog) => ({
+    url: `${BASE_URL}/${blog.lang}/blog/${blog.id}`,
+    lastModified: new Date(blog.updatedAt),
+    changeFrequency: "weekly",
+    priority: 0.8,
   }));
+
+  return [...staticEntries, ...blogEntries];
 }

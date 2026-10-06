@@ -1,8 +1,8 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { AccordionFAQ } from "@/components/Accordion";
 import Animation from "@/components/Animation";
-import BlogsSection from "@/components/BlogsSection";
 import ContactForm from "@/components/ContactForm";
 import Heading from "@/components/Heading";
 import HomePageOverlay from "@/components/HomePageOverlay";
@@ -15,6 +15,7 @@ import AdBanner from "./ad/AdBanner";
 
 interface HomeClientProps {
   locale: string;
+  blogsSection: ReactNode;
   translations: {
     heroTitle: string;
     heroParagraph: string;
@@ -35,7 +36,10 @@ interface HomeClientProps {
   };
 }
 
-export default function HomeClient({ translations }: HomeClientProps) {
+export default function HomeClient({
+  translations,
+  blogsSection,
+}: HomeClientProps) {
   const locale = useLocale();
   const t = translations;
 
@@ -198,7 +202,7 @@ export default function HomeClient({ translations }: HomeClientProps) {
       <section className="min-h-screen flex py-16" id="blog">
         <div className="container flex flex-col gap-20">
           <Heading>{t.blogTitle}</Heading>
-          <BlogsSection />
+          {blogsSection}
         </div>
       </section>
 

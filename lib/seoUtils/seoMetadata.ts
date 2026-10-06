@@ -2,13 +2,20 @@ import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { legalServices, openGraphLinks, titleMap } from "./constants";
 
+const SITE_URL = "https://elbannalawfirm.com";
+const ALL_LOCALES: LocaleKey[] = ["ar", "en", "fr"];
+
 interface GenerateMetadataOptions {
   title?: string;
   description: string;
   path: string;
   image: string;
   keywordsByLocale?: Record<string, string[]>;
+  alternateLocales?: LocaleKey[];
 }
+
+const resolveImageUrl = (image: string): string =>
+  /^https?:\/\//i.test(image) ? image : `${SITE_URL}${image}`;
 
 export async function generateLocalizedMetadataFromContent({
   title,
@@ -16,12 +23,13 @@ export async function generateLocalizedMetadataFromContent({
   path,
   image,
   keywordsByLocale,
+  alternateLocales = ALL_LOCALES,
 }: GenerateMetadataOptions): Promise<Metadata> {
   const locale = (await getLocale()) as LocaleKey;
   const firmTitle = titleMap[locale] ?? "Elbanna Law Firm";
   const fullTitle = title ? `${title} - ${firmTitle}` : firmTitle;
-  const fullURL = `https://elbannalawfirm.com/${locale}/${path}`;
-  const imageURL = `https://elbannalawfirm.com${image}`;
+  const fullURL = `${SITE_URL}/${locale}/${path}`;
+  const imageURL = resolveImageUrl(image);
   const services = legalServices[locale] ?? legalServices.en;
   const keywords = (keywordsByLocale?.[locale] ?? []).join(", ");
 
@@ -29,11 +37,11 @@ export async function generateLocalizedMetadataFromContent({
     title: fullTitle,
     description,
     keywords,
-    authors: [{ name: "Ahmed Elbanna", url: "https://elbannalawfirm.com" }],
+    authors: [{ name: "Ahmed Elbanna", url: SITE_URL }],
     creator: "Elbanna Law Firm",
     publisher: "Elbanna Law Firm",
     category: "Legal Services",
-    metadataBase: new URL("https://elbannalawfirm.com"),
+    metadataBase: new URL(SITE_URL),
 
     openGraph: {
       title: fullTitle,
@@ -77,11 +85,9 @@ export async function generateLocalizedMetadataFromContent({
 
     alternates: {
       canonical: fullURL,
-      languages: {
-        ar: `https://elbannalawfirm.com/ar/${path}`,
-        en: `https://elbannalawfirm.com/en/${path}`,
-        fr: `https://elbannalawfirm.com/fr/${path}`,
-      },
+      languages: Object.fromEntries(
+        alternateLocales.map((item) => [item, `${SITE_URL}/${item}/${path}`]),
+      ),
     },
 
     other: {

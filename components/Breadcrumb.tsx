@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import React from "react";
 
 interface ILink {
@@ -27,7 +27,7 @@ const BreadcrumbC = ({ links }: { links: ILink[] }) => {
             <React.Fragment key={idx}>
               <BreadcrumbItem>
                 <Link
-                  href={link.href as string}
+                  href={link.href ?? "/"}
                   className="font-bold text-black"
                   title={link.title}
                 >

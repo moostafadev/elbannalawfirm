@@ -2,6 +2,39 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
+const BLOG_CONTENT_CLASSES = [
+  "text-4xl",
+  "text-3xl",
+  "text-2xl",
+  "text-xl",
+  "text-lg",
+  "text-base",
+  "font-bold",
+  "font-semibold",
+  "italic",
+  "underline",
+  "whitespace-pre-line",
+  "list-disc",
+  "list-decimal",
+  "list-inside",
+  "text-center",
+  "block",
+  "w-full",
+  "max-w-full",
+  "h-auto",
+  "text-primary",
+  "text-black",
+  "text-green-600",
+  "text-red-600",
+  "text-blue-600",
+  "mt-0",
+  "mt-1",
+  "mt-2",
+  "mt-4",
+  "mt-6",
+  "mt-8",
+];
+
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -9,6 +42,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: BLOG_CONTENT_CLASSES,
   theme: {
     screens: {
       sm: "640px",

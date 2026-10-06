@@ -1,4 +1,7 @@
+import { Suspense } from "react";
 import HomeClient from "@/components/HomePage";
+import BlogsSection from "@/components/BlogsSection";
+import BlogsSkeleton from "@/components/Blogs/BlogsSkeleton";
 import { getTranslations, getLocale } from "next-intl/server";
 
 export default async function HomePage() {
@@ -22,7 +25,7 @@ export default async function HomePage() {
     servicesTitle: t("ServicesSection.title"),
     servicesParagraph0: t("ServicesSection.paragraph.0"),
     servicesList: Array.from({ length: 10 }, (_, i) =>
-      t(`ServicesSection.paragraph.${i + 1}`)
+      t(`ServicesSection.paragraph.${i + 1}`),
     ),
     blogTitle: t("BlogSection.title"),
     faqTitle: t("FAQsSection.title"),
@@ -33,5 +36,15 @@ export default async function HomePage() {
     tryNow: t("InheritanceSection.tryNow"),
   };
 
-  return <HomeClient locale={locale} translations={translations} />;
+  return (
+    <HomeClient
+      locale={locale}
+      translations={translations}
+      blogsSection={
+        <Suspense fallback={<BlogsSkeleton />}>
+          <BlogsSection locale={locale} />
+        </Suspense>
+      }
+    />
+  );
 }
