@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import { LOCALE_TAGS } from "@/constants/blog";
+import { SITE_URL } from "@/constants/site";
+import { DEFAULT_LOCALE } from "@/lib/locale";
 import { legalServices, openGraphLinks, titleMap } from "./constants";
 
-const SITE_URL = "https://elbannalawfirm.com";
 const ALL_LOCALES: LocaleKey[] = ["ar", "en", "fr"];
 
 interface GenerateMetadataOptions {
@@ -12,6 +14,10 @@ interface GenerateMetadataOptions {
   image: string;
   keywordsByLocale?: Record<string, string[]>;
   alternateLocales?: LocaleKey[];
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
 }
 
 const resolveImageUrl = (image: string): string =>
@@ -24,6 +30,10 @@ export async function generateLocalizedMetadataFromContent({
   image,
   keywordsByLocale,
   alternateLocales = ALL_LOCALES,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  section,
 }: GenerateMetadataOptions): Promise<Metadata> {
   const locale = (await getLocale()) as LocaleKey;
   const firmTitle = titleMap[locale] ?? "Elbanna Law Firm";
@@ -31,7 +41,38 @@ export async function generateLocalizedMetadataFromContent({
   const fullURL = `${SITE_URL}/${locale}/${path}`;
   const imageURL = resolveImageUrl(image);
   const services = legalServices[locale] ?? legalServices.en;
-  const keywords = (keywordsByLocale?.[locale] ?? []).join(", ");
+  const keywordList = keywordsByLocale?.[locale] ?? [];
+  const keywords = keywordList.join(", ");
+
+  const languages: Record<string, string> = Object.fromEntries(
+    alternateLocales.map((item) => [item, `${SITE_URL}/${item}/${path}`]),
+  );
+
+  if (alternateLocales.length > 1) {
+    languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}/${path}`;
+  }
+
+  const openGraphBase = {
+    title: fullTitle,
+    description,
+    url: fullURL,
+    siteName: firmTitle,
+    locale: LOCALE_TAGS[locale].replace("-", "_"),
+    images: [{ url: imageURL, alt: fullTitle, width: 1200, height: 630 }],
+  };
+
+  const openGraph: Metadata["openGraph"] =
+    type === "article"
+      ? {
+          ...openGraphBase,
+          type: "article",
+          publishedTime,
+          modifiedTime,
+          authors: ["Ahmed Elbanna"],
+          section,
+          tags: keywordList.length > 0 ? keywordList : undefined,
+        }
+      : { ...openGraphBase, type: "website" };
 
   return {
     title: fullTitle,
@@ -43,22 +84,7 @@ export async function generateLocalizedMetadataFromContent({
     category: "Legal Services",
     metadataBase: new URL(SITE_URL),
 
-    openGraph: {
-      title: fullTitle,
-      description,
-      url: fullURL,
-      siteName: firmTitle,
-      locale,
-      type: "website",
-      images: [
-        {
-          url: imageURL,
-          alt: fullTitle,
-          width: 1200,
-          height: 630,
-        },
-      ],
-    },
+    openGraph,
 
     twitter: {
       card: "summary_large_image",
@@ -85,9 +111,7 @@ export async function generateLocalizedMetadataFromContent({
 
     alternates: {
       canonical: fullURL,
-      languages: Object.fromEntries(
-        alternateLocales.map((item) => [item, `${SITE_URL}/${item}/${path}`]),
-      ),
+      languages,
     },
 
     other: {

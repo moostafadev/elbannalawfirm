@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/constants/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: `https://www.elbannalawfirm.com/sitemap.xml`,
-    host: "https://www.elbannalawfirm.com",
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

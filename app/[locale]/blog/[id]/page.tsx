@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
@@ -9,6 +9,9 @@ import BreadcrumbC from "@/components/Breadcrumb";
 import BlogContent from "@/components/Blogs/BlogContent";
 import BlogImage from "@/components/Blogs/BlogImage";
 import BlogJsonLd from "@/components/Blogs/BlogJsonLd";
+import CommentsBlock from "@/components/Blogs/CommentsBlock";
+import CommentsSkeleton from "@/components/Blogs/CommentsSkeleton";
+import LikeButton from "@/components/Blogs/LikeButton";
 import ShareButtons from "@/components/Blogs/ShareButtons";
 import TableOfContents from "@/components/Blogs/TableOfContents";
 import { Link } from "@/i18n/routing";
@@ -39,7 +42,17 @@ export const generateMetadata = async ({
     return { title: "Article", robots: { index: false, follow: false } };
   }
 
-  const { id, title, desc, image, lang, keywords } = res.data;
+  const {
+    id,
+    title,
+    desc,
+    image,
+    lang,
+    keywords,
+    category,
+    createdAt,
+    updatedAt,
+  } = res.data;
 
   return generateLocalizedMetadataFromContent({
     title,
@@ -48,6 +61,10 @@ export const generateMetadata = async ({
     image,
     keywordsByLocale: { [lang]: keywords },
     alternateLocales: [lang],
+    type: "article",
+    publishedTime: createdAt,
+    modifiedTime: updatedAt,
+    section: category,
   });
 };
 
@@ -76,7 +93,15 @@ const BlogPage = async ({ params: { id } }: PageProps) => {
 
   return (
     <article className="py-6">
-      <BlogJsonLd blog={blog} url={url} />
+      <BlogJsonLd
+        blog={blog}
+        url={url}
+        breadcrumbs={[
+          { name: texts.home, url: `${SITE_URL}/${locale}` },
+          { name: texts.blogs, url: `${SITE_URL}/${locale}/blog` },
+          { name: blog.title, url },
+        ]}
+      />
       <div className="container max-w-6xl">
         <div className="flex flex-col gap-6">
           <BreadcrumbC
@@ -154,7 +179,20 @@ const BlogPage = async ({ params: { id } }: PageProps) => {
                 }
               />
 
+              <div className="flex flex-wrap items-center gap-3 border-t pt-4">
+                <LikeButton
+                  blogId={blog.id}
+                  initialCount={blog.likesCount}
+                  locale={locale}
+                />
+              </div>
+
               <ShareButtons url={url} title={blog.title} locale={locale} />
+
+              <Suspense fallback={<CommentsSkeleton />}>
+                <CommentsBlock blogId={blog.id} locale={locale} />
+              </Suspense>
+
               <AdBanner
                 dataAdFormat="auto"
                 dataFullWidthResponsive={true}

@@ -67,6 +67,7 @@ model Comment {
   updatedAt DateTime @updatedAt
 
   @@index([blogId, approved, createdAt])
+  @@index([visitorId, createdAt])
 }
 
 model Like {

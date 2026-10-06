@@ -2,7 +2,16 @@ import { Suspense } from "react";
 import HomeClient from "@/components/HomePage";
 import BlogsSection from "@/components/BlogsSection";
 import BlogsSkeleton from "@/components/Blogs/BlogsSkeleton";
+import LegalServiceJsonLd from "@/components/Seo/LegalServiceJsonLd";
+import { mainKeywords } from "@/data/seo";
+import { toLocaleKey } from "@/lib/locale";
 import { getTranslations, getLocale } from "next-intl/server";
+
+const DESCRIPTIONS: Record<LocaleKey, string> = {
+  ar: mainKeywords.ar_description,
+  en: mainKeywords.en_description,
+  fr: mainKeywords.fr_description,
+};
 
 export default async function HomePage() {
   const t = await getTranslations("HomePage");
@@ -35,16 +44,23 @@ export default async function HomePage() {
     inheritanceParagraph: t("InheritanceSection.paragraph"),
     tryNow: t("InheritanceSection.tryNow"),
   };
+  const localeKey = toLocaleKey(locale);
 
   return (
-    <HomeClient
-      locale={locale}
-      translations={translations}
-      blogsSection={
-        <Suspense fallback={<BlogsSkeleton />}>
-          <BlogsSection locale={locale} />
-        </Suspense>
-      }
-    />
+    <>
+      <LegalServiceJsonLd
+        locale={localeKey}
+        description={DESCRIPTIONS[localeKey]}
+      />
+      <HomeClient
+        locale={locale}
+        translations={translations}
+        blogsSection={
+          <Suspense fallback={<BlogsSkeleton />}>
+            <BlogsSection locale={locale} />
+          </Suspense>
+        }
+      />
+    </>
   );
 }
