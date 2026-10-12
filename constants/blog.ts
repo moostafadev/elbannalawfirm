@@ -27,6 +27,9 @@ interface BlogTexts {
   previous: string;
   next: string;
   viewAll: string;
+  latestArticles: string;
+  latestArticlesDescription: string;
+  articles: string;
 }
 
 export const BLOG_TEXTS: Record<LocaleKey, BlogTexts> = {
@@ -52,6 +55,10 @@ export const BLOG_TEXTS: Record<LocaleKey, BlogTexts> = {
     previous: "السابق",
     next: "التالي",
     viewAll: "عرض كل المقالات",
+    latestArticles: "أحدث المقالات",
+    latestArticlesDescription:
+      "تابع آخر المقالات والنصائح القانونية من مكتب أحمد البنا للمحاماة",
+    articles: "مقال",
   },
   en: {
     home: "Home",
@@ -75,6 +82,10 @@ export const BLOG_TEXTS: Record<LocaleKey, BlogTexts> = {
     previous: "Previous",
     next: "Next",
     viewAll: "View all articles",
+    latestArticles: "Latest Articles",
+    latestArticlesDescription:
+      "Follow the latest legal articles and tips from Ahmed Elbanna Law Firm",
+    articles: "articles",
   },
   fr: {
     home: "Page d'accueil",
@@ -98,5 +109,9 @@ export const BLOG_TEXTS: Record<LocaleKey, BlogTexts> = {
     previous: "Précédent",
     next: "Suivant",
     viewAll: "Voir tous les articles",
+    latestArticles: "Derniers Articles",
+    latestArticlesDescription:
+      "Suivez les derniers articles et conseils juridiques du cabinet Ahmed Elbanna",
+    articles: "articles",
   },
 };

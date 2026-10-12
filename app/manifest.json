@@ -1,6 +1,14 @@
 {
   "name": "Elbanna Law Firm",
   "short_name": "Elbanna",
+  "description": "مكتب البنا للمحاماة — خدمات قانونية متخصصة في مصر.",
+  "id": "/",
+  "start_url": "/ar",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "orientation": "portrait",
+  "categories": ["business", "legal", "productivity"],
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +23,19 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#bb9911",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "shortcuts": [
+    {
+      "name": "حاسبة المواريث",
+      "short_name": "المواريث",
+      "url": "/ar/inheritance-calculator"
+    },
+    {
+      "name": "المدونة القانونية",
+      "short_name": "المدونة",
+      "url": "/ar/blog"
+    }
+  ]
 }

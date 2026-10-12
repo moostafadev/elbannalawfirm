@@ -1,9 +1,5 @@
 import BlogsSkeleton from "@/components/Blogs/BlogsSkeleton";
 
-const Loading = () => (
-  <div className="container py-10">
-    <BlogsSkeleton count={6} />
-  </div>
-);
+const Loading = () => <BlogsSkeleton count={8} />;
 
 export default Loading;

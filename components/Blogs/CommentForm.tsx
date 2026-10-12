@@ -18,6 +18,7 @@ import {
 } from "@/constants/engagement";
 import CustomButton from "../CustomButton";
 import type { CommentItem } from "@/types/engagement";
+import { Send } from "lucide-react";
 
 interface CommentFormProps {
   blogId: string;
@@ -75,9 +76,11 @@ const CommentForm = ({ blogId, locale, onAdded }: CommentFormProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-lg border-2 border-primary bg-[#bb99111a] p-4"
+      className="flex flex-col gap-4 rounded-lg border-2 border-primary bg-[#bb99111a] p-4 md:p-5"
     >
-      <h3 className="text-lg font-bold text-primary">{texts.leaveComment}</h3>
+      <h3 className="text-base font-bold text-primary md:text-lg">
+        {texts.leaveComment}
+      </h3>
 
       <div className="flex flex-col gap-2">
         <label htmlFor={nameId} className="text-sm font-semibold">
@@ -98,7 +101,7 @@ const CommentForm = ({ blogId, locale, onAdded }: CommentFormProps) => {
         </label>
         <Textarea
           id={contentId}
-          rows={4}
+          rows={5}
           value={content}
           maxLength={COMMENT_LIMITS.contentMax}
           onChange={(e) => setContent(e.target.value)}
@@ -126,16 +129,22 @@ const CommentForm = ({ blogId, locale, onAdded }: CommentFormProps) => {
         </p>
       ) : null}
 
-      <CustomButton
-        type="submit"
-        size="fit"
-        color="yellow"
-        isLoading={isPending}
-        disabled={!isValid}
-        className="self-end"
-      >
-        {texts.submit}
-      </CustomButton>
+      <div className="mt-2 flex items-center justify-end gap-3 border-t border-primary/20 pt-4">
+        <span className="text-xs text-neutral-500">
+          {content.length}/{COMMENT_LIMITS.contentMax}
+        </span>
+        <CustomButton
+          type="submit"
+          size="fit"
+          color="yellow"
+          isLoading={isPending}
+          disabled={!isValid}
+          className="!gap-2 !px-5 !py-2.5"
+        >
+          <Send size={16} />
+          {texts.submit}
+        </CustomButton>
+      </div>
     </form>
   );
 };

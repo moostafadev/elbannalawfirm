@@ -37,6 +37,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(blog.updatedAt),
     changeFrequency: "weekly",
     priority: 0.8,
+    alternates: {
+      languages: { [blog.lang]: `${SITE_URL}/${blog.lang}/blog/${blog.id}` },
+    },
   }));
 
   return [...staticEntries, ...blogEntries];

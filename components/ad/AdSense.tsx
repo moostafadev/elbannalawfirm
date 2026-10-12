@@ -8,10 +8,11 @@ interface IProps {
 const AdSense = ({ pId }: IProps) => {
   return (
     <Script
+      id="adsbygoogle-init"
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${pId}`}
       crossOrigin="anonymous"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
     />
   );
 };

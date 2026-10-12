@@ -12,22 +12,22 @@ export interface RevealConfig {
 }
 
 const pending = new Map<string, RevealConfig>();
+let srInstance: ScrollRevealInstance | null = null;
 let instancePromise: Promise<ScrollRevealInstance> | null = null;
 let flushScheduled = false;
 
 const getInstance = (): Promise<ScrollRevealInstance> => {
+  if (srInstance) return Promise.resolve(srInstance);
   if (!instancePromise) {
     instancePromise = import("scrollreveal")
       .then((m) => {
-        // `export =` interop: unwrap `.default` if present, otherwise use
-        // the module object itself. The runtime decides; the types don't
-        // have to model both cases.
         const factory = ((m as { default?: ScrollRevealFactory }).default ??
           m) as ScrollRevealFactory;
-        return factory();
+        srInstance = factory();
+        return srInstance;
       })
       .catch((err) => {
-        instancePromise = null; // allow retry after a failed load
+        instancePromise = null;
         throw err;
       });
   }
@@ -51,9 +51,15 @@ const flush = async (): Promise<void> => {
 
   try {
     const sr = await getInstance();
-    targets.forEach(({ selector, config }) => sr.reveal(selector, config));
+    targets.forEach(({ selector, config }) => {
+      try {
+        sr.reveal(selector, config);
+      } catch {
+        /* ignore if element disappeared mid-reveal */
+      }
+    });
   } catch {
-    // swallow — don't let the timer path produce an unhandled rejection
+    /* swallow — don't let the timer path produce an unhandled rejection */
   }
 };
 
@@ -67,6 +73,15 @@ export const scheduleReveal = (name: string, config: RevealConfig): void => {
   }, 0);
 };
 
-export const cleanReveal = (element: HTMLElement): void => {
-  void instancePromise?.then((sr) => sr.clean(element)).catch(() => undefined);
+/**
+ * Synchronous cleanup — critical to prevent stale elements from being
+ * processed by ScrollReveal on the next scroll/resize tick.
+ */
+export const cleanReveal = (element: HTMLElement | null): void => {
+  if (!element || !srInstance) return;
+  try {
+    srInstance.clean(element);
+  } catch {
+    /* element already detached / cleaned — safe to ignore */
+  }
 };

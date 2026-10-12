@@ -61,6 +61,7 @@ const Animation = ({
 
   useEffect(() => {
     const element = ref.current;
+    if (!element) return;
 
     scheduleReveal(animationName, {
       origin,
@@ -71,7 +72,7 @@ const Animation = ({
     });
 
     return () => {
-      if (element) cleanReveal(element);
+      cleanReveal(element);
     };
   }, [origin, distance, duration, interval, reset, animationName]);
 

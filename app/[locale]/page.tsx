@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import HomeClient from "@/components/HomePage";
 import BlogsSection from "@/components/BlogsSection";
-import BlogsSkeleton from "@/components/Blogs/BlogsSkeleton";
+import HomeBlogsSkeleton from "@/components/Blogs/HomeBlogsSkeleton";
 import LegalServiceJsonLd from "@/components/Seo/LegalServiceJsonLd";
 import { mainKeywords } from "@/data/seo";
 import { toLocaleKey } from "@/lib/locale";
@@ -36,7 +36,6 @@ export default async function HomePage() {
     servicesList: Array.from({ length: 10 }, (_, i) =>
       t(`ServicesSection.paragraph.${i + 1}`),
     ),
-    blogTitle: t("BlogSection.title"),
     faqTitle: t("FAQsSection.title"),
     contactTitle: t("ContactSection.title"),
     contactParagraph: t("ContactSection.paragraph"),
@@ -56,7 +55,7 @@ export default async function HomePage() {
         locale={locale}
         translations={translations}
         blogsSection={
-          <Suspense fallback={<BlogsSkeleton />}>
+          <Suspense fallback={<HomeBlogsSkeleton />}>
             <BlogsSection locale={locale} />
           </Suspense>
         }

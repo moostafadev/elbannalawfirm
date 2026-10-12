@@ -19,6 +19,10 @@ declare global {
 
 const FILL_TIMEOUT_MS = 4000;
 const LOAD_MARGIN = "300px";
+const MIN_HEIGHT = 100;
+
+// أخطاء AdSense المعروفة بأنها benign — لا تستدعي معالجة
+const BENIGN_ERRORS = ["already have ads", "No slot size", "availableWidth=0"];
 
 const AdBanner: React.FC<AdBannerProps> = ({
   dataAdSlot,
@@ -43,7 +47,17 @@ const AdBanner: React.FC<AdBannerProps> = ({
       else if (value === "unfilled") setStatus("unfilled");
     };
 
+    if (ins.getAttribute("data-adsbygoogle-status") === "done") {
+      readStatus();
+      return;
+    }
+
     const loadAd = () => {
+      if (ins.getAttribute("data-adsbygoogle-status") === "done") {
+        readStatus();
+        return;
+      }
+
       setStatus("pending");
 
       statusObserver = new MutationObserver(readStatus);
@@ -59,9 +73,17 @@ const AdBanner: React.FC<AdBannerProps> = ({
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (error) {
-        console.log(
-          error instanceof Error ? error.message : "adsbygoogle error",
-        );
+        const message = error instanceof Error ? error.message : String(error);
+
+        // تجاهل صامت للأخطاء المتوقعة من AdSense
+        if (BENIGN_ERRORS.some((needle) => message.includes(needle))) {
+          readStatus();
+          return;
+        }
+
+        if (process.env.NODE_ENV !== "production") {
+          console.warn("[AdBanner]", message);
+        }
         setStatus("unfilled");
       }
     };
@@ -84,21 +106,24 @@ const AdBanner: React.FC<AdBannerProps> = ({
     };
   }, []);
 
+  const showHouse = status === "unfilled";
+
   return (
-    <div ref={wrapperRef} className="w-full min-h-[100px]">
-      <ins
-        ref={insRef}
-        className="adsbygoogle"
-        style={{
-          display: status === "unfilled" ? "none" : "block",
-          minHeight: 100,
-        }}
-        data-ad-client="ca-pub-5760588310891464"
-        data-ad-slot={dataAdSlot}
-        data-ad-format={dataAdFormat}
-        data-full-width-responsive={dataFullWidthResponsive.toString()}
-      ></ins>
-      {status === "unfilled" ? <HouseAd /> : null}
+    <div ref={wrapperRef} className="w-full">
+      {showHouse ? (
+        <HouseAd />
+      ) : (
+        <ins
+          ref={insRef}
+          className="adsbygoogle block w-full"
+          suppressHydrationWarning
+          style={{ display: "block", width: "100%", minHeight: MIN_HEIGHT }}
+          data-ad-client="ca-pub-5760588310891464"
+          data-ad-slot={dataAdSlot}
+          data-ad-format={dataAdFormat}
+          data-full-width-responsive={dataFullWidthResponsive.toString()}
+        />
+      )}
     </div>
   );
 };

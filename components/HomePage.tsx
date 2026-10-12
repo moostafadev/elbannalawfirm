@@ -27,7 +27,6 @@ interface HomeClientProps {
     servicesTitle: string;
     servicesParagraph0: string;
     servicesList: string[];
-    blogTitle: string;
     faqTitle: string;
     contactTitle: string;
     contactParagraph: string;
@@ -201,10 +200,7 @@ export default function HomeClient({
 
       {/* Blog Section */}
       <section className="min-h-screen flex py-16" id="blog">
-        <div className="container flex flex-col gap-20">
-          <Heading>{t.blogTitle}</Heading>
-          {blogsSection}
-        </div>
+        <div className="container">{blogsSection}</div>
       </section>
 
       {/* Inheritance Calculator Section */}

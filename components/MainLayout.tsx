@@ -9,17 +9,17 @@ import ViewCount from "./ViewCount";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       <Header />
-      <main className="overflow-hidden mt-24">
-        {children}
+      <main className="mt-24 overflow-x-clip">
+        <Suspense fallback={<Loading />}>{children}</Suspense>
         <ScrollToTop />
         <ContactBtn />
-        <Toaster />
         <ViewCount />
       </main>
       <Footer />
-    </Suspense>
+      <Toaster />
+    </>
   );
 };
 

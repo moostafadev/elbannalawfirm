@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { createView, getViews } from "@/actions/views";
 import { useLocale } from "next-intl";
 
+const BLOG_ARTICLE_PATTERN = /^\/[a-z]{2}\/blog\/[0-9a-f]{24}$/i;
+
 const translations = {
   en: "Views",
   ar: "المشاهدات",
@@ -15,17 +17,22 @@ const translations = {
 const ViewCount = () => {
   const locale = useLocale();
   const slug = usePathname();
+  const isBlogArticle = BLOG_ARTICLE_PATTERN.test(slug);
   const [views, setViews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const title =
-    translations[locale as keyof typeof translations] || translations.en;
+    translations[locale as keyof typeof translations] ?? translations.en;
 
   useEffect(() => {
+    if (!isBlogArticle) return;
+
+    let active = true;
     const key = `viewed-${slug}`;
     const hasViewed = sessionStorage.getItem(key);
 
     const fetchViews = async () => {
       const count = await getViews(slug);
+      if (!active) return;
       setViews(count);
       setLoading(false);
     };
@@ -36,21 +43,27 @@ const ViewCount = () => {
         await fetchViews();
         sessionStorage.setItem(key, "true");
       };
-      increment();
+      void increment();
     } else {
-      fetchViews();
+      void fetchViews();
     }
-  }, [slug]);
+
+    return () => {
+      active = false;
+    };
+  }, [slug, isBlogArticle]);
+
+  if (!isBlogArticle) return null;
 
   return (
     <div
       title={title}
-      className="fixed bottom-6 left-1/2 gap-1 -translate-x-1/2 z-20 rounded-lg py-1 px-3 bg-[hsl(48,83%,40%,.2)] backdrop-blur-sm text-brown duration-300 border-2 border-primary flex justify-center items-center cursor-pointer shadow-md hover:shadow-lg hover:bg-brown hover:text-primary"
+      className="fixed bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-1 rounded-lg border-2 border-primary bg-[hsl(48,83%,40%,.2)] px-3 py-1 text-brown shadow-md backdrop-blur-sm duration-300 hover:bg-brown hover:text-primary hover:shadow-lg"
     >
       {loading ? (
         <svg
           aria-hidden="true"
-          className="w-6 h-6 text-gray-200 animate-spin fill-primary mx-auto"
+          className="mx-auto h-6 w-6 animate-spin fill-primary text-gray-200"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +79,7 @@ const ViewCount = () => {
         </svg>
       ) : (
         <>
-          <span className="font-semibold text-sm">{views}</span>
+          <span className="text-sm font-semibold">{views}</span>
           <Eye size={17} />
         </>
       )}

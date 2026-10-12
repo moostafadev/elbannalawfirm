@@ -18,30 +18,48 @@ interface CommentsSectionProps {
 }
 
 const CommentCard = memo(
-  ({ comment, locale }: { comment: CommentItem; locale: LocaleKey }) => (
-    <li className="flex gap-3 rounded-lg border border-primary/30 bg-white p-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-        {(Array.from(comment.name)[0] ?? "?").toUpperCase()}
-      </div>
-      <div className="flex min-w-0 flex-col gap-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-bold">{comment.name}</span>
-          <time
-            dateTime={comment.createdAt}
-            className="text-xs text-neutral-600"
-          >
-            {formatBlogDate(comment.createdAt, locale)}
-          </time>
+  ({ comment, locale }: { comment: CommentItem; locale: LocaleKey }) => {
+    const initial = (Array.from(comment.name)[0] ?? "?").toUpperCase();
+
+    return (
+      <li className="flex gap-3 rounded-lg border border-primary/15 bg-white p-4 transition-colors duration-300 hover:border-primary/30 hover:bg-primary/[0.02] md:gap-4 md:p-5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/25 to-primary/5 text-sm font-bold text-primary ring-1 ring-primary/20 md:h-11 md:w-11 md:text-base">
+          {initial}
         </div>
-        <p className="whitespace-pre-line break-words text-sm md:text-base">
-          {comment.content}
-        </p>
-      </div>
-    </li>
-  ),
+
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+            <span className="text-sm font-bold text-neutral-900 md:text-base">
+              {comment.name}
+            </span>
+            <span aria-hidden="true" className="text-neutral-400">
+              •
+            </span>
+            <time
+              dateTime={comment.createdAt}
+              className="text-xs text-neutral-500 md:text-sm"
+            >
+              {formatBlogDate(comment.createdAt, locale)}
+            </time>
+          </div>
+
+          <p className="whitespace-pre-line break-words text-sm leading-relaxed text-neutral-700 md:text-base">
+            {comment.content}
+          </p>
+        </div>
+      </li>
+    );
+  },
 );
 
 CommentCard.displayName = "CommentCard";
+
+const EmptyComments = ({ label }: { label: string }) => (
+  <div className="flex flex-col items-center gap-3 rounded-lg border-2 border-dashed border-primary/20 bg-primary/[0.02] px-6 py-12 text-center">
+    <MessageSquare className="h-10 w-10 text-primary/30" strokeWidth={1.5} />
+    <p className="text-sm text-neutral-500 md:text-base">{label}</p>
+  </div>
+);
 
 const CommentsSection = ({ blogId, locale, initial }: CommentsSectionProps) => {
   const texts = ENGAGEMENT_TEXTS[locale];
@@ -84,50 +102,63 @@ const CommentsSection = ({ blogId, locale, initial }: CommentsSectionProps) => {
   }, [blogId, locale, nextCursor, isLoadingMore]);
 
   return (
-    <section
-      className="flex flex-col gap-6 border-t pt-6"
-      aria-labelledby="comments-title"
-    >
+    <section className="border-t pt-6 md:pt-8" aria-labelledby="comments-title">
+      {/* Header */}
       <h2
         id="comments-title"
-        className="flex items-center gap-2 text-2xl font-bold text-primary"
+        className="flex items-center gap-2 text-xl font-bold text-primary md:text-2xl"
       >
-        <MessageSquare size={24} />
-        {texts.commentsTitle} ({total.toLocaleString(LOCALE_TAGS[locale])})
+        <MessageSquare size={22} className="md:hidden" />
+        <MessageSquare size={26} className="hidden md:block" />
+        <span>{texts.commentsTitle}</span>
+        <span className="text-sm font-medium text-neutral-500 md:text-base">
+          ({total.toLocaleString(LOCALE_TAGS[locale])})
+        </span>
       </h2>
 
-      <CommentForm blogId={blogId} locale={locale} onAdded={handleAdded} />
+      {/* Form + List grid */}
+      <div className="mt-6 grid gap-6 md:mt-8 md:gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-start">
+        {/* Form — first on mobile, sticky left column on lg */}
+        <div className="lg:sticky lg:top-28">
+          <CommentForm blogId={blogId} locale={locale} onAdded={handleAdded} />
+        </div>
 
-      {initial === null ? (
-        <p
-          role="alert"
-          className="rounded-lg border border-red-200 bg-red-50 p-4 text-center text-red-700"
-        >
-          {BLOG_TEXTS[locale].loadError}
-        </p>
-      ) : items.length === 0 ? (
-        <p className="py-6 text-center text-muted-foreground">
-          {texts.noComments}
-        </p>
-      ) : (
-        <ul className="flex flex-col gap-3">
-          {items.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} locale={locale} />
-          ))}
-        </ul>
-      )}
+        {/* Comments list */}
+        <div className="flex flex-col gap-4">
+          {initial === null ? (
+            <p
+              role="alert"
+              className="rounded-lg border border-red-200 bg-red-50 p-4 text-center text-red-700"
+            >
+              {BLOG_TEXTS[locale].loadError}
+            </p>
+          ) : items.length === 0 ? (
+            <EmptyComments label={texts.noComments} />
+          ) : (
+            <ul className="flex flex-col gap-3">
+              {items.map((comment) => (
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  locale={locale}
+                />
+              ))}
+            </ul>
+          )}
 
-      {nextCursor ? (
-        <CustomButton
-          size="fit"
-          color="yellow"
-          onClick={handleLoadMore}
-          isLoading={isLoadingMore}
-          className="self-center"
-        >
-          {texts.loadMore}
-        </CustomButton>
-      ) : null}
+          {nextCursor ? (
+            <CustomButton
+              size="fit"
+              color="yellow"
+              onClick={handleLoadMore}
+              isLoading={isLoadingMore}
+              className="self-center"
+            >
+              {texts.loadMore}
+            </CustomButton>
+          ) : null}
+        </div>
+      </div>
     </section>
   );
 };

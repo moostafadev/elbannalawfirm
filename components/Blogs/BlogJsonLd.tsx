@@ -14,8 +14,15 @@ interface BlogJsonLdProps {
 }
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const AUTHOR_ID = `${SITE_URL}/#author`;
 
 const BlogJsonLd = ({ blog, url, breadcrumbs }: BlogJsonLdProps) => {
+  const wordCount = blog.content
+    .map((html) => html.replace(/<[^>]*>/g, " ").trim())
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+
   const data = {
     "@context": "https://schema.org",
     "@graph": [
@@ -30,8 +37,9 @@ const BlogJsonLd = ({ blog, url, breadcrumbs }: BlogJsonLdProps) => {
         inLanguage: blog.lang,
         keywords: blog.keywords.join(", "),
         articleSection: blog.category,
+        wordCount,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        author: { "@type": "Person", name: "Ahmed Elbanna" },
+        author: { "@id": AUTHOR_ID },
         publisher: { "@id": ORGANIZATION_ID },
         commentCount: blog.commentsCount,
         interactionStatistic: [
@@ -48,7 +56,16 @@ const BlogJsonLd = ({ blog, url, breadcrumbs }: BlogJsonLdProps) => {
         ],
       },
       {
+        "@type": "Person",
+        "@id": AUTHOR_ID,
+        name: "Ahmed Elbanna",
+        url: `${SITE_URL}/ar/about`,
+        jobTitle: "Lawyer",
+        worksFor: { "@id": ORGANIZATION_ID },
+      },
+      {
         "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
         itemListElement: breadcrumbs.map((item, index) => ({
           "@type": "ListItem",
           position: index + 1,

@@ -1,45 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const useScrollDirection = (threshold: number = 0) => {
+const useScrollDirection = (threshold = 0) => {
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
-  const [lastScrollTop, setLastScrollTop] = useState<number>(0);
-  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
+  const lastScrollTop = useRef(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-      setScrollTimeout(
-        setTimeout(() => {
-          const currentScrollTop =
-            document.documentElement.scrollTop || document.body.scrollTop;
+      timeoutRef.current = setTimeout(() => {
+        const current =
+          document.documentElement.scrollTop || document.body.scrollTop;
 
-          if (currentScrollTop > lastScrollTop + threshold) {
-            setScrollDirection("down");
-          } else if (currentScrollTop < lastScrollTop - threshold) {
-            setScrollDirection("up");
-          }
+        if (current > lastScrollTop.current + threshold) {
+          setScrollDirection("down");
+        } else if (current < lastScrollTop.current - threshold) {
+          setScrollDirection("up");
+        }
 
-          setLastScrollTop(currentScrollTop <= 0 ? 0 : currentScrollTop);
-        }, 10)
-      );
+        lastScrollTop.current = current <= 0 ? 0 : current;
+      }, 10);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [lastScrollTop, threshold, scrollTimeout]);
+  }, [threshold]);
 
   return scrollDirection;
 };

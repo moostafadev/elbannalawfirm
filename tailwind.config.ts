@@ -124,6 +124,10 @@ const config: Config = {
           "80%": { transform: "translateX(0)" },
           "100%": { transform: "translateX([calc(100%-45px-8px)])" },
         },
+        "heart-ring": {
+          "0%": { transform: "scale(0.85)", opacity: "0.6" },
+          "100%": { transform: "scale(1.9)", opacity: "0" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -146,6 +150,7 @@ const config: Config = {
         "slide-in-out-ar": "slideInOutAr 3s ease-in-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "heart-ring": "heart-ring 0.7s ease-out 1",
       },
     },
   },

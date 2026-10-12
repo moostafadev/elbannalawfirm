@@ -18,6 +18,9 @@ import BlockedHeirsList from "./BlockedHeirsList";
 import AdBanner from "../ad/AdBanner";
 import Animation from "../Animation";
 import { AD_SLOTS } from "@/constants/ads";
+import { useToast } from "@/hooks/use-toast";
+import { toLocaleKey } from "@/lib/locale";
+import { INHERITANCE_TEXTS } from "@/constants/inheritance";
 
 type CalculatorClientProps = {
   translations: {
@@ -42,7 +45,9 @@ type CalculatorClientProps = {
 
 const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
   ({ translations }) => {
-    const locale = useLocale();
+    const locale = toLocaleKey(useLocale());
+    const { toast } = useToast();
+    const t = INHERITANCE_TEXTS[locale];
 
     const [estate, setEstate] = useState<number>(0);
     const [unit, setUnit] = useState<"pound" | "feddan">("pound");
@@ -55,31 +60,37 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
 
     const calculate = useCallback(() => {
       if (estate <= 0) {
-        alert("الرجاء إدخال قيمة تركة صحيحة.");
+        toast({ variant: "destructive", title: t.invalidEstate });
         return;
       }
       if (heirs.length === 0) {
-        alert("الرجاء إضافة ورثة قبل الحساب.");
+        toast({ variant: "destructive", title: t.noHeirs });
         return;
       }
-      const calc = new InheritanceCalculator(heirs, estate);
-      const res = calc.calculate();
-      const blocked = Object.entries(calc["blocked"])
-        .filter(([, isBlocked]) => isBlocked)
-        .map(([type]) => type as HeirType);
-      setResults(res);
-      setBlockedHeirs(blocked);
-    }, [heirs, estate]);
 
-    const clearResultsIfExist = () => {
-      if (results.length > 0) {
-        setResults([]);
+      try {
+        const calc = new InheritanceCalculator(heirs, estate);
+        const res = calc.calculate();
+        const blocked = Object.entries(calc["blocked"])
+          .filter(([, isBlocked]) => isBlocked)
+          .map(([type]) => type as HeirType);
+        setResults(res);
+        setBlockedHeirs(blocked);
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: error instanceof Error ? error.message : t.invalidEstate,
+        });
       }
-    };
+    }, [heirs, estate, t, toast]);
+
+    const clearResultsIfExist = useCallback(() => {
+      setResults((prev) => (prev.length > 0 ? [] : prev));
+    }, []);
 
     useEffect(() => {
       clearResultsIfExist();
-    }, [heirs]);
+    }, [heirs, clearResultsIfExist]);
 
     useEffect(() => {
       setHeirs((prev) => {
@@ -97,7 +108,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
     }, [deceasedGender]);
 
     return (
-      <div className="max-w-5xl mx-auto p-4 py-10">
+      <div className="mx-auto max-w-5xl p-4 py-10">
         <Heading className="mb-10">{translations.title}</Heading>
 
         <Gender
@@ -106,7 +117,6 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           locale={locale}
         />
 
-        {/* Estate input */}
         <EstateInput
           estate={estate}
           setEstate={setEstate}
@@ -116,9 +126,8 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           locale={locale}
         />
 
-        {/* Heir selection */}
         <div className="mb-4">
-          <label className="block font-medium mb-3">
+          <label className="mb-3 block font-medium">
             {translations.heirsLabel}:
           </label>
           <HeirsGrid
@@ -135,6 +144,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           blockedHeirs={blockedHeirs}
           inputHeirs={heirs}
           locale={locale}
+          title={t.blockedHeirsTitle}
         />
 
         <Animation origin="top" animationName="animation-inheritance-item">
@@ -142,7 +152,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
             size="fit"
             color="gray"
             onClick={calculate}
-            className="text-center justify-center mt-6 py-2 px-4"
+            className="mt-6 justify-center px-4 py-2 text-center"
           >
             {translations.calculateButton}
           </CustomButton>
