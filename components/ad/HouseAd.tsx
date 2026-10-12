@@ -1,10 +1,10 @@
 "use client";
 
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
-import { HOUSE_ADS, HOUSE_AD_LABEL } from "@/constants/ads";
+import { HOUSE_ADS, HOUSE_AD_LABEL, type HouseAdConfig } from "@/constants/ads";
 import { toLocaleKey } from "@/lib/locale";
 
 const BUTTON_CLASS =
@@ -13,12 +13,21 @@ const BUTTON_CLASS =
 const HouseAd = () => {
   const locale = toLocaleKey(useLocale());
   const pathname = usePathname();
-  const [seed] = useState(() => Math.random());
+  const [ad, setAd] = useState<HouseAdConfig | null>(null);
 
-  const available = HOUSE_ADS.filter((item) => item.href !== pathname);
-  const ad = available[Math.floor(seed * available.length)] ?? HOUSE_ADS[0];
-  const texts = ad.texts[locale];
+  // نختار الإعلان بعد الـ mount فقط، لتفادي hydration mismatch
+  // ولتفادي اختيار نفس الصفحة اللي احنا فيها.
+  useEffect(() => {
+    const available = HOUSE_ADS.filter((item) => item.href !== pathname);
+    const pool = available.length > 0 ? available : HOUSE_ADS;
+    setAd(pool[Math.floor(Math.random() * pool.length)]);
+  }, [pathname]);
+
+  const texts = useMemo(() => ad?.texts[locale], [ad, locale]);
   const label = HOUSE_AD_LABEL[locale];
+
+  // قبل ما نختار الإعلان في الـ client، نرجع null لتفادي أي flash
+  if (!ad || !texts) return null;
 
   return (
     <aside
@@ -33,7 +42,7 @@ const HouseAd = () => {
         alt={texts.title}
         width={80}
         height={80}
-        loading="lazy"
+        loading="eager"
         className="h-20 w-auto shrink-0"
       />
       <div className="flex flex-1 flex-col gap-1 text-center sm:text-start">

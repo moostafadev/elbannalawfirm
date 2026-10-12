@@ -12,6 +12,7 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import CustomButton from "./CustomButton";
 import AdBanner from "./ad/AdBanner";
+import { AD_SLOTS } from "@/constants/ads";
 
 interface HomeClientProps {
   locale: string;
@@ -136,7 +137,7 @@ export default function HomeClient({
             <AdBanner
               dataAdFormat="auto"
               dataFullWidthResponsive={true}
-              dataAdSlot="2456497086"
+              dataAdSlot={AD_SLOTS.homeAbout}
             />
           </div>
         </div>

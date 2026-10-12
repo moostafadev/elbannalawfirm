@@ -9,6 +9,7 @@ import Script from "next/script";
 import { mainKeywords } from "@/data/seo";
 import AdSense from "@/components/ad/AdSense";
 import { generateLocalizedMetadataFromContent } from "@/lib/seoUtils/seoMetadata";
+import AdSenseRouteHandler from "@/components/ad/AdSenseRouteHandler";
 
 const fontSans = FontSans({
   weight: ["300", "400", "700", "900"],
@@ -91,6 +92,7 @@ export default async function RootLayout({
       </Script>
       <body className={cn("min-h-screen antialiased", selectedFont)}>
         <NextIntlClientProvider messages={messages}>
+          <AdSenseRouteHandler />
           <MainLayout>{children}</MainLayout>
         </NextIntlClientProvider>
       </body>

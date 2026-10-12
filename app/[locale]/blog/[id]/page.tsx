@@ -26,6 +26,7 @@ import {
 import { getDirection, toLocaleKey } from "@/lib/locale";
 import { generateLocalizedMetadataFromContent } from "@/lib/seoUtils/seoMetadata";
 import { getBlogById, getRelatedBlogs } from "@/services/blog.service";
+import { AD_SLOTS } from "@/constants/ads";
 
 interface PageProps {
   params: { id: string; locale: string };
@@ -173,7 +174,7 @@ const BlogPage = async ({ params: { id } }: PageProps) => {
                     <AdBanner
                       dataAdFormat="auto"
                       dataFullWidthResponsive={true}
-                      dataAdSlot="2456497086"
+                      dataAdSlot={AD_SLOTS.blogInline}
                     />
                   ) : undefined
                 }
@@ -196,7 +197,7 @@ const BlogPage = async ({ params: { id } }: PageProps) => {
               <AdBanner
                 dataAdFormat="auto"
                 dataFullWidthResponsive={true}
-                dataAdSlot="2456497086"
+                dataAdSlot={AD_SLOTS.blogArticleBottom}
               />
             </div>
 

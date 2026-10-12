@@ -85,11 +85,14 @@ const AdBanner: React.FC<AdBannerProps> = ({
   }, []);
 
   return (
-    <div ref={wrapperRef} className="w-full">
+    <div ref={wrapperRef} className="w-full min-h-[100px]">
       <ins
         ref={insRef}
         className="adsbygoogle"
-        style={{ display: status === "unfilled" ? "none" : "block" }}
+        style={{
+          display: status === "unfilled" ? "none" : "block",
+          minHeight: 100,
+        }}
         data-ad-client="ca-pub-5760588310891464"
         data-ad-slot={dataAdSlot}
         data-ad-format={dataAdFormat}

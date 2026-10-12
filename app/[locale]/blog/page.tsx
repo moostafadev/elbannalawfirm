@@ -19,6 +19,7 @@ import {
   getMostViewedBlogs,
   getPublishedBlogs,
 } from "@/services/blog.service";
+import { AD_SLOTS } from "@/constants/ads";
 
 interface PageProps {
   searchParams: { page?: string | string[]; category?: string | string[] };
@@ -117,7 +118,7 @@ const BlogsPage = async ({ searchParams }: PageProps) => {
             <AdBanner
               dataAdFormat="auto"
               dataFullWidthResponsive={true}
-              dataAdSlot="2456497086"
+              dataAdSlot={AD_SLOTS.blogListBottom}
             />
           </div>
 

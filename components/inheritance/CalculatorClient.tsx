@@ -17,6 +17,7 @@ import ResultsTable from "./ResultsTable";
 import BlockedHeirsList from "./BlockedHeirsList";
 import AdBanner from "../ad/AdBanner";
 import Animation from "../Animation";
+import { AD_SLOTS } from "@/constants/ads";
 
 type CalculatorClientProps = {
   translations: {
@@ -46,7 +47,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
     const [estate, setEstate] = useState<number>(0);
     const [unit, setUnit] = useState<"pound" | "feddan">("pound");
     const [deceasedGender, setDeceasedGender] = useState<"male" | "female">(
-      "male"
+      "male",
     );
     const [heirs, setHeirs] = useState<Heir[]>([]);
     const [results, setResults] = useState<ShareResult[]>([]);
@@ -83,7 +84,7 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
     useEffect(() => {
       setHeirs((prev) => {
         const withoutSpouses = prev.filter(
-          (h) => h.type !== "husband" && h.type !== "wife"
+          (h) => h.type !== "husband" && h.type !== "wife",
         );
         const spouse: Heir =
           deceasedGender === "female"
@@ -159,12 +160,12 @@ const CalculatorClient: React.FC<CalculatorClientProps> = React.memo(
           <AdBanner
             dataAdFormat="auto"
             dataFullWidthResponsive={true}
-            dataAdSlot="2456497086"
+            dataAdSlot={AD_SLOTS.inheritanceBottom}
           />
         </div>
       </div>
     );
-  }
+  },
 );
 
 CalculatorClient.displayName = "CalculatorClient";
