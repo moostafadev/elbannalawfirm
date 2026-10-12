@@ -1,4 +1,6 @@
-type ScrollRevealFactory = (typeof import("scrollreveal"))["default"];
+import type ScrollReveal from "scrollreveal";
+
+type ScrollRevealFactory = typeof ScrollReveal;
 type ScrollRevealInstance = ReturnType<ScrollRevealFactory>;
 
 export interface RevealConfig {
@@ -14,11 +16,25 @@ let instancePromise: Promise<ScrollRevealInstance> | null = null;
 let flushScheduled = false;
 
 const getInstance = (): Promise<ScrollRevealInstance> => {
-  instancePromise ??= import("scrollreveal").then((module) => module.default());
+  if (!instancePromise) {
+    instancePromise = import("scrollreveal")
+      .then((m) => {
+        // `export =` interop: unwrap `.default` if present, otherwise use
+        // the module object itself. The runtime decides; the types don't
+        // have to model both cases.
+        const factory = ((m as { default?: ScrollRevealFactory }).default ??
+          m) as ScrollRevealFactory;
+        return factory();
+      })
+      .catch((err) => {
+        instancePromise = null; // allow retry after a failed load
+        throw err;
+      });
+  }
   return instancePromise;
 };
 
-const flush = async () => {
+const flush = async (): Promise<void> => {
   flushScheduled = false;
 
   const batch = Array.from(pending);
@@ -33,19 +49,24 @@ const flush = async () => {
 
   if (targets.length === 0) return;
 
-  const sr = await getInstance();
-
-  targets.forEach(({ selector, config }) => sr.reveal(selector, config));
+  try {
+    const sr = await getInstance();
+    targets.forEach(({ selector, config }) => sr.reveal(selector, config));
+  } catch {
+    // swallow — don't let the timer path produce an unhandled rejection
+  }
 };
 
-export const scheduleReveal = (name: string, config: RevealConfig) => {
+export const scheduleReveal = (name: string, config: RevealConfig): void => {
   if (!pending.has(name)) pending.set(name, config);
   if (flushScheduled) return;
 
   flushScheduled = true;
-  setTimeout(flush, 0);
+  setTimeout(() => {
+    void flush();
+  }, 0);
 };
 
-export const cleanReveal = (element: HTMLElement) => {
-  instancePromise?.then((sr) => sr.clean(element)).catch(() => undefined);
+export const cleanReveal = (element: HTMLElement): void => {
+  void instancePromise?.then((sr) => sr.clean(element)).catch(() => undefined);
 };
