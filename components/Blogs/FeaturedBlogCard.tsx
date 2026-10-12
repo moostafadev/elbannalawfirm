@@ -18,13 +18,7 @@ const FeaturedBlogCard = ({ blog, locale }: FeaturedBlogCardProps) => {
 
   return (
     <article className="content-data group flex h-full flex-col overflow-hidden rounded-lg border-2 border-primary bg-[#bb99111a] shadow-sm duration-300 hover:shadow-md">
-      <BlogImage
-        src={blog.image}
-        alt={blog.title}
-        variant="cover"
-        priority
-        className="aspect-[16/10] sm:aspect-[16/9]"
-      />
+      <BlogImage src={blog.image} alt={blog.title} variant="cover" priority />
 
       <div className="flex flex-1 flex-col justify-center gap-3 p-4 md:gap-5 md:p-6 lg:p-8">
         <div className="flex flex-wrap items-center gap-2 text-[11px] md:text-sm">

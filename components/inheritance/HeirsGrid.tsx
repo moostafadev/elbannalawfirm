@@ -115,20 +115,24 @@ const HeirItem = React.memo(
                 size="fit"
                 color="yellow"
                 disabled={maxReached}
+                aria-label={`+1 ${opt.label[locale]}`}
                 className={`border border-primary/90 hover:scale-100 !py-1 !px-1 ${
                   maxReached ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                <Plus className="w-4 h-4 lg:w-5 lg:h-5" />
+                <Plus className="w-4 h-4 lg:w-5 lg:h-5" aria-hidden="true" />
               </CustomButton>
+
               <p className="w-5 text-center">{heirCount}</p>
+
               <CustomButton
                 onClick={onRemove}
                 size="fit"
                 color="red"
+                aria-label={`-1 ${opt.label[locale]}`}
                 className="border border-red-700 hover:scale-100 !py-1 !px-1"
               >
-                <Minus className="w-4 h-4 lg:w-5 lg:h-5" />
+                <Minus className="w-4 h-4 lg:w-5 lg:h-5" aria-hidden="true" />
               </CustomButton>
             </>
           )}
@@ -141,7 +145,7 @@ const HeirItem = React.memo(
       prevProps.heirCount === nextProps.heirCount &&
       prevProps.exists === nextProps.exists
     );
-  }
+  },
 );
 
 HeirItem.displayName = "HeirItem";
@@ -159,7 +163,7 @@ const HeirsGrid: React.FC<Props> = ({
       const exists = prev.find((h) => h.type === type);
       if (exists) {
         return prev.map((h) =>
-          h.type === type ? { ...h, count: h.count + 1 } : h
+          h.type === type ? { ...h, count: h.count + 1 } : h,
         );
       } else {
         return [...prev, { type, count: 1 }];
@@ -176,7 +180,7 @@ const HeirsGrid: React.FC<Props> = ({
         return prev.filter((h) => h.type !== type);
       } else {
         return prev.map((h) =>
-          h.type === type ? { ...h, count: h.count - 1 } : h
+          h.type === type ? { ...h, count: h.count - 1 } : h,
         );
       }
     });

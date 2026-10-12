@@ -19,6 +19,13 @@ const VARIANT_CLASSES: Record<ImageVariant, string> = {
   thumb: "h-12 w-12 shrink-0",
 };
 
+// يُخبر المتصفح أي نسخة يحمّل حسب viewport — يقلل الـ payload بشكل ملموس
+const VARIANT_SIZES: Record<ImageVariant, string> = {
+  cover: "(max-width: 1024px) 100vw, 1200px",
+  card: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+  thumb: "96px",
+};
+
 const BlogImage = ({
   src,
   alt,
@@ -42,6 +49,8 @@ const BlogImage = ({
           alt={alt}
           width={size.width}
           height={size.height}
+          sizes={VARIANT_SIZES[variant]}
+          quality={75}
           priority={priority}
           className="h-full w-full object-cover"
         />

@@ -38,18 +38,22 @@ export async function generateLocalizedMetadataFromContent({
   const locale = (await getLocale()) as LocaleKey;
   const firmTitle = titleMap[locale] ?? "Elbanna Law Firm";
   const fullTitle = title ? `${title} - ${firmTitle}` : firmTitle;
-  const fullURL = `${SITE_URL}/${locale}/${path}`;
   const imageURL = resolveImageUrl(image);
   const services = legalServices[locale] ?? legalServices.en;
   const keywordList = keywordsByLocale?.[locale] ?? [];
   const keywords = keywordList.join(", ");
 
+  const normalizedPath = path.replace(/^\/+|\/+$/g, "");
+  const pathSegment = normalizedPath ? `/${normalizedPath}` : "";
+
+  const fullURL = `${SITE_URL}/${locale}${pathSegment}`;
+
   const languages: Record<string, string> = Object.fromEntries(
-    alternateLocales.map((item) => [item, `${SITE_URL}/${item}/${path}`]),
+    alternateLocales.map((item) => [item, `${SITE_URL}/${item}${pathSegment}`]),
   );
 
   if (alternateLocales.length > 1) {
-    languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}/${path}`;
+    languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${pathSegment}`;
   }
 
   const openGraphBase = {

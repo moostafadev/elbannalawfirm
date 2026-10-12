@@ -38,6 +38,7 @@ const CopyLinkButton = ({ url, label, copiedLabel }: CopyLinkButtonProps) => {
       type="button"
       onClick={handleCopy}
       title={label}
+      aria-label={copied ? copiedLabel : label}
       className="flex items-center gap-2 rounded-md border-2 border-primary px-3 py-2 text-sm font-semibold text-primary duration-300 hover:bg-primary/10"
     >
       {copied ? <Check size={18} /> : <Link2 size={18} />}

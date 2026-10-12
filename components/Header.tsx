@@ -48,8 +48,8 @@ const Header = () => {
 
   return (
     <header
-      className={`h-24 shadow-sm fixed bottom-0 md:top-0 bg-[hsl(0deg,0%,100%,.8)] backdrop-blur-sm z-50 w-full border-b-2 flex items-center duration-300 ${
-        scrollDirection === "down" ? "!top-[-6rem]" : "!top-0"
+      className={`h-24 shadow-sm fixed top-0 bg-[hsl(0deg,0%,100%,.8)] backdrop-blur-sm z-50 w-full border-b-2 flex items-center transition-transform duration-300 will-change-transform ${
+        scrollDirection === "down" ? "-translate-y-24" : "translate-y-0"
       }`}
     >
       <div className="container">
@@ -95,10 +95,10 @@ const Header = () => {
                   isOpen && locale === "ar"
                     ? "left-0"
                     : isOpen && locale !== "ar"
-                    ? "right-0"
-                    : locale === "ar" && !isOpen
-                    ? "-left-full"
-                    : "-right-full"
+                      ? "right-0"
+                      : locale === "ar" && !isOpen
+                        ? "-left-full"
+                        : "-right-full"
                 }`}
               >
                 {headerLinks.map((item) => (
@@ -170,7 +170,18 @@ const Header = () => {
               </SelectContent>
             </Select>
             <div
-              className={`rounded-md px-[1px] lg:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]`}
+              role="button"
+              tabIndex={0}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setIsopen((prev) => !prev);
+                }
+              }}
+              className="rounded-md px-[1px] lg:hidden cursor-pointer hover:opacity-90 duration-300 relative w-[32px] h-[32px]"
               onClick={() => setIsopen((prev) => !prev)}
             >
               <span
